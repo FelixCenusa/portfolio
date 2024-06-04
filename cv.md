@@ -2,8 +2,8 @@
 layout: default
 title: CV
 ---
-
-![Logo](/assets/img/me.png)
+- [CV](cv.md) [Projects](projects.md)
+![Logo](/assets/img/me.png){:height="700px" width="400px"}
 
 # Curriculum Vitae
 
@@ -32,3 +32,5 @@ I had my own cybersecurity firm for a year until we split up. I then decided to 
   - C++ Algorithms and Data Structures - DV1662
   - Introduction to Software Design and Architecture - PA1460
   - Networked Systems - ET1524
+
+- [CV](cv.md) [Projects](projects.md)
