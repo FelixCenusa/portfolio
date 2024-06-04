@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Curriculum Vitae
-permalink: /cv/
+permalink: /portfolio/cv/
 ---
 # [Home](/portfolio) | [CV](/portfolio/cv/) | [Projects](/portfolio/projects/)
 ![Logo](/assets/img/me.png){:height="200px" width="150px"}**Felix Cenusa's Portfolio**
@@ -34,4 +34,5 @@ I had my own cybersecurity firm for a year until we split up. I then decided to 
   - Introduction to Software Design and Architecture - PA1460
   - Networked Systems - ET1524
 
-- [CV](cv.md) [Projects](projects.md)
+# [Home](/portfolio) | [CV](/portfolio/cv/) | [Projects](/portfolio/projects/)
+
