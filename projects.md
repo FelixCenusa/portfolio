@@ -4,7 +4,8 @@ title: Peronal projects
 permalink: /projects/
 ---
 # [Home](/portfolio) | [CV](/portfolio/cv/) | [Projects](/portfolio/projects/)
-![Logo](/assets/img/me.png)**Felix Cenusa's Portfolio**
+![Logo](/assets/img/me.png){:height="200px" width="150px"}
+**Felix Cenusa's Portfolio**
 
 # Projects
 
