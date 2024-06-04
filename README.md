@@ -9,7 +9,7 @@ The code as is can be forked or cloned and copied to implement your own CV, prog
 
 **Clone the Repository in terminal:**
 1. Open CMD or a terminal.
-- --Keep in mind that the repo will be cloned in whatever directory you currently are in--
+- --Keep in mind that the repo will be cloned in whatever directory you are currently in--
 2. git clone https://github.com/FelixCenusa/portfolio.git
 3. cd portfolio.git
 4. code .
