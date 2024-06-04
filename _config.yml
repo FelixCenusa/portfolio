@@ -1,4 +1,9 @@
 title: Felix Cenusa
+email: felixcenusa@gmail.com
+description: >- 
+  A portfolio website showcasing my CV and projects.
+baseurl: "/portfolio" 
 logo: /assets/img/me.png
 show_downloads: true
 theme: jekyll-theme-cayman
+plugins: jekyll-feed
