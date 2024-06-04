@@ -18,7 +18,7 @@ School database system that stores information about a school (people and classe
 - https://github.com/FelixCenusa/CPP-Projects/tree/main/Final-Course-Project
 - ^ Link to the project (my github repo) More description about the progject in the README file there ^
 
-## Eshop (SQL,JS,HTML & CSS)
+## Eshop (SQL, JS, HTML & CSS)
 Eshop made with SQL, JS, HTML and CSS.
 - Run index.js or cli.js with node to get a web version or a terminal version of the program.
 - https://github.com/FelixCenusa/Database-Projects/tree/main/meDatabase/kmom06/eshop2
