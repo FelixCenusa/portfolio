@@ -1,3 +1,6 @@
+**Link to web version of this repo**
+- [https://felixcenusa.github.io/portfolio/](https://felixcenusa.github.io/portfolio/)
+
 This repo is for a portfolio to store your CV, projects and other stuff you might want to add.
 The code as is can be forked or cloned and copied to implement your own CV, programming knowledge or anything you like.
 ### Total time effort: 30min
