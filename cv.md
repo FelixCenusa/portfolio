@@ -24,7 +24,7 @@ I had my own cybersecurity firm for a year until we split up. I then decided to 
     - Favourite subjects: Mathematics HL, Economy HL, Pysics HL, Chemistry HL
 
 - **BTH (Blekinge Institute of Technology) 2023-2026**
-![bthpin](/assets/img/BTHpin.png){:height="400" width="600"}**Felix Cenusa's Portfolio**
+![bthpin](/assets/img/BTHpin.png){:height="400" width="600"}
 
     - Favourite subjects: C++ Algorithms and Data Structures, Mathematics, Python, Database
   Courses in the first year:
