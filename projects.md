@@ -32,7 +32,7 @@ Eshop made with SQL, JS, HTML and CSS.
 I call it Fake-GPT since you can chat with it but it is not a real GPT :). The fourth version is the final version and the versions in between I did not include as they just add more features that Marvin4 already has.
 - [https://github.com/FelixCenusa/Python-Projects/tree/main/marvin4](https://github.com/FelixCenusa/Python-Projects/tree/main/marvin4)
 - ^ Link to the project (my github repo) ^
-- Run the main.py after forking or downloading the repo to run the program.
+- Run the main.py after cloning or downloading the repo to run the program.
 
 ## Press-Ice (python)
 ![pressice](/assets/img/pressicess.png){:height="400px" width= 600px"}**Screenshot of Python program running**
@@ -42,6 +42,6 @@ It tells you how fast you typed, what mistakes you made and there are different 
 - ^ Link to the project (my github repo) ^
 - [https://www.youtube.com/watch?v=ALf3cHNM08g](https://www.youtube.com/watch?v=ALf3cHNM08g)
 - ^ Link to a youtube video I made explaining the code and how the program works ^
-- Run the main.py after forking or downloading the repo to run the program.
+- Run the main.py after cloning or downloading the repo to run the program.
 
 # [Home](/portfolio) | [CV](/portfolio/cv/) | [Projects](/portfolio/projects/)
