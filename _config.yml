@@ -4,5 +4,9 @@ description: >-
   A portfolio website showcasing my CV and projects.
 baseurl: "/portfolio" 
 logo: /assets/img/me.png
+fakegpt: /assets/img/fakegptss.png
+eshop: /assets/img/eshopss.png
+pressice: /assets/img/pressicess.png
+schoolmgmt: /assets/img/schoolmanagementss.png
 show_downloads: true
 theme: jekyll-theme-cayman

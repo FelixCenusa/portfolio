@@ -5,7 +5,7 @@ permalink: /cv/
 ---
 # [Home](/portfolio) | [CV](/portfolio/cv/) | [Projects](/portfolio/projects/)
 ![Logo](/assets/img/me.png){:height="200px" width="150px"}**Felix Cenusa's Portfolio**
-TESTUPDATE
+
 
 # Curriculum Vitae
 
@@ -15,16 +15,16 @@ My name is Felix Cenusa and I like programming and data-driven stock analysis.
 
 ## Experience
 
-I had my own cybersecurity firm for a year until we split up. I then decided to enhance my skills by enrolling in BTH, a great Software Engineering university in Sweden. The program is 3 years and I have just finished the first.
+I had my own cybersecurity firm for a year until we split up. I then decided to enhance my skills by enrolling in BTH, a great Software Engineering university in Sweden. The program is 3 years and I have just finished the first. (written on of 4th June 2024)
 
 ## Education & history
 - **IESL (International English School of Linkoping) 2014-2017**
-    Favourite subject: Math
-- **IB (International Baccalaureate) 2017-2021**
-    Favourite subjects: Mathematics HL, Economy HL, Pysics HL, Chemistry HL
+    - Favourite subject: Math
+- **IB (International Baccalaureate) 2017-2021** 
+    - Favourite subjects: Mathematics HL, Economy HL, Pysics HL, Chemistry HL
 
 - **BTH (Blekinge Institute of Technology) 2023-2026**
-    Favourite subjects: C++ Algorithms and Data Structures, Mathematics
+    - Favourite subjects: C++ Algorithms and Data Structures, Mathematics, Python, Database
   Courses in the first year:
   - Programming and Problem Solving with Python - DV1670
   - Introduction to Mathematics - MA1476
