@@ -8,7 +8,7 @@ permalink: /portfolio/projects/
 
 # Projects
 
-## School Management System(C++)
+## School Management System (C++)
 This is the most complex program I have made as of updating this file.
 School database system that stores information about a school (people and classes).
 - Features:
@@ -24,13 +24,13 @@ Eshop made with SQL, JS, HTML and CSS.
 - https://github.com/FelixCenusa/Database-Projects/tree/main/meDatabase/kmom06/eshop2
 - ^ Link to the project (my github repo) ^
 
-## FAKE-GPT(python)
+## FAKE-GPT (python)
 I call it Fake-GPT since you can chat with it but it is not a real GPT :). The fourth version is the final version and the versions in between I did not include as they just add more features that Marvin4 already has.
 - https://github.com/FelixCenusa/Python-Projects/tree/main/marvin4
 - ^ Link to the project (my github repo) ^
 - Run the main.py after forking or downloading the repo to run the program.
 
-## Press-Ice(python)
+## Press-Ice (python)
 This is a typing game I made called "Press-Ice" as you must be precise to get a good score. 
 It tells you how fast you typed, what mistakes you made and there are different difficulty options.
 - https://github.com/FelixCenusa/Python-Projects/tree/main/typing

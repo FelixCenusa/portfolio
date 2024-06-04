@@ -17,7 +17,7 @@ My name is Felix Cenusa and I like programming and data-driven stock analysis.
 I had my own cybersecurity firm for a year until we split up. I then decided to enhance my skills by enrolling in BTH, a great Software Engineering university in Sweden. The program is 3 years and I have just finished the first.
 
 ## Education & history
-- **IESL(International English School of Linkoping) 2014-2017**
+- **IESL (International English School of Linkoping) 2014-2017**
     Favourite subject: Math
 - **IB (International Baccalaureate) 2017-2021**
     Favourite subjects: Mathematics HL, Economy HL, Pysics HL, Chemistry HL
