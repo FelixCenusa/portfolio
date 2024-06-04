@@ -4,12 +4,12 @@ title: Peronal projects
 permalink: /projects/
 ---
 # [Home](/portfolio) | [CV](/portfolio/cv/) | [Projects](/portfolio/projects/)
-![Logo](/assets/img/me.png){:height="200px" width="150px"}**Felix Cenusa's Portfolio**
+![Logo](/assets/img/me.png)**Felix Cenusa's Portfolio**
 
 # Projects
 
 ## School Management System (C++)
-![schoolmgmt](/assets/img/schoolmanagementss.png){:height="400px" width= 600px"}**Screenshot of C++ program running**
+![schoolmgmt](/assets/img/schoolmanagementss.png)**Screenshot of C++ program running**
 This is the most complex program I have made as of updating this file.
 School database system that stores information about a school (people and classes).
 - Features:
