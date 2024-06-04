@@ -11,8 +11,8 @@ title: Home
 Hi, I'm Felix Cenusa, and I like programming and data-driven stock analysis.
 
 # Contact Info:
-- gmail: [mailto:felixcenusa@gmail.com](felixcenusa@gmail.com)
-- tel: [0737809450](0737809450) <!-- This [LINK](Text) makes text clickable  -->
+- gmail: [felixcenusa@gmail.com](mailto:felixcenusa@gmail.com)
+- tel: [0737809450](tel:0737809450) <!-- This [LINK](Text) makes text clickable  -->
 
 # [Home](/portfolio) | [CV](/portfolio/cv/) | [Projects](/portfolio/projects/)
 
