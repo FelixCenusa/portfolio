@@ -1,6 +1,7 @@
 ---
 layout: default
 title: Projects
+permalink: /projects/
 ---
 - [CV](cv.md) [Projects](projects.md)
 ![Logo](/assets/img/me.png){:height="700px" width="400px"}
