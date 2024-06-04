@@ -2,7 +2,7 @@
 layout: default
 title: Home
 ---
-- [Home](/) | [CV](/cv/) | [Projects](/projects/)
+- [Home](/portfolio) | [CV](/cv/) | [Projects](/projects/)
 ![Logo](/assets/img/me.png){:height="200px" width="150px"}
 
 # Welcome to My Portfolio

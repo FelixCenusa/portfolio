@@ -1,10 +1,10 @@
 ---
 layout: default
-title: Peronal projects
+title: Peronal projects ![Logo](/assets/img/me.png){:height="200px" width="150px"}
 permalink: /projects/
 ---
-- [Home](/) | [CV](/cv/) | [Projects](/projects/)
-![Logo](/assets/img/me.png){:height="200px" width="150px"}
+- [Home](/portfolio) | [CV](/cv/) | [Projects](/projects/)
+
 
 # Projects
 
