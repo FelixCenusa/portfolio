@@ -1,7 +1,7 @@
 ---
 layout: default
 title: Curriculum Vitae
-permalink: /portfolio/cv/
+permalink: /cv/
 ---
 # [Home](/portfolio) | [CV](/portfolio/cv/) | [Projects](/portfolio/projects/)
 ![Logo](/assets/img/me.png){:height="200px" width="150px"}**Felix Cenusa's Portfolio**
