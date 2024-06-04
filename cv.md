@@ -1,10 +1,10 @@
 ---
 layout: default
-title: CV
+title: Curriculum Vitae
 permalink: /cv/
 ---
-- [CV](cv.md) [Projects](projects.md)
-![Logo](/assets/img/me.png){:height="700px" width="400px"}
+- # [Home](/) | [CV](/cv/) | [Projects](/projects/)
+![Logo](/assets/img/me.png){:height="200px" width="150px"}
 
 # Curriculum Vitae
 

@@ -1,10 +1,10 @@
 ---
 layout: default
-title: Projects
+title: Peronal projects
 permalink: /projects/
 ---
-- [CV](cv.md) [Projects](projects.md)
-![Logo](/assets/img/me.png){:height="700px" width="400px"}
+- [Home](/) | [CV](/cv/) | [Projects](/projects/)
+![Logo](/assets/img/me.png){:height="200px" width="150px"}
 
 # Projects
 
@@ -39,4 +39,4 @@ https://www.youtube.com/watch?v=ALf3cHNM08g
 ^ Link to a youtube video I made explaining the code and how the program works ^
 Run the main.py after forking or downloading the repo to run the program.
 
-- [CV](cv.md) [Projects](projects.md)
+- [Home](/) | [CV](/cv/) | [Projects](/projects/)
