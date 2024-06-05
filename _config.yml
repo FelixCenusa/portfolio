@@ -10,5 +10,4 @@ pressice: /assets/img/pressicess.png
 schoolmgmt: /assets/img/schoolmanagementss.png
 bthpin: /assets/img/BTHpin.png
 show_downloads: true
-#theme: jekyll-theme-cayman
-theme: jekyll-theme-minimal
+theme: jekyll-theme-cayman
