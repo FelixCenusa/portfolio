@@ -11,8 +11,7 @@ title: Home
 Hi, I'm Felix Cenusa, and I like programming and data-driven stock analysis.
 
 # Contact Info:
-- gmail: [felixcenusa@gmail.com](mailto:felixcenusa@gmail.com)
-- tel: [0737809450](tel:0737809450) <!-- This [LINK](Text) makes text clickable  -->
+- gmail: [felixcenusa@gmail.com](mailto:felixcenusa@gmail.com) <!-- This [LINK](Text) makes text clickable  -->
 
 # Clone this repo to make your own portfolio CV😎😎😎!
 - Ive added some instructions on how to clone my repo, its in the README.md file in the repository of this project. Link below.👇👇👇
