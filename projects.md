@@ -9,9 +9,21 @@ permalink: /projects/
 
 # Projects
 
+## Aristotles Puzzle Solver (C++)
+![AristotlesPuzzleSolver](/assets/img/480p2xAristotlesGif.gif)**Gif of C++ program running**
+ Highly optimized C++ implementation designed to solve Aristotle's Puzzle efficiently. 
+- Features:
+    - Efficient C++ implementation
+    - Custom Linked List
+    - Mathematical rigor
+    - Scalability
+    - Debug printing
+- [https://github.com/FelixCenusa/Aristotles-Puzzle-Solver](https://github.com/FelixCenusa/Aristotles-Puzzle-Solver)
+- ^ Link to the project (my github repo) More description about the progject in the README file there ^
+
+
 ## School Management System (C++)
 ![schoolmgmt](/assets/img/schoolmanagementss.png)**Screenshot of C++ program running**
-This is the most complex program I have made as of updating this file.
 School database system that stores information about a school (people and classes).
 - Features:
     - Menu
