@@ -10,7 +10,7 @@ permalink: /projects/
 # Projects
 
 ## Aristotles Puzzle Solver (C++)
-![AristotlesPuzzleSolver](/assets/img/480p2xAristotlesGif.gif)
+![AristotlesPuzzleSolver](/assets/img/AristotlesPuzzleAndMath.jpg)
  Highly optimized C++ implementation designed to solve Aristotle's Puzzle efficiently. 
 - Features:
     - Efficient C++ implementation
