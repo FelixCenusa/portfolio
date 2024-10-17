@@ -9,6 +9,25 @@ permalink: /projects/
 
 # Projects
 
+## TimeToMove (JS, EJS, HTML, CSS)
+![TimeToMoveSS](/assets/img/TimeToMoveSS.png)
+Web application that enables users to create, share, and manage digital labels with advanced security and privacy features.
+- Built with:
+    - JS
+    - EJS
+    - MySQL
+    - A lot of packages :)
+    - More details here: [https://felixcenusa.com/architecture](https://felixcenusa.com/architecture)
+- Features:
+    - Login integration with Gmail
+    - Robust password security
+    - Many more security features visible at [https://felixcenusa.com/security](https://felixcenusa.com/security)
+    - Admin controls
+    - Uploads and downloads
+- [Link to the project (my github repo)](https://github.com/FelixCenusa/PiPullV3)
+-  ^ More description about the progject in the README file there ^
+
+
 ## Aristotles Puzzle Solver (C++)
 ![AristotlesPuzzleSolver](/assets/img/AristotlesPuzzleAndMath.jpg)
  Highly optimized C++ implementation designed to solve Aristotle's Puzzle efficiently. 
