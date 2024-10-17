@@ -11,7 +11,7 @@ permalink: /projects/
 
 ## TimeToMove (JS, EJS, HTML, CSS)
 ![TimeToMoveSS](/assets/img/TimeToMoveSS.png)
-Web application that enables users to create, share, and manage digital labels with advanced security and privacy features.
+Self Hosted Web application that enables users to create, share, and manage digital labels with advanced security and privacy features.
 - Built with:
     - JS
     - EJS
