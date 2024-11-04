@@ -72,4 +72,7 @@ It tells you how fast you typed, what mistakes you made and there are different 
 - [Link to a youtube video I made explaining the code and how the program works](https://www.youtube.com/watch?v=ALf3cHNM08g)
 - Run the main.py after cloning or downloading the repo to run the program.
 
+## TIS-100 (Assembly)
+Played and completed the entire TIS-100 game which based on assembly language.
+
 # [Home](/portfolio) | [CV](/portfolio/cv/) | [Projects](/portfolio/projects/)
