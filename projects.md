@@ -9,6 +9,81 @@ permalink: /projects/
 
 # Projects
 
+
+
+## 8-Segment Display Controller (Assembly)
+
+
+An Assembly program that controls an 8-segment display to count up or down based on user input. It supports input via keyboard or physical push buttons and includes implementations using both polling and interrupts.
+
+Built with:
+
+Assembly (ARM)
+
+Peripheral interface for buttons and display
+
+
+Features:
+
+Real-time input handling via polling or interrupt-driven logic
+
+Keyboard and push-button compatibility
+
+Configurable counting behavior (up/down)
+
+Efficient display updates
+
+Example implementation details available in the README file (available once course is over (mid Jan) and I can publish the code)
+
+
+Link to the project (my GitHub repo)
+(available once course is over (mid Jan) and I can publish the code)
+
+
+---
+
+## Custom File System with FAT (C++)
+
+
+A versatile file system implemented in C++ that supports customizable block sizes and stores any given data. Includes standard file operations like ls, cd, mv, cp, mkdir, and create.
+
+Built with:
+
+C++
+
+Custom FAT implementation
+
+File I/O operations
+
+
+Features:
+
+Configurable block sizes for flexible storage
+
+Commands for file and directory manipulation:
+
+ls: List directory contents
+
+cd: Change directories
+
+mv: Move files/directories
+
+cp: Copy files
+
+mkdir: Create directories
+
+create: Create new files
+
+
+Simple and efficient FAT design for optimized performance
+
+Example usage and testing framework in the README (available once course is over (mid Jan) and I can publish the code)
+
+Link to the project (my GitHub repo)
+(available once course is over (mid Jan) and I can publish the code)
+
+
+
 ## TimeToMove (JS, EJS, HTML, CSS)
 ![TimeToMoveSS](/assets/img/TimeToMoveSS.png)
 Self Hosted Web application that enables users to create, share, and manage digital labels with advanced security and privacy features.
