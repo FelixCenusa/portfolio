@@ -10,80 +10,52 @@ permalink: /projects/
 # Projects
 
 
-## Advent of code solutions 
+## Advent of Code Solutions
 
-Made video & code solutions for every daily challenge in Adven Of Code
+Developed comprehensive video tutorials and code solutions for each daily challenge in the [Advent of Code 2024](https://github.com/FelixCenusa/Advent-Of-Code-2024). This project demonstrates problem-solving skills and proficiency in various programming concepts.
+
+- **Languages Used:** Python
+- **Features:**
+  - Daily challenge solutions with detailed explanations
+  - Video walkthroughs for all problems
+  - Optimized and well-documented code
+- **GitHub Repository:** [Advent of Code 2024](https://github.com/FelixCenusa/Advent-Of-Code-2024)
+
 
 ## 8-Segment Display Controller (Assembly)
 
+Designed an ARM Assembly program to manage an 8-segment display, enabling it to count up or down based on user input. The system supports input via keyboard and physical push buttons, utilizing both polling and interrupt methods for input handling.
 
-An Assembly program that controls an 8-segment display to count up or down based on user input. It supports input via keyboard or physical push buttons and includes implementations using both polling and interrupts.
+- **Languages Used:** ARM Assembly
+- **Features:**
+  - Real-time input processing through polling and interrupts
+  - Compatibility with keyboard and physical push buttons
+  - Configurable counting direction (increment/decrement)
+  - Efficient display refresh mechanisms
+- **Implementation Details:** Detailed information will be available in the README file upon course completion (expected mid-January).
+- **GitHub Repository:** To be published post-course completion (expected mid-January)
 
-Built with:
-
-Assembly (ARM)
-
-Peripheral interface for buttons and display
-
-
-Features:
-
-Real-time input handling via polling or interrupt-driven logic
-
-Keyboard and push-button compatibility
-
-Configurable counting behavior (up/down)
-
-Efficient display updates
-
-Example implementation details available in the README file (available once course is over (mid Jan) and I can publish the code)
-
-
-Link to the project (my GitHub repo)
-(available once course is over (mid Jan) and I can publish the code)
 
 
 ---
 
 ## Custom File System with FAT (C++)
 
+Engineered a flexible file system in C++ featuring a custom File Allocation Table (FAT) implementation. The system supports adjustable block sizes and standard file operations, including `ls`, `cd`, `mv`, `cp`, `mkdir`, and `create`.
 
-A versatile file system implemented in C++ that supports customizable block sizes and stores any given data. Includes standard file operations like ls, cd, mv, cp, mkdir, and create.
-
-Built with:
-
-C++
-
-Custom FAT implementation
-
-File I/O operations
-
-
-Features:
-
-Configurable block sizes for flexible storage
-
-Commands for file and directory manipulation:
-
-ls: List directory contents
-
-cd: Change directories
-
-mv: Move files/directories
-
-cp: Copy files
-
-mkdir: Create directories
-
-create: Create new files
-
-
-Simple and efficient FAT design for optimized performance
-
-Example usage and testing framework in the README (available once course is over (mid Jan) and I can publish the code)
-
-Link to the project (my GitHub repo)
-(available once course is over (mid Jan) and I can publish the code)
+- **Languages Used:** C++
+- **Features:**
+  - Adjustable block sizes for adaptable storage solutions
+  - Comprehensive file and directory manipulation commands:
+    - `ls`: List directory contents
+    - `cd`: Navigate between directories
+    - `mv`: Move files or directories
+    - `cp`: Copy files
+    - `mkdir`: Create new directories
+    - `create`: Generate new files
+  - Streamlined FAT design for enhanced performance
+- **Documentation:** Example usage and testing framework will be provided in the README file upon course completion (expected mid-January).
+- **GitHub Repository:** To be published post-course completion (expected mid-January)
 
 
 
