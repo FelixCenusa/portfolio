@@ -10,6 +10,9 @@ permalink: /projects/
 # Projects
 
 
+## Advent of code solutions 
+
+Made video & code solutions for every daily challenge in Adven Of Code
 
 ## 8-Segment Display Controller (Assembly)
 
