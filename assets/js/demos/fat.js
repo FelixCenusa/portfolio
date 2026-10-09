@@ -337,7 +337,7 @@ export function exec(fs, line) {
         fs.format(a[0]);
         seed(fs);
         say(`formatted 64 KiB as ${fs.n} blocks × ${fmtBS(fs.bs)}; the FAT is ${fs.n} entries × 2 B = ${fmtB(fs.n * 2)}`);
-        say('sample tree re-seeded: compare WASTE and FAT across block sizes', 'dim');
+        say('sample tree re-seeded: compare Waste and FAT across block sizes', 'dim');
         res.formatted = true;
         res.status = `Formatted with ${fmtBS(fs.bs)} blocks, ${fs.n} blocks. Sample files re-seeded.`;
         break;

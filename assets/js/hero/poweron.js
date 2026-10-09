@@ -45,7 +45,7 @@ export function caption({ cause, mode, at, armedAt = 0 }) {
   if (cause === 'auto') return 'Running without a trigger';
   if (cause === 'timeout') return `Triggered after ${num({ value: (at / 1000).toFixed(1), unit: 's' })}`;
   if (mode === 'single') return `Triggered by your move, ${num(readout(at - armedAt))} after arming`;
-  return `Triggered by your first move, ${num(readout(at))} after load`;
+  return `Triggered by your first move, ${num(readout(at))} into your visit`;
 }
 
 // how far channel i (0 = L4) has swept, 0..1, given when the sweep started
@@ -96,7 +96,7 @@ function paint() {
   const shown = display(state);
   if (stage.dataset.scope !== shown) stage.dataset.scope = shown;
   if (statusEl && statusEl.innerHTML !== state.text) statusEl.innerHTML = state.text;
-  if (singleKey) singleKey.setAttribute('aria-pressed', String(state.mode === 'single'));
+  if (singleKey) singleKey.classList.toggle('is-on', state.mode === 'single');
   if (autoKey) {
     const hide = state.mode !== 'single';
     // hiding the focused key would drop focus to the page; hand it to Single, beside it
@@ -155,7 +155,8 @@ function capture(cause) {
   state.at = now();
   state.cause = cause;
   // the sweep waits while the power-on plays, or while Stop holds the display
-  state.sweepAt = state.booting || !isRunning() ? null : state.at;
+  // (reduced motion animates no sweep, so a capture shows at once)
+  state.sweepAt = reducedMotion ? state.at : state.booting || !isRunning() ? null : state.at;
   state.text = caption(state);
   emit();
 }
@@ -180,7 +181,10 @@ function auto() {
   if (state.mode !== 'single') return;
   state.mode = 'auto';
   if (state.at == null) capture('auto');
-  else emit();
+  else {
+    if (state.sweepAt == null && !state.booting && (reducedMotion || isRunning())) state.sweepAt = now();
+    emit();
+  }
 }
 
 /* ------------------------------------------------------------ power-on */

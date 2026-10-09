@@ -157,7 +157,7 @@
   flex: 1; min-width: 0; height: 36px; padding: 0; border: 0; outline: 0; background: transparent;
   color: var(--text-1); font: inherit; caret-color: var(--signal);
 }
-.demo--fat .fat-in::placeholder { color: var(--text-4); }
+.demo--fat .fat-in::placeholder { color: var(--text-3); }
 
 /* ------------------------------------------------ actions + caption */
 .demo--fat .fat-acts .ctl { min-width: 44px; }

@@ -32,8 +32,8 @@
   letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-3);
 }
 .demo--segment .seg__core { display: inline-flex; align-items: center; gap: 8px; }
-.demo--segment .led { transition: background 0.12s, box-shadow 0.12s; }
-.demo--segment .led.is-fault { background: var(--fault); box-shadow: 0 0 0 3px var(--fault-a15); }
+.demo--segment .led { transition: background 0.12s; }
+.demo--segment .led.is-fault { background: var(--fault); }
 
 .demo--segment .seg__window {
   flex: 1; min-height: 0;
@@ -77,7 +77,7 @@
   display: flex; align-items: center; justify-content: center; gap: 7px; height: 100%;
   border-radius: 5px;
   background: var(--bg-4); color: var(--text-2);
-  font-family: var(--f-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+  font-family: var(--f-sans); font-size: 13px; font-weight: 560;
   box-shadow: inset 0 1px 0 var(--line-3), inset 0 0 0 1px var(--line-2), 0 3px 0 var(--bg-0);
   transform: translateY(-2px);
   transition: transform 0.08s var(--ease-out), box-shadow 0.08s var(--ease-out), background 0.2s, color 0.2s;
@@ -127,7 +127,7 @@
 .demo--segment .seg__trace text { font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.06em; fill: var(--text-2); }
 .demo--segment .seg__trace .seg__ax { font-size: 10px; fill: var(--text-3); }
 .demo--segment .seg__lb--irq { transition: fill 0.25s; }
-.demo--segment:not(.is-irq) .seg__lb--irq { fill: var(--text-4); }
+.demo--segment:not(.is-irq) .seg__lb--irq { fill: var(--text-3); }
 .demo--segment .seg__grid line { stroke: var(--line-1); stroke-width: 1; stroke-dasharray: 2 3; shape-rendering: crispEdges; }
 .demo--segment .seg__grid .seg__base { stroke-dasharray: none; }
 .demo--segment .seg__grid .seg__now { stroke: var(--line-3); stroke-dasharray: none; }

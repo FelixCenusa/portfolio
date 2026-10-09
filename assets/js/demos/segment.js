@@ -125,14 +125,9 @@ export function mount(root, { reducedMotion = false } = {}) {
 
   /* ---- display */
   const dsp = el('svg', { class: 'seg__digits', viewBox: '0 0 140 100', role: 'img', 'aria-label': 'Display: 00' });
-  const flt = el('filter', { id: id + '-glow', x: '-40%', y: '-40%', width: '180%', height: '180%' }, el('defs', {}, dsp));
-  el('feGaussianBlur', { stdDeviation: 2.4, result: 'b' }, flt);
-  const fm = el('feMerge', {}, flt);
-  el('feMergeNode', { in: 'b' }, fm);
-  el('feMergeNode', { in: 'SourceGraphic' }, fm);
   const sk = el('g', { transform: 'translate(10.5 5) skewX(-7)' }, dsp);
   const ghost = el('g', { class: 'seg__ghost' }, sk);
-  const lit = el('g', { class: 'seg__lit', filter: `url(#${id}-glow)` }, sk);
+  const lit = el('g', { class: 'seg__lit' }, sk);
   const segs = [[], []], dps = [];
   const polys = segPolys();
   for (let i = 0; i < 2; i++) {
@@ -273,7 +268,7 @@ export function mount(root, { reducedMotion = false } = {}) {
     cancel(dpT);
     dpT = later(() => dps[1].classList.remove('is-on'), 120);
     if (cause !== 'tmr') say(`Count ${st.count}, ${modeName()} mode`);
-    if (rm) {                                     // event-driven redraw only
+    if (rm || !running) {                         // event-driven redraw only (reduced motion, or held by Stop)
       render(now);
       cancel(fuT);
       fuT = later(() => render(performance.now()), ISR_LAT + ISR_W + 30);
@@ -303,7 +298,7 @@ export function mount(root, { reducedMotion = false } = {}) {
     holds.delete(src);
     if (!holds.size && btn.length) btn[btn.length - 1].b = performance.now();
     syncKeys();
-    if (rm) render(performance.now());
+    if (rm || !running) render(performance.now());
   }
   const releaseAll = () => [...holds.keys()].forEach(release);
 
@@ -441,9 +436,9 @@ export function mount(root, { reducedMotion = false } = {}) {
     running = want;
     if (want) start(); else stop();
   }
-  // the page's Run/Stop key holds the picture; reduced motion keeps its slow numbers-only path
+  // the page's Run/Stop key holds the picture; key presses still redraw it
   let held = false;
-  const unhold = register({ start() { held = false; sync(); }, stop() { held = !rm; sync(); } });
+  const unhold = register({ start() { held = false; sync(); }, stop() { held = true; sync(); } });
   const io = new IntersectionObserver(es => { seen = es[es.length - 1].isIntersecting; sync(); });
   io.observe(root);
   on(document, 'visibilitychange', sync);

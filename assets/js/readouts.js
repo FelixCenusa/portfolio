@@ -380,11 +380,12 @@ const MEASURE = {
       const tick = (t) => {
         if (last && t - last > 0 && t - last < 100) d.push(t - last); // a hidden tab or a long task isn't a frame
         last = t;
-        if (d.length < 60) requestAnimationFrame(tick); else resolve(d);
+        if (d.length < 61) requestAnimationFrame(tick); else resolve(d); // odd, so the median is a frame that happened
       };
       requestAnimationFrame(tick);
     });
     const frameMs = frameInterval(deltas), hz = 1000 / frameMs;
+    if (!(frameMs > 0) || !isFinite(frameMs)) { dropItem('l3', 'frame'); return; }
     record('l3', { frameMs, hz });
     put('l3', 'frame', time(frameMs));
     put('l3', 'hz', hertz(hz));

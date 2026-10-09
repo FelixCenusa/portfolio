@@ -154,7 +154,7 @@ export function mount(root, { reducedMotion = false } = {}) {
   <div class="ar-side">
     <div class="ar-ro readouts">${['Nodes', 'Backtracks', 'Depth', 'Time'].map(l => `<div class="readout"><span class="label">${l}</span><b class="num">0</b></div>`).join('')}</div>
     <div class="ar-pad" role="group" aria-label="Number pad: enter a value in the selected cell">${
-      Array.from({ length: N }, (_, k) => `<button type="button" class="ar-key" data-v="${k + 1}">${k + 1}</button>`).join('')}<button type="button" class="ar-key ar-key--del" data-v="0" aria-label="Erase cell">DEL</button></div>
+      Array.from({ length: N }, (_, k) => `<button type="button" class="ar-key" data-v="${k + 1}">${k + 1}</button>`).join('')}<button type="button" class="ar-key ar-key--del" data-v="0" aria-label="Erase cell">Del</button></div>
     <div class="ar-sols">
       <div class="ar-sols__row">
         <button type="button" class="ctl" data-a="prev" aria-label="Previous solution" disabled>${tri('M7.5 1.5 2.5 5l5 3.5z')}</button>

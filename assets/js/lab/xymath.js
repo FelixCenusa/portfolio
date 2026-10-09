@@ -96,7 +96,7 @@ export function checkExpr(src) {
     const t = list[i];
     if (!t) fail('it ends too early');
     i++;
-    if (t.k === 'num') return `${t.v}`;
+    if (t.k === 'num') return String(Number(t.v)); // '08' would be a strict-mode syntax error
     if (t.k === 'const') return CONSTS[t.v];
     if (t.k === 'var') { if (t.v === 'a') usesA = true; return t.v; }
     if (t.k === 'func') {

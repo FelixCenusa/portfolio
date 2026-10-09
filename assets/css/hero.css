@@ -29,7 +29,7 @@
 }
 .stage__key:hover { color: var(--text-1); box-shadow: inset 0 0 0 1px var(--line-3); }
 .stage__key:active { transform: translateY(1px); }
-.stage__key[aria-pressed="true"] { color: var(--text-1); background: var(--bg-3); box-shadow: inset 0 0 0 1px var(--line-3); }
+.stage__key.is-on { color: var(--text-1); background: var(--bg-3); box-shadow: inset 0 0 0 1px var(--line-3); }
 
 /* ---------------------------------------------------------------- power-on: one line splits into five, then the stack */
 .stage__boot { position: absolute; inset: 0; z-index: 3; width: 100%; height: 100%; overflow: visible; pointer-events: none; }

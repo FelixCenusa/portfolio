@@ -208,7 +208,7 @@ export function mount(root, { reducedMotion = false } = {}) {
 
   /* ---------- DOM */
   const presetBtns = Object.keys(PRESETS).map(k =>
-    h('button', { type: 'button', role: 'radio', 'data-v': k, text: k, onclick: () => pick(k) }));
+    h('button', { type: 'button', role: 'radio', 'data-v': k, text: k[0] + k.slice(1).toLowerCase(), onclick: () => pick(k) }));
   const sw = h('div', { class: 'switch', role: 'radiogroup', 'aria-label': 'Puzzle' }, presetBtns);
   sw.addEventListener('keydown', e => {
     const i = presetBtns.indexOf(document.activeElement);

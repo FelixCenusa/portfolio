@@ -268,9 +268,10 @@ const refreshTriggers = () => {
   refreshT = setTimeout(() => ScrollTrigger.refresh(), 200);
 };
 if (ScrollTrigger && 'ResizeObserver' in window) {
-  let lastH = 0;
+  let lastH = -1;
   new ResizeObserver(() => {
     const h = document.body.scrollHeight;
+    if (lastH < 0) { lastH = h; return; } // the first call is the baseline; ScrollTrigger refreshes on load itself
     if (Math.abs(h - lastH) > 40) { lastH = h; refreshTriggers(); }
   }).observe(document.body);
 }

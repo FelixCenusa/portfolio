@@ -235,3 +235,6 @@ html.lab-has-bar .lab-measure__read { bottom: calc(var(--lab-bar-h) + 12px); }
 @media (prefers-reduced-motion: reduce) {
   .lab-bar, .lab-bar.is-away, .lab-sw, .lab-sw__knob, .lab-ch, .lab-key, .lab-run { transition: none; }
 }
+
+/* a focused element is never hidden under the bar */
+html.lab-has-bar { scroll-padding-bottom: calc(var(--lab-bar-h, 40px) + 16px); }
