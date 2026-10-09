@@ -1,36 +1,45 @@
-# Not the github pages custom domain repo. Go to FelixCenusa.github.io repo for that
+# Portfolio
 
-**Link to web version of this repo**
-- [https://felixcenusa.github.io/portfolio/](https://felixcenusa.github.io/portfolio/)
+My portfolio site: a home page, a CV and ten projects.
 
-This repo is for a portfolio to store your CV, projects and other stuff you might want to add.
-The code as is can be forked or cloned and copied to implement your own CV, programming knowledge or anything you like.
-### Total time effort: 30min
-### Requirements:
-- Code editor (VS code works great)
-- Basic programming knowledge to edit a markdown (.md) file
+**Live:** [portfolio.felix.best](https://portfolio.felix.best)
 
-## How to Clone, Edit, and Publish
+It's plain HTML, CSS and a little JavaScript. There's no build step, no framework and no Jekyll, so you can fork it and make it yours with only a text editor.
 
-**Clone the Repository in terminal:**
-1. Open CMD or a terminal.
-- --Keep in mind that the repo will be cloned in whatever directory you are currently in--
-2. git clone https://github.com/FelixCenusa/portfolio.git
-3. cd portfolio.git
-4. code .
-- --This opens the current directory with your chosen code editor--
+## Structure
 
-**Clone the repository by downloading the files manually:**
-- go to [https://felixcenusa.github.io/portfolio/cv/](https://felixcenusa.github.io/portfolio/cv/)
-- That link is the web version of this repo.
-- Press "Download .zip" and the entire folder should download. 
-- Unzip it with Winrar or 7zip. 
-5. edit the code as you wish, correct syntax for adding more pictures or pages can be deduced by seeing the existing code.
-6. git commit -m “Initial commit msg”
-- --If you are not logged in with github from your terminal, just publish the folder manually after making a new public repository on github.com with the name "portfolio"--
-![image](https://github.com/FelixCenusa/portfolio/assets/106628617/f64d2203-2afe-4cd4-88b0-891895cf35cf)
-*Lastly:*
-Go to your repo that sould be named portfolio, go to settings then pages, choose to deploy from branch, Branch MAIN / ROOT and press save.
-**Done!**
-Now you should have your own portfolio website!
-Mention my name somewhere in your project if ive helped you make a easy portfolio website! :) Cheers!
+```
+index.html            Home: intro, about and selected projects
+projects/index.html   All projects, with a language filter
+cv/index.html         CV
+assets/css/site.css   All styles (colours and type are variables at the top)
+assets/js/site.js     Scroll reveals, filters, image viewer, the 7-segment counter
+assets/img/           Screenshots and the portrait (web-sized copies in img/opt/)
+assets/fonts/         Mona Sans (SIL Open Font License, see OFL.txt)
+CNAME                 Custom domain for GitHub Pages
+.nojekyll             Tells GitHub Pages to serve the files as they are
+```
+
+All links are relative, so the site works on a custom domain, at `username.github.io/portfolio/` or opened straight from disk.
+
+## Make it your own
+
+1. Fork this repo, or clone it:
+   ```
+   git clone https://github.com/FelixCenusa/portfolio.git
+   ```
+2. Edit the text in `index.html`, `projects/index.html` and `cv/index.html`.
+   - Each project is one `<article class="proj">` block. Copy one to add a project.
+   - Put screenshots in `assets/img/` and point the `<img>` tags at them.
+   - Change the colours in the `:root` block at the top of `assets/css/site.css`.
+3. Delete the `CNAME` file, or replace its contents with your own domain.
+4. On GitHub, go to **Settings → Pages**, choose **Deploy from a branch**, pick `main` and `/ (root)`, then save.
+
+That's it, your portfolio is live. To preview locally, open `index.html` in a browser, or run `python -m http.server` in the folder and visit `http://localhost:8000`.
+
+If this helped you make your own portfolio, a mention somewhere would make my day. Cheers!
+
+## Credits
+
+- Typeface: [Mona Sans](https://github.com/github/mona-sans) by GitHub, under the SIL Open Font License 1.1 (`assets/fonts/OFL.txt`).
+- Code: MIT, see `LICENSE`.

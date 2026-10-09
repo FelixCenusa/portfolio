@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Projects · Felix Cenusa</title>
+  <meta name="description" content="Projects by Felix Cenusa: ARM assembly, a FAT file system in C++, web apps, Python games and more.">
+  <meta name="author" content="Felix Cenusa">
+  <meta name="theme-color" content="#f1f0eb">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Projects · Felix Cenusa">
+  <meta property="og:description" content="From ARM assembly and a file system in C++ to full web apps.">
+  <link rel="icon" href="../favicon.ico">
+  <link rel="preload" href="../assets/fonts/MonaSans-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="../assets/css/site.css">
+  <script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="nav">
+    <div class="wrap nav__inner">
+      <a class="brand" href="../" aria-label="Felix Cenusa, home">
+        <span class="brand__name">Felix Cenusa</span>
+        <span class="brand__role mono">Software Engineer</span>
+      </a>
+      <nav class="nav__links" aria-label="Main">
+        <a href="./" aria-current="page">Projects</a>
+        <a href="../cv/">CV</a>
+        <a href="#contact">Contact</a>
+        <a class="nav__ext" href="https://felix.best" target="_blank" rel="noopener">felix.best<svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M3 9l6-6M4 3h5v5"/></svg></a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="page-hero wrap">
+      <div class="hero__top" data-reveal>
+        <span class="eyebrow"><b>Index</b><span>10 projects</span></span>
+        <span class="eyebrow">Personal and course projects</span>
+      </div>
+      <h1 class="page-hero__title" data-reveal>Projects<span class="dot">.</span></h1>
+      <div class="grid page-hero__row" data-reveal>
+        <p class="page-hero__lede">From ARM assembly and a file system in C++ to full web apps. Where the code is public, it's linked.</p>
+        <div class="page-hero__side">
+          <span class="mono" style="color: var(--ink-3)">Filter by language</span>
+          <div class="chips" data-chips role="group" aria-label="Filter by language">
+            <button class="chip is-active" type="button" data-filter="all" aria-pressed="true">All <small>10</small></button>
+            <button class="chip" type="button" data-filter="python" aria-pressed="false">Python <small>3</small></button>
+            <button class="chip" type="button" data-filter="cpp" aria-pressed="false">C++ <small>3</small></button>
+            <button class="chip" type="button" data-filter="js" aria-pressed="false">JavaScript <small>2</small></button>
+            <button class="chip" type="button" data-filter="sql" aria-pressed="false">SQL <small>2</small></button>
+            <button class="chip" type="button" data-filter="asm" aria-pressed="false">Assembly <small>2</small></button>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <div class="projects wrap">
+
+      <!-- P.01 -->
+      <article class="grid proj" id="advent-of-code" data-lang="python">
+        <div class="proj__head mono"><span class="no">P.01</span><span>Python</span></div>
+        <div class="proj__text" data-reveal>
+          <h2 class="proj__title">Advent of Code 2024</h2>
+          <p class="proj__lede">Code solutions and video walkthroughs for every daily challenge in Advent of Code 2024, made to show problem solving across a wide range of programming concepts.</p>
+          <div class="spec">
+            <div class="spec__row"><span class="mono">Language</span><span>Python</span></div>
+            <div class="spec__row"><span class="mono">Features</span><ul><li>Solutions with explanations for each daily challenge</li><li>Video walkthroughs for every problem</li><li>Optimized, well-documented code</li></ul></div>
+            <div class="spec__row"><span class="mono">Code</span><span><a class="link ext" href="https://github.com/FelixCenusa/Advent-Of-Code-2024" target="_blank" rel="noopener">FelixCenusa/Advent-Of-Code-2024<svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M3 9l6-6M4 3h5v5"/></svg></a></span></div>
+          </div>
+        </div>
+        <div class="proj__media" data-reveal style="--d: .1s">
+          <div class="media">
+            <div class="plate">
+              <div class="cal-wrap" aria-hidden="true">
+                <div class="cal-big">25<small>Daily puzzles</small></div>
+                <div class="cal"><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+              </div>
+              <span class="plate__label mono">December 2024</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- P.02 -->
+      <article class="grid proj" id="segment-display" data-lang="asm">
+        <div class="proj__head mono"><span class="no">P.02</span><span>ARM Assembly</span></div>
+        <div class="proj__text" data-reveal>
+          <h2 class="proj__title">8-Segment Display Controller</h2>
+          <p class="proj__lede">An ARM Assembly program that drives an 8-segment display and counts up or down based on user input. Input comes from the keyboard or physical push buttons, handled with both polling and interrupts.</p>
+          <div class="spec">
+            <div class="spec__row"><span class="mono">Language</span><span>ARM Assembly</span></div>
+            <div class="spec__row"><span class="mono">Features</span><ul><li>Real-time input through polling and interrupts</li><li>Works with the keyboard and physical push buttons</li><li>Configurable counting direction, up or down</li><li>Efficient display refresh</li></ul></div>
+            <div class="spec__row"><span class="mono">Code</span><span class="muted">Course work, not public</span></div>
+          </div>
+        </div>
+        <div class="proj__media" data-reveal style="--d: .1s">
+          <div class="media">
+            <div class="plate" data-seg>
+              <div class="seg-row" aria-hidden="true">
+                <div class="seg"><i class="a"></i><i class="b"></i><i class="c"></i><i class="d"></i><i class="e"></i><i class="f"></i><i class="g"></i></div>
+                <div class="seg"><i class="a"></i><i class="b"></i><i class="c"></i><i class="d"></i><i class="e"></i><i class="f"></i><i class="g"></i><i class="dp"></i></div>
+              </div>
+              <div class="seg-dir mono" aria-hidden="true"><span data-dir="up">Up</span><span data-dir="down">Down</span></div>
+              <span class="plate__label mono">A live counter, in the spirit of the original</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- P.03 -->
+      <article class="grid proj" id="fat-file-system" data-lang="cpp">
+        <div class="proj__head mono"><span class="no">P.03</span><span>C++</span></div>
+        <div class="proj__text" data-reveal>
+          <h2 class="proj__title">Custom File System with FAT</h2>
+          <p class="proj__lede">A flexible file system in C++ with its own File Allocation Table. It supports adjustable block sizes and the standard file operations.</p>
+          <div class="spec">
+            <div class="spec__row"><span class="mono">Language</span><span>C++</span></div>
+            <div class="spec__row"><span class="mono">Features</span><ul><li>Adjustable block sizes</li><li>File and directory commands: <code>ls</code> <code>cd</code> <code>mv</code> <code>cp</code> <code>mkdir</code> <code>create</code></li><li>A streamlined FAT design for performance</li></ul></div>
+            <div class="spec__row"><span class="mono">Code</span><span class="muted">Course work, not public</span></div>
+          </div>
+        </div>
+        <div class="proj__media" data-reveal style="--d: .1s">
+          <div class="media">
+            <div class="plate">
+              <div class="term" aria-hidden="true">
+                <div><b>$</b> mkdir projects</div>
+                <div><b>$</b> create notes.txt</div>
+                <div><b>$</b> cp notes.txt projects/notes.txt</div>
+                <div><b>$</b> cd projects</div>
+                <div><b>$</b> ls</div>
+                <div class="out">notes.txt&nbsp;&nbsp;&nbsp;&nbsp;file&nbsp;&nbsp;&nbsp;&nbsp;512 B</div>
+                <div><b>$</b> <span class="cursor"></span></div>
+              </div>
+              <span class="plate__label mono">The shell, as it might look</span>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- P.04 -->
+      <article class="grid proj" id="timetomove" data-lang="js sql">
+        <div class="proj__head mono"><span class="no">P.04</span><span>JavaScript · EJS · MySQL</span></div>
+        <div class="proj__text" data-reveal>
+          <h2 class="proj__title">TimeToMove</h2>
+          <p class="proj__lede">A self-hosted web application for creating, sharing and managing digital labels, with a strong focus on security and privacy.</p>
+          <div class="spec">
+            <div class="spec__row"><span class="mono">Built with</span><span>JavaScript, EJS, MySQL and a lot of packages</span></div>
+            <div class="spec__row"><span class="mono">Features</span><ul><li>Login with Gmail</li><li>Robust password security</li><li>Admin controls</li><li>Uploads and downloads</li></ul></div>
+            <div class="spec__row"><span class="mono">Code</span><span><a class="link ext" href="https://github.com/FelixCenusa/PiPullV3" target="_blank" rel="noopener">FelixCenusa/PiPullV3<svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M3 9l6-6M4 3h5v5"/></svg></a><br><span class="muted">The README has the full write-up.</span></span></div>
+          </div>
+        </div>
+        <div class="proj__media" data-reveal style="--d: .1s">
+          <button class="media" type="button" data-full="../assets/img/opt/TimeToMoveSS.jpg" data-cap="TimeToMove: the dashboard after logging in">
+            <img src="../assets/img/opt/TimeToMoveSS.jpg" alt="TimeToMove dashboard with a profile panel and a form for creating a new box" width="1600" height="840" loading="lazy">
+          </button>
+          <div class="media__cap mono"><span>Dashboard</span><span>Click to enlarge</span></div>
+        </div>
+      </article>
+
+      <!-- P.05 -->
+      <article class="grid proj" id="aristotle" data-lang="cpp">
+        <div class="proj__head mono"><span class="no">P.05</span><span>C++</span></div>
+        <div class="proj__text" data-reveal>
+          <h2 class="proj__title">Aristotle's Puzzle Solver</h2>
+          <p class="proj__lede">A highly optimized C++ implementation that solves Aristotle's Puzzle efficiently.</p>
+          <div class="spec">
+            <div class="spec__row"><span class="mono">Language</span><span>C++</span></div>
+            <div class="spec__row"><span class="mono">Features</span><ul><li>Efficient C++ implementation</li><li>Custom linked list</li><li>Mathematical rigour</li><li>Scalability</li><li>Debug printing</li></ul></div>
+            <div class="spec__row"><span class="mono">Code</span><span><a class="link ext" href="https://github.com/FelixCenusa/Aristotles-Puzzle-Solver" target="_blank" rel="noopener">FelixCenusa/Aristotles-Puzzle-Solver<svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M3 9l6-6M4 3h5v5"/></svg></a><br><span class="muted">The README has the full write-up.</span></span></div>
+          </div>
+        </div>
+        <div class="proj__media" data-reveal style="--d: .1s">
+          <button class="media media--photo" type="button" data-full="../assets/img/opt/AristotlesPuzzleAndMath.jpg" data-cap="The physical puzzle, on top of the maths behind the solver">
+            <img src="../assets/img/opt/AristotlesPuzzleAndMath.jpg" alt="Aristotle's number puzzle: hexagonal wooden pieces on top of handwritten maths" width="1280" height="960" loading="lazy">
+          </button>
+          <div class="media__cap mono"><span>The puzzle and the maths</span><span>Click to enlarge</span></div>
+        </div>
+      </article>
+
+      <!-- P.06 -->
+      <article class="grid proj" id="school-management" data-lang="cpp">
+        <div class="proj__head mono"><span class="no">P.06</span><span>C++</span></div>
+        <div class="proj__text" data-reveal>
+          <h2 class="proj__title">School Management System</h2>
+          <p class="proj__lede">A school database system that stores information about a school: its people and its classes.</p>
+          <div class="spec">
+            <div class="spec__row"><span class="mono">Language</span><span>C++</span></div>
+            <div class="spec__row"><span class="mono">Features</span><ul><li>Menu-driven interface</li><li>Save to file</li><li>Load from file</li></ul></div>
+            <div class="spec__row"><span class="mono">Code</span><span class="muted">In a private repo (CPP-Projects)</span></div>
+          </div>
+        </div>
+        <div class="proj__media" data-reveal style="--d: .1s">
+          <button class="media" type="button" data-full="../assets/img/opt/schoolmanagementss.jpg" data-cap="School Management System running in the terminal">
+            <img src="../assets/img/opt/schoolmanagementss.jpg" alt="School Management System menu running in a terminal inside Visual Studio" width="1600" height="957" loading="lazy">
+          </button>
+          <div class="media__cap mono"><span>Terminal menu</span><span>Click to enlarge</span></div>
+        </div>
+      </article>
+
+      <!-- P.07 -->
+      <article class="grid proj" id="eshop" data-lang="sql js">
+        <div class="proj__head mono"><span class="no">P.07</span><span>SQL · JavaScript · HTML · CSS</span></div>
+        <div class="proj__text" data-reveal>
+          <h2 class="proj__title">Eshop</h2>
+          <p class="proj__lede">An online shop built with SQL, JavaScript, HTML and CSS. Run <code style="font-family: ui-monospace, Consolas, monospace; font-size: .92em">index.js</code> with Node for the web version, or <code style="font-family: ui-monospace, Consolas, monospace; font-size: .92em">cli.js</code> for a terminal version.</p>
+          <div class="spec">
+            <div class="spec__row"><span class="mono">Built with</span><span>SQL, JavaScript, HTML, CSS</span></div>
+            <div class="spec__row"><span class="mono">Runs as</span><ul><li>A web app (<code>index.js</code>)</li><li>A terminal app (<code>cli.js</code>)</li></ul></div>
+            <div class="spec__row"><span class="mono">Code</span><span class="muted">In a private repo (Database-Projects)</span></div>
+          </div>
+        </div>
+        <div class="proj__media" data-reveal style="--d: .1s">
+          <button class="media" type="button" data-full="../assets/img/opt/eshopss.jpg" data-cap="Eshop: the product list in the web version">
+            <img src="../assets/img/opt/eshopss.jpg" alt="Eshop product table in a browser with update and delete actions" width="1600" height="953" loading="lazy">
+          </button>
+          <div class="media__cap mono"><span>Product list</span><span>Click to enlarge</span></div>
+        </div>
+      </article>
+
+      <!-- P.08 -->
+      <article class="grid proj" id="fake-gpt" data-lang="python">
+        <div class="proj__head mono"><span class="no">P.08</span><span>Python</span></div>
+        <div class="proj__text" data-reveal>
+          <h2 class="proj__title">Fake-GPT</h2>
+          <p class="proj__lede">I call it Fake-GPT because you can chat with it, but it isn't a real GPT. The fourth version, Marvin4, is the final one. The versions in between only added features Marvin4 already has.</p>
+          <div class="spec">
+            <div class="spec__row"><span class="mono">Language</span><span>Python</span></div>
+            <div class="spec__row"><span class="mono">Run it</span><span>Clone the repo and run <code>main.py</code></span></div>
+            <div class="spec__row"><span class="mono">Code</span><span><a class="link ext" href="https://github.com/FelixCenusa/Python-Projects/tree/main/marvin4" target="_blank" rel="noopener">Python-Projects/marvin4<svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M3 9l6-6M4 3h5v5"/></svg></a></span></div>
+          </div>
+        </div>
+        <div class="proj__media" data-reveal style="--d: .1s">
+          <button class="media" type="button" data-full="../assets/img/opt/fakegptss.jpg" data-cap="Fake-GPT chatting in the terminal">
+            <img src="../assets/img/opt/fakegptss.jpg" alt="Fake-GPT ASCII banner and a chat session in a terminal" width="1600" height="960" loading="lazy">
+          </button>
+          <div class="media__cap mono"><span>Chat in the terminal</span><span>Click to enlarge</span></div>
+        </div>
+      </article>
+
+      <!-- P.09 -->
+      <article class="grid proj" id="press-ice" data-lang="python">
+        <div class="proj__head mono"><span class="no">P.09</span><span>Python</span></div>
+        <div class="proj__text" data-reveal>
+          <h2 class="proj__title">Press-Ice</h2>
+          <p class="proj__lede">A typing game called Press-Ice, because you have to be precise to get a good score. It tells you how fast you typed and which mistakes you made, and it has several difficulty levels.</p>
+          <div class="spec">
+            <div class="spec__row"><span class="mono">Language</span><span>Python</span></div>
+            <div class="spec__row"><span class="mono">Run it</span><span>Clone the repo and run <code>main.py</code></span></div>
+            <div class="spec__row"><span class="mono">Video</span><span><a class="link ext" href="https://www.youtube.com/watch?v=ALf3cHNM08g" target="_blank" rel="noopener">Code walkthrough on YouTube<svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M3 9l6-6M4 3h5v5"/></svg></a></span></div>
+            <div class="spec__row"><span class="mono">Code</span><span><a class="link ext" href="https://github.com/FelixCenusa/Python-Projects/tree/main/typing" target="_blank" rel="noopener">Python-Projects/typing<svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M3 9l6-6M4 3h5v5"/></svg></a></span></div>
+          </div>
+        </div>
+        <div class="proj__media" data-reveal style="--d: .1s">
+          <button class="media" type="button" data-full="../assets/img/opt/pressicess.jpg" data-cap="Press-Ice: the start screen in the terminal">
+            <img src="../assets/img/opt/pressicess.jpg" alt="Press-Ice typing game running in a terminal next to its Python code" width="1600" height="960" loading="lazy">
+          </button>
+          <div class="media__cap mono"><span>Start screen</span><span>Click to enlarge</span></div>
+        </div>
+      </article>
+
+      <!-- P.10 -->
+      <article class="grid proj" id="tis-100" data-lang="asm">
+        <div class="proj__head mono"><span class="no">P.10</span><span>Assembly</span></div>
+        <div class="proj__text" data-reveal>
+          <h2 class="proj__title">TIS-100</h2>
+          <p class="proj__lede">Played through and completed all of TIS-100, a puzzle game built around programming in assembly.</p>
+          <div class="spec">
+            <div class="spec__row"><span class="mono">Language</span><span>TIS-100 assembly</span></div>
+            <div class="spec__row"><span class="mono">Status</span><span>Completed</span></div>
+          </div>
+        </div>
+        <div class="proj__media" data-reveal style="--d: .1s">
+          <div class="media">
+            <div class="plate">
+              <div class="tis" aria-hidden="true">
+                <div>MOV UP, ACC<br>ADD ACC<br>MOV ACC, DOWN</div>
+                <div class="is-hot">MOV LEFT, ACC<br>JGZ POS<br>SUB 1<br>POS: MOV ACC, RIGHT</div>
+                <div>MOV UP, DOWN</div>
+                <div>NOP</div>
+                <div class="is-hot">MOV LEFT, ACC<br>SAV<br>MOV ACC, DOWN</div>
+                <div>SWP<br>MOV ACC, DOWN</div>
+              </div>
+              <span class="plate__label mono">Six nodes, one puzzle at a time</span>
+            </div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </main>
+
+  <section class="contact on-dark" id="contact" aria-labelledby="contact-title">
+    <div class="wrap">
+      <div class="folio">
+        <span class="folio__no mono">→</span>
+        <span class="folio__name mono">Contact</span>
+        <span class="folio__meta mono">Sweden</span>
+      </div>
+      <h2 class="contact__title" id="contact-title">Say hello<span class="dot">.</span></h2>
+      <p class="contact__note">Email is the quickest way to reach me. My CV and code are linked below.</p>
+
+      <div class="grid contact__row">
+        <div class="contact__mail">
+          <span class="mono" style="display:block; color: var(--on-dark-3); margin-bottom: 10px">Email</span>
+          <a href="mailto:felixcenusa@gmail.com">felixcenusa@gmail.com<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M1 8h13M9 3l5 5-5 5"/></svg></a>
+        </div>
+        <div class="contact__meta">
+          <div><span class="mono">GitHub</span><p><a href="https://github.com/FelixCenusa" target="_blank" rel="noopener">FelixCenusa</a></p></div>
+          <div><span class="mono">LinkedIn</span><p><a href="https://linkedin.com/in/felixcenusa" target="_blank" rel="noopener">felixcenusa</a></p></div>
+          <div><span class="mono">Links</span><p><a href="https://felix.best" target="_blank" rel="noopener">felix.best</a></p></div>
+          <div><span class="mono">CV</span><p><a href="https://felix.best/Felix_Cenusa_CV.pdf" target="_blank" rel="noopener">Download PDF</a></p></div>
+        </div>
+      </div>
+
+      <footer class="footer">
+        <div class="bits" data-bits="FELIX" aria-hidden="true"></div>
+        <div class="footer__bar mono">
+          <span>© <span data-year>2026</span> Felix Cenusa</span>
+          <a href="https://github.com/FelixCenusa/portfolio" target="_blank" rel="noopener">Fork this site on GitHub</a>
+          <a href="#main">Back to top ↑</a>
+        </div>
+      </footer>
+    </div>
+  </section>
+
+  <div class="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer" aria-hidden="true">
+    <div class="lightbox__top">
+      <span class="mono">Screenshot</span>
+      <button class="lightbox__close" type="button" aria-label="Close"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4"><path d="M2 2l12 12M14 2L2 14"/></svg></button>
+    </div>
+    <div class="lightbox__stage"><img alt=""></div>
+    <div class="lightbox__cap"></div>
+  </div>
+
+  <div class="grain" aria-hidden="true"></div>
+  <script src="../assets/js/site.js"></script>
+</body>
+</html>

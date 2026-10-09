@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Felix Cenusa · Portfolio</title>
+  <meta name="description" content="Felix Cenusa, software engineer. Projects, CV and contact.">
+  <meta name="author" content="Felix Cenusa">
+  <meta name="theme-color" content="#f1f0eb">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Felix Cenusa · Portfolio">
+  <meta property="og:description" content="Projects, CV and contact for Felix Cenusa, software engineer.">
+  <link rel="icon" href="favicon.ico">
+  <link rel="preload" href="assets/fonts/MonaSans-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/css/site.css">
+  <script>document.documentElement.classList.add('js')</script>
+</head>
+<body>
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="nav">
+    <div class="wrap nav__inner">
+      <a class="brand" href="./" aria-label="Felix Cenusa, home">
+        <span class="brand__name">Felix Cenusa</span>
+        <span class="brand__role mono">Software Engineer</span>
+      </a>
+      <nav class="nav__links" aria-label="Main">
+        <a href="projects/">Projects</a>
+        <a href="cv/">CV</a>
+        <a href="#contact">Contact</a>
+        <a class="nav__ext" href="https://felix.best" target="_blank" rel="noopener">felix.best<svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M3 9l6-6M4 3h5v5"/></svg></a>
+      </nav>
+    </div>
+  </header>
+
+  <main id="main">
+    <section class="hero wrap">
+      <div class="hero__top" data-reveal>
+        <span class="eyebrow"><b>Portfolio</b><span>Sweden</span></span>
+        <span class="eyebrow">Index · 10 projects</span>
+      </div>
+
+      <div class="grid hero__grid">
+        <h1 class="hero__title" data-reveal>Hi, I'm Felix Cenusa<span class="dot">.</span> <span class="dim">I like programming and data-driven stock analysis.</span></h1>
+        <figure class="hero__portrait" data-reveal style="--d: .12s">
+          <div class="portrait"><img src="assets/img/me.png" alt="Portrait of Felix Cenusa" width="256" height="400"></div>
+          <figcaption class="portrait__cap mono"><span>Felix Cenusa</span><span>Sweden</span></figcaption>
+        </figure>
+      </div>
+
+      <div class="grid hero__meta" data-reveal>
+        <div class="meta-item meta-item--lede">
+          <span class="mono">About</span>
+          <p>Before university I ran my own cybersecurity firm for a year. Then I enrolled at BTH, Blekinge Institute of Technology, to study Software Engineering.</p>
+        </div>
+        <div class="meta-item">
+          <span class="mono">Education</span>
+          <p>Software Engineering<br>BTH, 2023–2026</p>
+        </div>
+        <div class="meta-item">
+          <span class="mono">Contact</span>
+          <p><a class="link" href="mailto:felixcenusa@gmail.com">felixcenusa@gmail.com</a></p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section wrap" aria-labelledby="selected">
+      <div class="folio" data-reveal>
+        <span class="folio__no mono">01</span>
+        <span class="folio__name mono" id="selected">Selected projects</span>
+        <span class="folio__meta mono"><a href="projects/">All 10 projects →</a></span>
+      </div>
+
+      <div class="grid cards">
+        <a class="card" href="projects/#timetomove" data-reveal>
+          <div class="card__media"><img src="assets/img/opt/TimeToMoveSS.jpg" alt="TimeToMove dashboard with a profile panel and a form for creating a new box" width="1600" height="840" loading="lazy"></div>
+          <div class="card__info">
+            <span class="card__no mono">P.04</span>
+            <h2 class="card__title">TimeToMove<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M1 8h13M9 3l5 5-5 5"/></svg></h2>
+            <p class="card__sub">A self-hosted web app for creating, sharing and managing digital labels.</p>
+            <div class="tags"><span class="tag">JavaScript</span><span class="tag">EJS</span><span class="tag">MySQL</span></div>
+          </div>
+        </a>
+
+        <a class="card" href="projects/#aristotle" data-reveal style="--d: .1s">
+          <div class="card__media"><img src="assets/img/opt/AristotlesPuzzleAndMath.jpg" alt="Aristotle's number puzzle: hexagonal wooden pieces on top of handwritten maths" width="1280" height="960" loading="lazy" style="object-position: center"></div>
+          <div class="card__info">
+            <span class="card__no mono">P.05</span>
+            <h2 class="card__title">Aristotle's Puzzle Solver<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M1 8h13M9 3l5 5-5 5"/></svg></h2>
+            <p class="card__sub">A highly optimized solver for a classic puzzle.</p>
+            <div class="tags"><span class="tag">C++</span></div>
+          </div>
+        </a>
+
+        <a class="card" href="projects/#segment-display" data-reveal>
+          <div class="card__media">
+            <div class="plate" data-seg>
+              <div class="seg-row" aria-hidden="true">
+                <div class="seg"><i class="a"></i><i class="b"></i><i class="c"></i><i class="d"></i><i class="e"></i><i class="f"></i><i class="g"></i></div>
+                <div class="seg"><i class="a"></i><i class="b"></i><i class="c"></i><i class="d"></i><i class="e"></i><i class="f"></i><i class="g"></i><i class="dp"></i></div>
+              </div>
+              <div class="seg-dir mono" aria-hidden="true"><span data-dir="up">Up</span><span data-dir="down">Down</span></div>
+              <span class="plate__label mono">ARMv7 · polling + interrupts</span>
+            </div>
+          </div>
+          <div class="card__info">
+            <span class="card__no mono">P.02</span>
+            <h2 class="card__title">8-Segment Display Controller<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M1 8h13M9 3l5 5-5 5"/></svg></h2>
+            <p class="card__sub">Counts up or down from keyboard or push-button input.</p>
+            <div class="tags"><span class="tag">ARM Assembly</span></div>
+          </div>
+        </a>
+
+        <a class="card" href="projects/#press-ice" data-reveal style="--d: .1s">
+          <div class="card__media"><img src="assets/img/opt/pressicess.jpg" alt="Press-Ice typing game running in a terminal next to its Python code" width="1600" height="960" loading="lazy"></div>
+          <div class="card__info">
+            <span class="card__no mono">P.09</span>
+            <h2 class="card__title">Press-Ice<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M1 8h13M9 3l5 5-5 5"/></svg></h2>
+            <p class="card__sub">A typing game that rewards precision over speed.</p>
+            <div class="tags"><span class="tag">Python</span></div>
+          </div>
+        </a>
+      </div>
+    </section>
+  </main>
+
+  <section class="contact on-dark" id="contact" aria-labelledby="contact-title">
+    <div class="wrap">
+      <div class="folio">
+        <span class="folio__no mono">02</span>
+        <span class="folio__name mono">Contact</span>
+        <span class="folio__meta mono">Sweden</span>
+      </div>
+      <h2 class="contact__title" id="contact-title">Say hello<span class="dot">.</span></h2>
+      <p class="contact__note">Email is the quickest way to reach me. My CV and code are linked below.</p>
+
+      <div class="grid contact__row">
+        <div class="contact__mail">
+          <span class="mono" style="display:block; color: var(--on-dark-3); margin-bottom: 10px">Email</span>
+          <a href="mailto:felixcenusa@gmail.com">felixcenusa@gmail.com<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M1 8h13M9 3l5 5-5 5"/></svg></a>
+        </div>
+        <div class="contact__meta">
+          <div><span class="mono">GitHub</span><p><a href="https://github.com/FelixCenusa" target="_blank" rel="noopener">FelixCenusa</a></p></div>
+          <div><span class="mono">LinkedIn</span><p><a href="https://linkedin.com/in/felixcenusa" target="_blank" rel="noopener">felixcenusa</a></p></div>
+          <div><span class="mono">Links</span><p><a href="https://felix.best" target="_blank" rel="noopener">felix.best</a></p></div>
+          <div><span class="mono">CV</span><p><a href="https://felix.best/Felix_Cenusa_CV.pdf" target="_blank" rel="noopener">Download PDF</a></p></div>
+        </div>
+      </div>
+
+      <footer class="footer">
+        <div class="bits" data-bits="FELIX" aria-hidden="true"></div>
+        <div class="footer__bar mono">
+          <span>© <span data-year>2026</span> Felix Cenusa</span>
+          <a href="https://github.com/FelixCenusa/portfolio" target="_blank" rel="noopener">Fork this site on GitHub</a>
+          <a href="#main">Back to top ↑</a>
+        </div>
+      </footer>
+    </div>
+  </section>
+
+  <div class="grain" aria-hidden="true"></div>
+  <script src="assets/js/site.js"></script>
+</body>
+</html>
