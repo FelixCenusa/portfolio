@@ -38,7 +38,6 @@ export const DAYS = [
 const pad = (n) => String(n).padStart(2, '0');
 const folder = (n) => `${REPO}/tree/main/Day-${pad(n)}-Challenge${n === 25 ? '-Final' : ''}`;
 const esc = (s) => s.replace(/[&<>"]/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' })[c]);
-const arrow = '<svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M3 9l6-6M4 3h5v5"/></svg>';
 
 export function mount(root, { reducedMotion = false } = {}) {
   const uid = 'aoc-' + Math.random().toString(36).slice(2, 7);
@@ -69,9 +68,9 @@ export function mount(root, { reducedMotion = false } = {}) {
           <p class="aoc__twist"><b>Part two</b> <span></span></p>
           <ul class="aoc__topics"></ul>
           <div class="aoc__links">
-            <a class="link ext" data-l="yt" target="_blank" rel="noopener">YouTube${arrow}</a>
-            <a class="link ext" data-l="code" target="_blank" rel="noopener">Code${arrow}</a>
-            <a class="link ext" data-l="puzzle" target="_blank" rel="noopener">Puzzle${arrow}</a>
+            <a class="link ext" data-l="yt" target="_blank" rel="noopener">YouTube</a>
+            <a class="link ext" data-l="code" target="_blank" rel="noopener">Code</a>
+            <a class="link ext" data-l="puzzle" target="_blank" rel="noopener">Puzzle</a>
           </div>
         </div>
       </div>

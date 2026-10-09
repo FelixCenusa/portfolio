@@ -12,7 +12,7 @@
 /* ------------------------------------------------ header: block size + readouts */
 .demo--fat .fat-head { display: flex; gap: 12px; align-items: stretch; }
 .demo--fat .fat-bs { display: flex; flex-direction: column; justify-content: space-between; gap: 5px; flex: none; }
-.demo--fat .fat-bs .label { font-size: 10px; padding-left: 2px; }
+.demo--fat .fat-bs .label { font-size: 12px; padding-left: 2px; }
 .demo--fat .switch > button { min-height: 30px; }
 .demo--fat .fat-ro { flex: 1; min-width: 0; display: grid; grid-template-columns: 1fr 0.8fr 0.8fr 1.3fr 1fr; }
 .demo--fat .fat-ro .readout { min-width: 0; padding: 7px 9px; }
@@ -29,7 +29,7 @@
 .demo--fat .fat-ruler { grid-column: 2; display: grid; grid-template-columns: repeat(var(--cols), minmax(0, 1fr)); padding: 0 2px; }
 .demo--fat .fat-gutter { grid-column: 1; grid-row: 2; display: grid; grid-template-rows: repeat(8, minmax(0, 1fr)); align-items: center; padding: 2px 0; text-align: right; }
 .demo--fat .fat-ruler span,
-.demo--fat .fat-gutter span { font: 9.5px/1 var(--f-mono); font-variant-numeric: tabular-nums; color: var(--text-4); }
+.demo--fat .fat-gutter span { font: 9.5px/1 var(--f-mono); font-variant-numeric: tabular-nums; color: var(--text-3); }
 .demo--fat .fat-ruler span { text-align: center; }
 
 .demo--fat .fat-map {
@@ -65,7 +65,7 @@
 .demo--fat .fat-c.is-hl:not(.is-file):not(.is-dir)::before { box-shadow: inset 0 0 0 1px var(--accent-hi); }
 .demo--fat .fat-c.is-new::after { animation: fat-flash 1s var(--ease-out); }
 @keyframes fat-flash {
-  0%, 25% { background: var(--signal); box-shadow: 0 0 10px var(--signal-a40); }
+  0%, 25% { background: var(--signal); box-shadow: inset 0 0 0 1px var(--signal); }
 }
 
 /* file tints: the accent at different lightness steps, never a rainbow */
@@ -113,7 +113,7 @@
 }
 .demo--fat .fat-fhead,
 .demo--fat .fat-row { display: grid; grid-template-columns: 9px minmax(0, 1fr) 54px 30px; align-items: center; gap: 6px; }
-.demo--fat .fat-fhead { padding: 8px 12px 7px 10px; border-bottom: 1px solid var(--line-1); font-size: 10px; }
+.demo--fat .fat-fhead { padding: 8px 12px 7px 10px; border-bottom: 1px solid var(--line-1); font-size: 12px; }
 .demo--fat .fat-fhead span:first-child { grid-column: 1 / 3; }
 .demo--fat .fat-fhead span:not(:first-child) { text-align: right; }
 .demo--fat .fat-list { flex: 1; min-height: 0; margin: 0; padding: 4px; list-style: none; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; }
@@ -161,7 +161,7 @@
 
 /* ------------------------------------------------ actions + caption */
 .demo--fat .fat-acts .ctl { min-width: 44px; }
-.demo--fat .fat-cap { font-size: 10.5px; color: var(--text-4); }
+.demo--fat .fat-cap { font-size: 12px; color: var(--text-3); }
 
 /* ------------------------------------------------ narrow plate (phones) */
 @container fatdemo (max-width: 560px) {

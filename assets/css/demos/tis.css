@@ -21,7 +21,7 @@
 /* ---------------------------------------------------------------- header */
 .demo--tis .tis__top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; }
 .demo--tis .tis__task { margin: 12px 0 0; font-size: 12px; line-height: 1.5; color: var(--text-3); }
-.demo--tis .tis__task::before { content: 'TASK'; margin-right: 10px; font-size: 10px; letter-spacing: 0.06em; color: var(--accent); }
+.demo--tis .tis__task::before { content: 'Task'; margin-right: 10px; font-family: var(--f-sans); font-weight: 520; color: var(--accent); }
 
 /* ---------------------------------------------------------------- board: streams + node */
 .demo--tis .tis__board {
@@ -31,9 +31,10 @@
 
 .demo--tis .tis__streams { display: grid; grid-template-columns: repeat(3, 50px); gap: 4px; }
 .demo--tis .tis__col { min-width: 0; border-radius: var(--r-1); background: var(--bg-0); box-shadow: inset 0 0 0 1px var(--line-2); overflow: hidden; }
+.demo--tis .tis__regs .readout .label { font-family: var(--f-mono); }
 .demo--tis .tis__col > .label {
   display: block; padding: 6px 0 5px; border-bottom: 1px solid var(--line-2);
-  font-size: 10px; text-align: center; color: var(--accent);
+  font-family: var(--f-mono); font-size: 11px; text-align: center; color: var(--accent);
 }
 .demo--tis .tis__cells { margin: 0; padding: 4px 0; list-style: none; }
 .demo--tis .tis__cells li {
@@ -59,11 +60,11 @@
 .demo--tis .tis__code { position: relative; min-width: 0; padding: 10px 0; border-right: 1px solid var(--line-2); }
 .demo--tis .tis__listing { margin: 0; padding: 0; list-style: none; }
 .demo--tis .tis__ln { display: flex; height: 18px; line-height: 18px; font-size: 12.5px; white-space: pre; overflow: hidden; }
-.demo--tis .tis__no { flex: none; width: 34px; padding-right: 10px; text-align: right; font-size: 11px; color: var(--text-4); font-variant-numeric: tabular-nums; }
+.demo--tis .tis__no { flex: none; width: 34px; padding-right: 10px; text-align: right; font-size: 11px; color: var(--text-3); font-variant-numeric: tabular-nums; }
 .demo--tis .tis__src { min-width: 0; overflow: hidden; color: var(--text-2); }
 .demo--tis .tis__op { color: var(--text-1); }
 .demo--tis .tis__lbl { color: var(--accent); }
-.demo--tis .tis__com { color: var(--text-4); }
+.demo--tis .tis__com { color: var(--text-3); }
 .demo--tis .tis__ln.is-exec { background: var(--signal-a15); box-shadow: inset 2px 0 0 var(--signal); }
 .demo--tis .tis__ln.is-exec span { color: var(--signal); }
 .demo--tis .tis__code.is-editing .tis__src { visibility: hidden; }
@@ -89,7 +90,7 @@
 .demo--tis .tis__port {
   position: absolute; left: 14px; z-index: 1;
   display: inline-flex; align-items: center; gap: 5px; height: 16px; padding: 0 6px;
-  background: var(--bg-1); font-size: 10px; letter-spacing: 0.06em; color: var(--text-4);
+  background: var(--bg-1); font-size: 10px; letter-spacing: 0.06em; color: var(--text-3);
 }
 .demo--tis .tis__port--up { top: -8px; }
 .demo--tis .tis__port--down { bottom: -8px; }
@@ -127,7 +128,7 @@
   .demo--tis .tis__regs { flex-direction: row; }
   .demo--tis .tis__regs .readout { padding: 7px 2px 9px; }
   .demo--tis .tis__regs .readout + .readout { border-top: 0; border-left: 1px solid var(--line-2); }
-  .demo--tis .tis__regs .readout .label { font-size: 9px; }
+  .demo--tis .tis__regs .readout .label { font-size: 10.5px; }
   .demo--tis .tis__regs .readout b { font-size: 12px; }
   .demo--tis .tis__port { left: 10px; }
 }

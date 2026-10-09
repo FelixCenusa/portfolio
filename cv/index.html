@@ -17,6 +17,7 @@
   <link rel="icon" href="../assets/img/mark.svg" type="image/svg+xml">
   <link rel="alternate icon" href="../favicon.ico">
   <link rel="apple-touch-icon" href="../assets/img/apple-touch-icon.png">
+  <link rel="manifest" href="../site.webmanifest">
   <link rel="preload" href="../assets/fonts/MonaSans-latin.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="preload" href="../assets/fonts/MonaSansMono.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="../assets/vendor/lenis@1.3.26/lenis.css">
@@ -31,11 +32,12 @@
 </head>
 <body data-page="cv">
   <a class="skip" href="#main">Skip to content</a>
+  <div class="vt-beam" aria-hidden="true"></div>
 
   <header class="nav">
     <div class="wrap nav__inner">
       <a class="brand" href="../" aria-label="Felix Cenusa, home">
-        <svg class="brand__mark" viewBox="3 5 26 22" aria-hidden="true"><g fill="none"><path class="brand__edge" d="M9.1 9V12.5" style="stroke:var(--ch-l4)"/><path class="brand__edge" d="M13.7 12.5V16" style="stroke:var(--ch-l3)"/><path class="brand__edge" d="M18.3 16V19.5" style="stroke:var(--ch-l2)"/><path class="brand__edge" d="M22.9 19.5V23" style="stroke:var(--ch-l1)"/><path class="brand__level" pathLength="1" d="M4.5 9H9.1" style="stroke:var(--ch-l4);--i:0"/><path class="brand__level" pathLength="1" d="M9.1 12.5H13.7" style="stroke:var(--ch-l3);--i:1"/><path class="brand__level" pathLength="1" d="M13.7 16H18.3" style="stroke:var(--ch-l2);--i:2"/><path class="brand__level" pathLength="1" d="M18.3 19.5H22.9" style="stroke:var(--ch-l1);--i:3"/><path class="brand__level" pathLength="1" d="M22.9 23H27.5" style="stroke:var(--ch-l0);--i:4"/></g></svg>
+        <svg class="brand__mark" viewBox="4 5 24 20" aria-hidden="true"><g fill="none"><path class="brand__edge" d="M10 7V11M14 11V15M18 15V19M22 19V23"/><path class="brand__level" pathLength="1" d="M6 7H10" style="stroke:var(--ch-l4);--i:0"/><path class="brand__level" pathLength="1" d="M10 11H14" style="stroke:var(--ch-l3);--i:1"/><path class="brand__level" pathLength="1" d="M14 15H18" style="stroke:var(--ch-l2);--i:2"/><path class="brand__level" pathLength="1" d="M18 19H22" style="stroke:var(--ch-l1);--i:3"/><path class="brand__level" pathLength="1" d="M22 23H26" style="stroke:var(--ch-l0);--i:4"/></g></svg>
         <span class="brand__name">Felix Cenusa</span>
       </a>
       <nav class="nav__links" aria-label="Main">
@@ -48,18 +50,23 @@
         <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="7" cy="7" r="4.5"/><path d="M10.5 10.5 14 14"/></svg>
         <span class="kbd-label">Jump to</span><kbd data-mod-key>Ctrl</kbd><kbd>K</kbd>
       </button>
+      <button class="runkey" type="button" data-runkey aria-label="Stop animations">
+        <span class="runkey__lamp" aria-hidden="true"></span>
+        <svg class="runkey__icon" viewBox="0 0 8 8" aria-hidden="true" focusable="false"><rect class="runkey__stop" x="1" y="1" width="6" height="6"/><path class="runkey__run" d="M1.5 .5v7L7.5 4z"/></svg>
+        <span class="runkey__label">Stop</span>
+      </button>
     </div>
   </header>
 
   <main id="main">
     <section class="page-head wrap" aria-labelledby="page-title">
-      <p class="page-head__eyebrow"><span data-scramble>Curriculum vitae, written in June 2024</span></p>
+      <p class="page-head__eyebrow"><span>Curriculum vitae, written in June 2024</span></p>
       <h1 class="display page-head__title" id="page-title" data-split>CV</h1>
       <div class="grid page-head__row">
         <p class="lede page-head__lede" data-reveal>My name is Felix Cenusa and I like programming and data-driven stock analysis.</p>
         <div class="page-head__side" data-reveal>
           <span class="label">This page is from June 2024. The PDF is current.</span>
-          <a class="btn btn--primary" href="https://felix.best/Felix_Cenusa_CV.pdf" target="_blank" rel="noopener">Latest CV (PDF)<svg class="go" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4.5 11.5l7-7M6 4.5h5.5V10"/></svg></a>
+          <a class="btn btn--primary" href="https://felix.best/Felix_Cenusa_CV.pdf" target="_blank" rel="noopener">Latest CV (PDF)</a>
         </div>
       </div>
     </section>
@@ -88,21 +95,21 @@
         <div class="cv-block__body" data-reveal>
           <ol class="timeline">
             <li>
-              <span class="years">2023 – 2026</span>
+              <span class="years">2023–2026</span>
               <div>
                 <h3>BTH, Blekinge Institute of Technology</h3>
                 <p>Software Engineering. Favourite subjects: C++ Algorithms and Data Structures, Mathematics, Python, Databases.</p>
               </div>
             </li>
             <li>
-              <span class="years">2017 – 2021</span>
+              <span class="years">2017–2021</span>
               <div>
                 <h3>IB, International Baccalaureate</h3>
                 <p>Favourite subjects: Mathematics HL, Economics HL, Physics HL, Chemistry HL.</p>
               </div>
             </li>
             <li>
-              <span class="years">2014 – 2017</span>
+              <span class="years">2014–2017</span>
               <div>
                 <h3>IESL, International English School of Linköping</h3>
                 <p>Favourite subject: Maths.</p>
@@ -137,14 +144,14 @@
       <footer class="footer">
         <div class="footer__cta">
           <span class="label">Get in touch</span>
-          <a class="mailto" href="mailto:felixcenusa@gmail.com">felixcenusa@gmail.com<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M2 8h11M8.5 3.5 13 8l-4.5 4.5"/></svg></a>
+          <a class="mailto" href="mailto:felixcenusa@gmail.com">felixcenusa@gmail.com</a>
         </div>
         <div class="bits" data-bits="FELIX" aria-hidden="true"></div>
         <div class="footer__bar">
           <span>© <span data-year>2026</span> Felix Cenusa</span>
           <a href="https://github.com/FelixCenusa" target="_blank" rel="noopener">GitHub</a>
           <a href="https://github.com/FelixCenusa/portfolio" target="_blank" rel="noopener">Source on GitHub</a>
-          <a href="#main" data-top>Back to top ↑</a>
+          <a href="#main" data-top>Back to top</a>
         </div>
       </footer>
     </div>

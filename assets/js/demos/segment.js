@@ -3,6 +3,8 @@
    the difference between polling and interrupts. Everything is simulated in
    the browser; timings on the analyzer are stretched so a person can see them. */
 
+import { register } from '../instrument.js';
+
 const NS = 'http://www.w3.org/2000/svg';
 const SPAN = 4000;                        // analyzer window, ms
 const HOLD_DELAY = 400, HOLD_RATE = 125;  // key auto-repeat
@@ -434,11 +436,14 @@ export function mount(root, { reducedMotion = false } = {}) {
     releaseAll();
   }
   function sync() {
-    const want = seen && !document.hidden;
+    const want = seen && !document.hidden && !held;
     if (want === running) return;
     running = want;
     if (want) start(); else stop();
   }
+  // the page's Run/Stop key holds the picture; reduced motion keeps its slow numbers-only path
+  let held = false;
+  const unhold = register({ start() { held = false; sync(); }, stop() { held = !rm; sync(); } });
   const io = new IntersectionObserver(es => { seen = es[es.length - 1].isIntersecting; sync(); });
   io.observe(root);
   on(document, 'visibilitychange', sync);
@@ -449,6 +454,7 @@ export function mount(root, { reducedMotion = false } = {}) {
   return {
     destroy() {
       running = false;
+      unhold();
       stop();
       ac.abort();
       io.disconnect();
