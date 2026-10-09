@@ -1,1 +1,95 @@
-/* The hero: armed and triggered traces on the stack, the power-on line (assets/js/hero/). */
+/* The hero: armed and triggered traces on the stack, the caption's soft keys,
+   and the power-on (assets/js/hero/stack.js, poweron.js).
+
+   The poster below is the stack drawn flat, for no WebGL, touch and reduced
+   motion. Each slab is a dark-glass screen with a 10 x 8 graticule and its
+   channel's trace, and short hard-edged edges run down the vias in the colour
+   of the slab they last passed. It follows the same trigger as the 3D stack,
+   through data-scope on the stage:
+     armed    the traces are flat, waiting for a trigger
+     capture  they sweep in left to right (L4 first), then roll
+     hold     they sweep in once and hold (Single)
+   Without JS there's no data-scope and the traces simply show. The poster
+   sits 6 units higher than its slab coordinates (viewBox "0 6 600 600") so its
+   top faces meet the 3D ones, with the labels at mid-thickness. Flat
+   throughout: no glow, no blur. Stop (html.is-stopped) and an off-screen stage
+   pause every loop here (site.css, instrument.css). */
+
+/* ---------------------------------------------------------------- the caption: a measurement and two soft keys */
+.stage__cap { flex-wrap: wrap; align-items: center; row-gap: 6px; min-height: 26px; }
+.stage__read { display: inline-flex; flex-wrap: wrap; align-items: center; gap: 6px 12px; min-width: 0; }
+.stage__status .num { color: var(--text-1); }
+.stage__keys { display: inline-flex; gap: 6px; }
+.stage__keys[hidden], .stage__key[hidden] { display: none; }
+.stage__key {
+  display: inline-flex; align-items: center; height: 24px; padding: 0 9px;
+  border-radius: var(--r-2); background: var(--bg-1); box-shadow: inset 0 0 0 1px var(--line-2);
+  font-size: 12.5px; font-weight: 520; color: var(--text-2); white-space: nowrap;
+  transition: color 0.2s, background-color 0.2s, box-shadow 0.2s;
+}
+.stage__key:hover { color: var(--text-1); box-shadow: inset 0 0 0 1px var(--line-3); }
+.stage__key:active { transform: translateY(1px); }
+.stage__key[aria-pressed="true"] { color: var(--text-1); background: var(--bg-3); box-shadow: inset 0 0 0 1px var(--line-3); }
+
+/* ---------------------------------------------------------------- power-on: one line splits into five, then the stack */
+.stage__boot { position: absolute; inset: 0; z-index: 3; width: 100%; height: 100%; overflow: visible; pointer-events: none; }
+.stage__boot line { fill: none; stroke-width: 1.6; stroke-linecap: butt; }
+.boot__flat { stroke: var(--text-2); }
+.boot__ch { opacity: 0; }
+.boot__ch--l4 { stroke: var(--ch-l4); }
+.boot__ch--l3 { stroke: var(--ch-l3); }
+.boot__ch--l2 { stroke: var(--ch-l2); }
+.boot__ch--l1 { stroke: var(--ch-l1); }
+.boot__ch--l0 { stroke: var(--ch-l0); }
+.stage.is-booting .stage__poster, .stage.is-booting .stage__canvas { opacity: 0; transition: none; }
+.stage.is-booted .stage__poster, .stage.is-booted .stage__canvas { transition-duration: 0.15s; }
+
+/* ---------------------------------------------------------------- poster: each slab a screen */
+.poster .slab--web { --trace: var(--ch-l4); }
+.poster .slab--apps { --trace: var(--ch-l3); }
+.poster .slab--algo { --trace: var(--ch-l2); }
+.poster .slab--sys { --trace: var(--ch-l1); }
+.poster .slab--metal { --trace: var(--ch-l0); }
+.poster .face * { vector-effect: non-scaling-stroke; }
+.poster .glass { fill: color-mix(in srgb, var(--top) 30%, var(--s-bg-0)); }
+.poster .wave, .poster .flat { fill: none; stroke: var(--trace); stroke-width: 1.5; stroke-linejoin: round; stroke-linecap: butt; }
+.poster .grat { fill: none; stroke: var(--text-1); stroke-opacity: 0.07; stroke-width: 1; }
+.poster .grat--axis { stroke-opacity: 0.13; }
+.poster .pads { fill: var(--via); fill-opacity: 0.9; }
+.poster .flab { font-family: var(--f-sans); font-size: 36px; font-weight: 520; fill: var(--trace); fill-opacity: 0.85; text-anchor: end; }
+.poster .flab .num { font-family: var(--f-mono); font-weight: 500; }
+
+/* the sweep: a strip of glass carrying the flat line covers the trace, and shrinks to the right */
+.poster .cover { transform-box: fill-box; transform-origin: 100% 50%; transform: scaleX(0); }
+.stage[data-scope="armed"] .poster .cover { transform: none; }
+/* until poweron.js runs (a slow load) a scripted page already looks armed, so the traces don't show, go
+   flat and sweep in again; if it never runs they sweep in by themselves after 4 s. Reduced motion keeps
+   them showing, as poweron.js draws them there. */
+@media (scripting: enabled) and (prefers-reduced-motion: no-preference) {
+  .stage:not([data-scope]) .poster .cover { animation: glass-late 0.45s linear calc(4s + var(--i) * 70ms) both; }
+}
+/* the hand-off: site.css pauses the poster once the canvas is live, but while the canvas fades in over
+   it (stack.js sets is-handoff for that second) its traces keep sweeping and rolling, in step with the 3D */
+html:not(.is-stopped) .stage.is-handoff:not(.is-paused) .poster :is(.wave, .cover) { animation-play-state: running; }
+
+/* edges on the vias: a dash per via segment, in the colour of the slab above it */
+.poster .pe { fill: none; stroke-width: 2; stroke-linecap: butt; stroke-dasharray: 16 400; stroke-dashoffset: 16; }
+.poster .pe--l4 { stroke: var(--ch-l4); }
+.poster .pe--l3 { stroke: var(--ch-l3); }
+.poster .pe--l2 { stroke: var(--ch-l2); }
+.poster .pe--l1 { stroke: var(--ch-l1); }
+.poster .pe--l0 { stroke: var(--ch-l0); }
+
+@media (prefers-reduced-motion: no-preference) {
+  .stage:is([data-scope="capture"], [data-scope="hold"]) .poster .cover { animation: glass-sweep 0.45s linear calc(var(--i) * 70ms) both; }
+  .stage[data-scope="capture"] .poster .wave { animation: wave-roll 3.2s linear infinite; }
+  /* an edge drops a slab every 0.6 s; the three vias take turns, 1.2 s apart */
+  .stage:is([data-scope="capture"], [data-scope="hold"]) .poster .pe { animation: pe-gap 3.6s linear calc(var(--k) * 0.6s + var(--v) * 1.2s) infinite backwards; }
+  .stage:is([data-scope="capture"], [data-scope="hold"]) .poster .pe--lead { animation-name: pe-lead; }
+}
+@keyframes glass-sweep { from { transform: scaleX(1); } to { transform: scaleX(0); } }
+@keyframes glass-late { from { transform: scaleX(1); } to { transform: scaleX(0); } } /* the same, under its own name so it never carries over into a capture's sweep */
+@keyframes wave-roll { to { transform: translateX(-94px); } }
+/* 92 px between faces and 45 px of lead below the metal, at 153 px/s; the dash is 16 px */
+@keyframes pe-gap { 0% { stroke-dashoffset: 16px; } 19.57%, 100% { stroke-dashoffset: -92px; } }
+@keyframes pe-lead { 0% { stroke-dashoffset: 16px; } 11.05%, 100% { stroke-dashoffset: -45px; } }
