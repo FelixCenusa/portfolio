@@ -1,7 +1,6 @@
 /* Your visit as a logic trace (home page footer, drawn by assets/js/trace.js).
-   An instrument panel made from the page's own tokens, so it sits on paper or
-   on the board depending on the theme. Channels take the accent, or their
-   layer's colour where a theme defines one (--ch-l4 to --ch-l0). */
+   An instrument panel made from the page's own tokens. Each channel is drawn
+   in its layer's colour (--ch-l4 to --ch-l0). */
 
 .trace {
   --trace-row: 24px;

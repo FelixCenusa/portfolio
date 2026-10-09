@@ -29,7 +29,7 @@ CNAME                   Custom domain for GitHub Pages
 
 All links are relative, so the site works on a custom domain or at `username.github.io/portfolio/`. Every page reads fine without JavaScript, and the motion respects "reduce motion" in your OS settings.
 
-The page is printed like a circuit board read from the top: the layers above the operating system (web, apps, algorithms) sit on light paper, and below the syscall line the file system and the metal sit on dark solder mask. Each layer has its own tone (`--tone-l4` to `--tone-l0`), and any element marked `data-tone="dark"` switches to the board's colours. The demos are screens, so they stay dark wherever they are.
+The page reads like an oscilloscope screen: a graticule behind everything, and each layer is a channel with its own probe colour (`--ch-l4` to `--ch-l0`) for its links, its running trace and its demos. It gets a step darker each layer on the way down (`--tone-l4` to `--tone-l0`) and crosses the syscall line from user space into kernel space. The mark is one trace stepping down all five levels.
 
 ## Things to try
 
@@ -45,7 +45,7 @@ The page is printed like a circuit board read from the top: the layers above the
 2. Edit the text in `index.html`, `projects/index.html` and `cv/index.html`.
    - Each project is one `<article class="proj">` block inside a layer `<section>`. Copy one to add a project.
    - Put screenshots in `assets/img/` and point the `<img>` tags at them.
-   - Change the colours in the `:root` block (paper) and the `[data-tone="dark"]` block (board) at the top of `assets/css/site.css`.
+   - Change the colours in the `:root` block at the top of `assets/css/site.css`: the channel colours, the layer tones and the text and surface steps.
    - A demo is a module in `assets/js/demos/` that exports `mount(root)`. Add `<div class="demo" data-demo="name">` to a page and it loads when scrolled into view.
 3. Delete the `CNAME` file, or replace its contents with your own domain.
 4. On GitHub, go to **Settings → Pages**, choose **Deploy from a branch**, pick `main` and `/ (root)`, then save.

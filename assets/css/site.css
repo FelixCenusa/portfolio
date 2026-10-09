@@ -2,12 +2,12 @@
    Felix Cenusa, portfolio
    "Full stack, all the way down."
 
-   Material: a circuit board, read from the top. The page starts on light
-   paper (user space: web, apps, algorithms), crosses the syscall line, and
-   ends on solder mask (kernel space and hardware: the file system and the
-   metal). Mask green marks links and the current layer on paper; LED lime
-   does the same job on the board. Interactive demos are screens, so they are
-   always dark, wherever they sit.
+   Material: an oscilloscope screen. A graticule runs behind everything, and
+   the page descends from the browser (L4) to the registers (L0), a step
+   darker each layer, crossing the syscall line from user space into kernel
+   space. Each layer is a channel with its own probe colour, used for its
+   links, its running trace and its demos. The mark is one trace stepping
+   down all five levels.
    Type: Mona Sans for words, Mona Sans Mono only for real data
    (registers, code, numbers).
    ========================================================================== */

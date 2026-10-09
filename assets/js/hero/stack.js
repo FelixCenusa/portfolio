@@ -1,6 +1,6 @@
 // The hero: an exploded isometric stack of the five layers this portfolio is
-// organised by (Web, Apps, Algorithms, Systems, Metal). The top three are paper,
-// like the sections they stand for; the bottom two are solder mask. Vias run
+// organised by (Web, Apps, Algorithms, Systems, Metal). Each slab is drawn in its
+// layer's channel colour, read from the CSS tokens. Vias run
 // through every slab and pulses travel down them like a request turning into
 // electrons. Hover a slab to light it, click to jump to that layer.
 //
@@ -199,7 +199,7 @@ function faceTexture(layer, maxAniso) {
   return tex;
 }
 
-// a pulse: a bright bead with a darker rim, readable on paper and on the board
+// a pulse: a bright bead with a darker rim, readable on every slab
 function pulseTexture() {
   const c = document.createElement('canvas');
   c.width = c.height = 64;
