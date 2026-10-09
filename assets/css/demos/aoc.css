@@ -1,0 +1,101 @@
+/* Advent of Code 2024: a paper advent calendar. Each door swings open onto a
+   frame from that day's video; the panel beside it says what the puzzle was. */
+
+.demo--aoc { container-type: inline-size; min-height: 0; }
+.demo--aoc .aoc { display: grid; gap: 18px; }
+@container (min-width: 620px) {
+  .demo--aoc .aoc { grid-template-columns: minmax(0, 1fr) minmax(0, 1.08fr); gap: 22px; align-items: start; }
+}
+
+/* ---------------- calendar */
+.demo--aoc .aoc__cal {
+  padding: 14px 14px 12px; border-radius: var(--r-3);
+  background: var(--bg-1); box-shadow: 0 0 0 1px var(--line-2), var(--lift);
+}
+.demo--aoc .aoc__head { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; margin: 2px 2px 12px; }
+.demo--aoc .aoc__month { font-size: 15px; font-weight: 620; letter-spacing: -0.015em; }
+.demo--aoc .aoc__legend { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-3); }
+
+.demo--aoc .star {
+  display: inline-block; width: 9px; height: 9px; flex: none; background: var(--accent);
+  clip-path: polygon(50% 0, 61% 35%, 98% 35%, 68% 57%, 79% 91%, 50% 70%, 21% 91%, 32% 57%, 2% 35%, 39% 35%);
+}
+
+.demo--aoc .aoc__doors { display: grid; grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 6px; }
+.demo--aoc .aoc__door {
+  position: relative; aspect-ratio: 1; border-radius: 6px; perspective: 700px;
+  -webkit-tap-highlight-color: transparent;
+}
+.demo--aoc .aoc__door:focus-visible { outline-offset: 2px; }
+.demo--aoc .aoc__behind {
+  position: absolute; inset: 0; overflow: hidden; border-radius: 6px;
+  background: var(--door-recess); box-shadow: inset 0 2px 6px rgba(0, 0, 0, 0.55);
+}
+.demo--aoc .aoc__behind img { width: 100%; height: 100%; object-fit: cover; opacity: 0.92; }
+.demo--aoc .aoc__leaf {
+  position: absolute; inset: 0; z-index: 1; border-radius: 6px;
+  background: var(--door); box-shadow: inset 0 0 0 1px var(--line-2), 0 1px 0 color-mix(in srgb, var(--shade) 6%, transparent);
+  transform-origin: 0 50%; transform-style: preserve-3d;
+  transition: transform 0.7s var(--ease-out), box-shadow 0.3s;
+}
+.demo--aoc .aoc__leaf::after { /* the back of the door, seen once it swings past 90° */
+  content: ''; position: absolute; inset: 0; border-radius: inherit; background: var(--door-back);
+  transform: rotateY(180deg); backface-visibility: hidden;
+}
+.demo--aoc .aoc__n, .demo--aoc .aoc__stars { position: absolute; backface-visibility: hidden; }
+.demo--aoc .aoc__n { left: 8px; top: 5px; font-family: var(--f-mono); font-size: clamp(11px, 2.6cqi, 14px); font-weight: 500; color: var(--door-ink); }
+.demo--aoc .aoc__stars { right: 6px; bottom: 6px; display: flex; gap: 2px; }
+.demo--aoc .aoc__stars .star { width: clamp(6px, 1.5cqi, 9px); height: clamp(6px, 1.5cqi, 9px); background: var(--door-star); }
+
+@media (hover: hover) {
+  .demo--aoc .aoc__door:hover .aoc__leaf { transform: rotateY(-22deg); box-shadow: inset 0 0 0 1px var(--line-3), 8px 4px 14px -6px color-mix(in srgb, var(--shade) 35%, transparent); }
+}
+.demo--aoc .aoc__door.is-open { z-index: 2; }
+.demo--aoc .aoc__door.is-open .aoc__leaf,
+.demo--aoc .aoc__door.is-open:hover .aoc__leaf { transform: rotateY(-100deg); box-shadow: inset 0 0 0 1px var(--line-3); }
+.demo--aoc .aoc__door.is-open .aoc__behind { box-shadow: inset 0 0 0 2px var(--accent), inset 0 2px 6px rgba(0, 0, 0, 0.55); }
+
+.demo--aoc .aoc__hint { margin: 12px 2px 0; font-size: 12.5px; color: var(--text-3); }
+.demo--aoc .aoc__hint .touch { display: none; }
+@media (hover: none) {
+  .demo--aoc .aoc__hint .mouse { display: none; }
+  .demo--aoc .aoc__hint .touch { display: inline; }
+}
+
+/* ---------------- panel */
+.demo--aoc .aoc__panel { outline: none; }
+.demo--aoc .aoc__media {
+  position: relative; display: block; width: 100%; aspect-ratio: 16 / 9; overflow: hidden; border-radius: var(--r-2);
+  background: var(--door-recess) center / cover no-repeat; box-shadow: 0 0 0 1px var(--line-2), var(--lift);
+  cursor: pointer;
+}
+.demo--aoc .aoc__thumb { width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 0.35s, transform 1.2s var(--ease-out); }
+.demo--aoc .aoc__thumb.is-in { opacity: 1; }
+.demo--aoc .aoc__media:hover .aoc__thumb { transform: scale(1.02); }
+.demo--aoc .aoc__media::after { content: ''; position: absolute; inset: 0; background: linear-gradient(transparent 55%, color-mix(in srgb, var(--d-bg-0) 55%, transparent)); pointer-events: none; }
+.demo--aoc .aoc__play {
+  position: absolute; left: 50%; top: 50%; z-index: 1; width: 58px; height: 58px; margin: -29px 0 0 -29px;
+  display: grid; place-items: center; border-radius: 50%;
+  background: color-mix(in srgb, var(--d-text-1) 94%, transparent); color: var(--d-bg-0); box-shadow: 0 8px 24px -8px rgba(0, 0, 0, 0.5);
+  transition: transform 0.4s var(--ease-out), background 0.25s;
+}
+.demo--aoc .aoc__play svg { width: 22px; height: 22px; margin-left: 2px; }
+.demo--aoc .aoc__media:hover .aoc__play { transform: scale(1.08); background: var(--pill); color: var(--pill-ink); }
+.demo--aoc .aoc__badge {
+  position: absolute; left: 12px; bottom: 10px; z-index: 1;
+  font-size: 12.5px; font-weight: 560; color: var(--d-text-1);
+}
+
+.demo--aoc .aoc__info { padding: 16px 2px 0; }
+.demo--aoc .aoc__day { margin: 0; font-family: var(--f-mono); font-size: 13px; color: var(--accent); }
+.demo--aoc .aoc__title { margin-top: 4px; font-size: clamp(21px, 1.9vw, 26px); line-height: 1.12; letter-spacing: -0.028em; font-weight: 620; }
+.demo--aoc .aoc__task { margin: 10px 0 0; font-size: 15px; color: var(--text-2); }
+.demo--aoc .aoc__twist { margin: 8px 0 0; font-size: 15px; color: var(--text-2); }
+.demo--aoc .aoc__twist b { font-weight: 600; color: var(--text-1); margin-right: 4px; }
+.demo--aoc .aoc__topics { display: flex; flex-wrap: wrap; gap: 6px; margin: 14px 0 0; padding: 0; list-style: none; }
+.demo--aoc .aoc__topics[hidden] { display: none; }
+.demo--aoc .aoc__links { display: flex; flex-wrap: wrap; gap: 6px 18px; margin-top: 16px; font-size: 14.5px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .demo--aoc .aoc__leaf { transition: none; }
+}

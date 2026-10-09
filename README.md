@@ -1,26 +1,40 @@
 # Portfolio
 
-My portfolio site: a home page, a CV and ten projects.
+My portfolio site: ten projects arranged as a computer is, from web apps at the top of the stack down to ARM assembly at the bottom. Most of them have a live demo you can play with in the browser.
 
 **Live:** [portfolio.felix.best](https://portfolio.felix.best)
 
-It's plain HTML, CSS and a little JavaScript. There's no build step, no framework and no Jekyll, so you can fork it and make it yours with only a text editor.
+It's plain HTML, CSS and JavaScript modules. There's no build step, no framework and no Jekyll, so you can fork it and make it yours with only a text editor.
 
 ## Structure
 
 ```
-index.html            Home: intro, about and selected projects
-projects/index.html   All projects, with a language filter
-cv/index.html         CV
-assets/css/site.css   All styles (colours and type are variables at the top)
-assets/js/site.js     Scroll reveals, filters, image viewer, the 7-segment counter
-assets/img/           Screenshots and the portrait (web-sized copies in img/opt/)
-assets/fonts/         Mona Sans (SIL Open Font License, see OFL.txt)
-CNAME                 Custom domain for GitHub Pages
-.nojekyll             Tells GitHub Pages to serve the files as they are
+index.html              Home: the 3D stack, five layers with every project, about, contact
+projects/index.html     All projects as one table, with a language filter
+cv/index.html           CV
+404.html                The page GitHub Pages shows for a missing address
+assets/css/site.css     The design system (colours, type and spacing are variables at the top)
+assets/css/demos/       One stylesheet per live demo
+assets/js/main.js       Smooth scroll, text animations, command palette (Ctrl/⌘ K), lightbox, lazy demos
+assets/js/shell.js      The small shell inside the command palette (help, ls, cd, open, run, whoami)
+assets/js/trace.js      The footer's trace of your visit, and its export as a .vcd file
+assets/js/hero/         The three.js stack in the hero (an SVG poster stands in when WebGL is off)
+assets/js/demos/        The live demos: segment, fat, aristotle, tis, typing, and the Advent of Code calendar (aoc)
+assets/vendor/          GSAP, Lenis and three.js, pinned and served locally
+assets/img/             Screenshots (web-sized copies in img/opt/) and the AoC video thumbnails (img/aoc/)
+assets/fonts/           Mona Sans and Mona Sans Mono (SIL Open Font License, see OFL.txt)
+CNAME                   Custom domain for GitHub Pages
+.nojekyll               Tells GitHub Pages to serve the files as they are
 ```
 
-All links are relative, so the site works on a custom domain, at `username.github.io/portfolio/` or opened straight from disk.
+All links are relative, so the site works on a custom domain or at `username.github.io/portfolio/`. Every page reads fine without JavaScript, and the motion respects "reduce motion" in your OS settings.
+
+The page is printed like a circuit board read from the top: the layers above the operating system (web, apps, algorithms) sit on light paper, and below the syscall line the file system and the metal sit on dark solder mask. Each layer has its own tone (`--tone-l4` to `--tone-l0`), and any element marked `data-tone="dark"` switches to the board's colours. The demos are screens, so they stay dark wherever they are.
+
+## Things to try
+
+- Press **Ctrl K** (or **⌘ K**) and type `help`. The palette is also a small shell: `ls`, `cd l1`, `open fat`, `run tis`, `whoami`.
+- Scroll to the bottom of the home page. The footer has drawn your visit as a logic trace, one channel per layer. **Download .vcd** saves it as a Value Change Dump that [GTKWave](https://gtkwave.sourceforge.net) can open.
 
 ## Make it your own
 
@@ -29,17 +43,21 @@ All links are relative, so the site works on a custom domain, at `username.githu
    git clone https://github.com/FelixCenusa/portfolio.git
    ```
 2. Edit the text in `index.html`, `projects/index.html` and `cv/index.html`.
-   - Each project is one `<article class="proj">` block. Copy one to add a project.
+   - Each project is one `<article class="proj">` block inside a layer `<section>`. Copy one to add a project.
    - Put screenshots in `assets/img/` and point the `<img>` tags at them.
-   - Change the colours in the `:root` block at the top of `assets/css/site.css`.
+   - Change the colours in the `:root` block (paper) and the `[data-tone="dark"]` block (board) at the top of `assets/css/site.css`.
+   - A demo is a module in `assets/js/demos/` that exports `mount(root)`. Add `<div class="demo" data-demo="name">` to a page and it loads when scrolled into view.
 3. Delete the `CNAME` file, or replace its contents with your own domain.
 4. On GitHub, go to **Settings → Pages**, choose **Deploy from a branch**, pick `main` and `/ (root)`, then save.
 
-That's it, your portfolio is live. To preview locally, open `index.html` in a browser, or run `python -m http.server` in the folder and visit `http://localhost:8000`.
+That's it, your portfolio is live. To preview locally, run `python -m http.server` in the folder and visit `http://localhost:8000` (the JavaScript modules don't load from a file opened straight from disk).
 
 If this helped you make your own portfolio, a mention somewhere would make my day. Cheers!
 
 ## Credits
 
-- Typeface: [Mona Sans](https://github.com/github/mona-sans) by GitHub, under the SIL Open Font License 1.1 (`assets/fonts/OFL.txt`).
+- Typefaces: [Mona Sans and Mona Sans Mono](https://github.com/github/mona-sans) by GitHub, under the SIL Open Font License 1.1 (`assets/fonts/OFL.txt`).
+- [GSAP](https://gsap.com) 3.15 with ScrollTrigger, SplitText and ScrambleText, under the GSAP Standard License.
+- [Lenis](https://github.com/darkroomengineering/lenis) 1.3 for smooth scrolling, MIT.
+- [three.js](https://threejs.org) r185 for the hero, MIT.
 - Code: MIT, see `LICENSE`.

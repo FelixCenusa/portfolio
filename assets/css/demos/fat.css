@@ -1,0 +1,193 @@
+/* Fig. 08 · FAT file system demo. Everything scoped under .demo--fat. */
+
+.demo--fat {
+  container: fatdemo / inline-size;
+  display: flex; flex-direction: column; gap: 12px;
+  padding: 18px;
+  color: var(--text-1);
+}
+.demo--fat button { -webkit-tap-highlight-color: transparent; }
+.demo--fat p { margin: 0; }
+
+/* ------------------------------------------------ header: block size + readouts */
+.demo--fat .fat-head { display: flex; gap: 12px; align-items: stretch; }
+.demo--fat .fat-bs { display: flex; flex-direction: column; justify-content: space-between; gap: 5px; flex: none; }
+.demo--fat .fat-bs .label { font-size: 10px; padding-left: 2px; }
+.demo--fat .switch > button { min-height: 30px; }
+.demo--fat .fat-ro { flex: 1; min-width: 0; display: grid; grid-template-columns: 1fr 0.8fr 0.8fr 1.3fr 1fr; }
+.demo--fat .fat-ro .readout { min-width: 0; padding: 7px 9px; }
+.demo--fat .fat-ro b { font-size: 14px; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+
+/* ------------------------------------------------ map + file list */
+.demo--fat .fat-mid { display: grid; grid-template-columns: minmax(0, 1fr) 238px; gap: 16px; }
+.demo--fat .fat-left { display: flex; flex-direction: column; gap: 8px; min-width: 0; }
+
+.demo--fat .fat-mapwrap {
+  display: grid; grid-template-columns: 24px minmax(0, 1fr); grid-template-rows: auto auto;
+  column-gap: 5px; row-gap: 3px;
+}
+.demo--fat .fat-ruler { grid-column: 2; display: grid; grid-template-columns: repeat(var(--cols), minmax(0, 1fr)); padding: 0 2px; }
+.demo--fat .fat-gutter { grid-column: 1; grid-row: 2; display: grid; grid-template-rows: repeat(8, minmax(0, 1fr)); align-items: center; padding: 2px 0; text-align: right; }
+.demo--fat .fat-ruler span,
+.demo--fat .fat-gutter span { font: 9.5px/1 var(--f-mono); font-variant-numeric: tabular-nums; color: var(--text-4); }
+.demo--fat .fat-ruler span { text-align: center; }
+
+.demo--fat .fat-map {
+  grid-column: 2; grid-row: 2;
+  position: relative; aspect-ratio: 5 / 2;
+  border-radius: var(--r-1); background: var(--bg-0); box-shadow: inset 0 0 0 1px var(--line-1);
+}
+.demo--fat .fat-cells {
+  position: absolute; inset: 2px;
+  display: grid; grid-template-columns: repeat(var(--cols), minmax(0, 1fr)); grid-template-rows: repeat(8, minmax(0, 1fr));
+}
+.demo--fat .fat-trace { position: absolute; left: 2px; top: 2px; width: calc(100% - 4px); height: calc(100% - 4px); max-width: none; overflow: visible; pointer-events: none; }
+
+/* one cell per block. ::before is the block, ::after the bytes in it (width = --f, the fill) */
+.demo--fat .fat-c { position: relative; min-width: 0; transition: opacity 0.2s; }
+.demo--fat .fat-c::before,
+.demo--fat .fat-c::after { content: ''; position: absolute; inset: 1.5px; border-radius: 2px; }
+.demo--fat .fat-c::before { background: var(--bg-1); box-shadow: inset 0 0 0 1px var(--line-1); }
+.demo--fat .fat-c::after { display: none; right: calc(1.5px + (100% - 3px) * (1 - var(--f, 1))); background: var(--tint); }
+.demo--fat .fat-c:hover::before { box-shadow: inset 0 0 0 1px var(--line-3); }
+.demo--fat .fat-c.is-file,
+.demo--fat .fat-c.is-dir { cursor: pointer; }
+.demo--fat .fat-c.is-file::before { background: var(--bg-0); box-shadow: inset 0 0 0 1px var(--accent-a20); }
+.demo--fat .fat-c.is-file::after { display: block; }
+.demo--fat .fat-c.is-dir::before { background: var(--bg-2); box-shadow: inset 0 0 0 1px var(--accent-a40); }
+.demo--fat .fat-c.is-dir::after { display: block; background: var(--accent-a20); }
+.demo--fat .fat-c.is-fat::before { background: var(--bg-4); box-shadow: inset 0 0 0 1px var(--line-3); }
+.demo--fat .fat-c.is-fat::after {
+  content: 'FAT'; display: grid; place-items: center; background: none;
+  font: 500 8.5px/1 var(--f-mono); letter-spacing: 0.02em; color: var(--text-2);
+}
+.demo--fat .fat-map.has-hl .fat-c:not(.is-hl) { opacity: 0.3; }
+.demo--fat .fat-c.is-hl:not(.is-file):not(.is-dir)::before { box-shadow: inset 0 0 0 1px var(--accent-hi); }
+.demo--fat .fat-c.is-new::after { animation: fat-flash 1s var(--ease-out); }
+@keyframes fat-flash {
+  0%, 25% { background: var(--signal); box-shadow: 0 0 10px var(--signal-a40); }
+}
+
+/* file tints: the accent at different lightness steps, never a rainbow */
+.demo--fat .t0 { --tint: color-mix(in srgb, var(--accent) 86%, var(--bg-1)); }
+.demo--fat .t1 { --tint: color-mix(in srgb, var(--accent-lo) 78%, var(--bg-1)); }
+.demo--fat .t2 { --tint: color-mix(in srgb, var(--accent-hi) 72%, var(--text-1)); }
+.demo--fat .t3 { --tint: color-mix(in srgb, var(--accent) 52%, var(--bg-1)); }
+.demo--fat .t4 { --tint: var(--accent-hi); }
+.demo--fat .t5 { --tint: color-mix(in srgb, var(--accent-lo) 52%, var(--bg-1)); }
+.demo--fat .t6 { --tint: color-mix(in srgb, var(--accent) 70%, var(--text-2)); }
+
+/* chain trace overlay */
+.demo--fat .fat-trace .halo { fill: none; stroke: var(--bg-0); stroke-width: 4; stroke-linecap: round; opacity: 0.85; }
+.demo--fat .fat-trace .ln { fill: none; stroke: var(--text-1); stroke-width: 1.5; stroke-linecap: round; }
+.demo--fat .fat-trace .arrow { fill: var(--text-1); }
+.demo--fat .fat-trace .dot { fill: var(--text-1); stroke: var(--bg-0); stroke-width: 1.25; }
+.demo--fat .fat-trace .start { fill: none; stroke: var(--text-1); stroke-width: 1.5; }
+.demo--fat .fat-trace .eof { fill: var(--bg-0); stroke: var(--text-1); stroke-width: 1.5; }
+.demo--fat .fat-trace.is-draw g { animation: fat-seg 0.3s var(--ease-out) both; }
+@keyframes fat-seg { from { opacity: 0; } }
+
+/* chain readout / legend under the map */
+.demo--fat .fat-chain {
+  min-height: 34px; padding-left: 29px;
+  font: 11.5px/1.5 var(--f-mono); font-variant-numeric: tabular-nums; color: var(--text-3);
+}
+.demo--fat .fat-chain b { font-weight: 500; color: var(--text-1); }
+.demo--fat .fat-chain .c-n { color: var(--accent-hi); }
+.demo--fat .fat-chain .c-j { color: var(--text-1); }
+.demo--fat .fat-chain .c-x { color: var(--text-2); }
+.demo--fat .fat-chain .c-meta { color: var(--text-3); }
+.demo--fat .fat-key { display: inline-flex; align-items: center; gap: 5px; margin-right: 12px; }
+
+.demo--fat .fat-sw { display: inline-block; flex: none; width: 9px; height: 9px; border-radius: 2px; background: var(--tint); }
+.demo--fat .fat-sw.k-fat { background: var(--bg-4); box-shadow: inset 0 0 0 1px var(--line-3); }
+.demo--fat .fat-sw.k-dir { background: var(--bg-2); box-shadow: inset 0 0 0 1px var(--accent-a40); }
+.demo--fat .fat-sw.k-slack { background: var(--bg-0); box-shadow: inset 0 0 0 1px var(--accent-a40); }
+.demo--fat .fat-sw.k-free { background: var(--bg-1); box-shadow: inset 0 0 0 1px var(--line-2); }
+
+/* file list */
+.demo--fat .fat-files { position: relative; min-width: 0; }
+.demo--fat .fat-fpanel {
+  position: absolute; inset: 0; display: flex; flex-direction: column;
+  border-radius: var(--r-2); background: var(--bg-0); box-shadow: inset 0 0 0 1px var(--line-1); overflow: hidden;
+}
+.demo--fat .fat-fhead,
+.demo--fat .fat-row { display: grid; grid-template-columns: 9px minmax(0, 1fr) 54px 30px; align-items: center; gap: 6px; }
+.demo--fat .fat-fhead { padding: 8px 12px 7px 10px; border-bottom: 1px solid var(--line-1); font-size: 10px; }
+.demo--fat .fat-fhead span:first-child { grid-column: 1 / 3; }
+.demo--fat .fat-fhead span:not(:first-child) { text-align: right; }
+.demo--fat .fat-list { flex: 1; min-height: 0; margin: 0; padding: 4px; list-style: none; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin; }
+.demo--fat .fat-row {
+  width: 100%; min-height: 26px; padding: 0 8px 0 calc(6px + var(--d, 0) * 10px); border-radius: 5px;
+  font: 11.5px/1.2 var(--f-mono); text-align: left; color: var(--text-2);
+  transition: background 0.15s;
+}
+.demo--fat .fat-row .nm { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--text-1); }
+.demo--fat .fat-row .sz,
+.demo--fat .fat-row .fb { text-align: right; font-size: 11px; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.demo--fat .fat-row .sz { color: var(--text-3); }
+.demo--fat .fat-row .fb { color: var(--accent); }
+.demo--fat .fat-row:hover,
+.demo--fat .fat-row.is-hl { background: var(--bg-2); }
+.demo--fat .fat-row[aria-pressed="true"] { background: var(--bg-3); box-shadow: inset 2px 0 0 var(--accent); }
+.demo--fat .fat-row[aria-current] .nm { color: var(--accent-hi); }
+.demo--fat .fat-row:focus-visible { outline-offset: -2px; }
+
+/* ------------------------------------------------ terminal */
+.demo--fat .fat-term {
+  display: flex; flex-direction: column;
+  border-radius: var(--r-2); background: var(--bg-0); box-shadow: inset 0 0 0 1px var(--line-2), var(--edge);
+  font: 12px/1.55 var(--f-mono); transition: box-shadow 0.2s;
+}
+.demo--fat .fat-term:focus-within { box-shadow: inset 0 0 0 1px var(--accent-a40), var(--edge); }
+.demo--fat .fat-log {
+  height: 120px; overflow-y: auto; overscroll-behavior: contain; scrollbar-width: thin;
+  padding: 8px 12px 6px; color: var(--text-2); white-space: pre-wrap; overflow-wrap: anywhere;
+}
+.demo--fat .fat-log:focus-visible { outline-offset: -2px; border-radius: var(--r-2); }
+.demo--fat .fat-l.is-cmd { color: var(--text-1); }
+.demo--fat .fat-l.is-cmd .p { color: var(--accent); }
+.demo--fat .fat-l.is-err { color: var(--fault); }
+.demo--fat .fat-l.is-key { color: var(--accent-hi); }
+.demo--fat .fat-l.is-dim { color: var(--text-3); }
+.demo--fat .fat-l.is-hang { padding-left: 2ch; text-indent: -2ch; }
+.demo--fat .fat-inrow { display: flex; align-items: center; gap: 8px; min-height: 38px; margin: 0; padding: 0 12px; border-top: 1px solid var(--line-1); }
+.demo--fat .fat-prompt { flex: none; max-width: 55%; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; color: var(--accent); }
+.demo--fat .fat-in {
+  flex: 1; min-width: 0; height: 36px; padding: 0; border: 0; outline: 0; background: transparent;
+  color: var(--text-1); font: inherit; caret-color: var(--signal);
+}
+.demo--fat .fat-in::placeholder { color: var(--text-4); }
+
+/* ------------------------------------------------ actions + caption */
+.demo--fat .fat-acts .ctl { min-width: 44px; }
+.demo--fat .fat-cap { font-size: 10.5px; color: var(--text-4); }
+
+/* ------------------------------------------------ narrow plate (phones) */
+@container fatdemo (max-width: 560px) {
+  .demo--fat .fat-head { flex-direction: column; }
+  .demo--fat .fat-bs .switch { display: flex; }
+  .demo--fat .fat-bs .switch > button { flex: 1; }
+  .demo--fat .fat-ro { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .demo--fat .fat-mid { grid-template-columns: minmax(0, 1fr); gap: 12px; }
+  .demo--fat .fat-map { aspect-ratio: 2 / 1; }
+  .demo--fat .fat-chain { padding-left: 0; font-size: 11px; }
+  .demo--fat .fat-fpanel { position: static; max-height: 236px; }
+  .demo--fat .fat-log { height: 150px; font-size: 11.5px; padding: 8px 10px 6px; }
+  .demo--fat .fat-inrow { padding: 0 10px; }
+  .demo--fat .fat-acts { display: grid; grid-template-columns: 1fr 1fr; }
+  .demo--fat .switch > button,
+  .demo--fat .fat-acts .ctl,
+  .demo--fat .fat-row { min-height: 40px; }
+}
+@container fatdemo (max-width: 380px) {
+  .demo--fat .fat-mapwrap { grid-template-columns: 20px minmax(0, 1fr); column-gap: 4px; }
+  .demo--fat .fat-ruler span,
+  .demo--fat .fat-gutter span { font-size: 8.5px; }
+}
+@media (pointer: coarse) {
+  .demo--fat .switch > button,
+  .demo--fat .fat-acts .ctl,
+  .demo--fat .fat-row { min-height: 40px; }
+  .demo--fat .fat-in { font-size: 16px; }   /* no zoom-on-focus on iOS */
+}

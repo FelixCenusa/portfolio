@@ -1,0 +1,108 @@
+/* Press-Ice typing demo. Every selector is scoped under .demo--typing. */
+
+.demo--typing {
+  container-type: inline-size;
+  padding: 18px;
+  font-family: var(--f-mono);
+  color: var(--text-2);
+}
+.demo--typing [hidden] { display: none !important; }
+.demo--typing .ctl { min-height: 36px; min-width: 64px; }
+.demo--typing .switch > button { min-height: 32px; }
+
+/* compact one-line readouts, same height as the controls */
+.demo--typing .typ__best,
+.demo--typing .typ__bar .readout { flex-direction: row; align-items: center; gap: 10px; min-height: 36px; min-width: 0; padding: 0 12px; }
+.demo--typing .typ__best b,
+.demo--typing .typ__bar .readout b { font-size: 13px; white-space: nowrap; }
+
+.demo--typing .typ__top { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px; }
+
+/* ---------------------------------------------------------------- terminal */
+.demo--typing .typ__term {
+  position: relative; margin-top: 14px; padding: 16px 18px 14px;
+  border-radius: var(--r-2); background: var(--bg-0); box-shadow: inset 0 0 0 1px var(--line-2);
+  cursor: text; touch-action: manipulation;
+  transition: box-shadow 0.2s;
+}
+.demo--typing.is-focus .typ__term { box-shadow: inset 0 0 0 1px var(--accent-a40); }
+
+.demo--typing .typ__banner {
+  margin: 0; overflow: hidden; white-space: pre;
+  font-family: var(--f-mono); font-size: min(15px, calc((100cqi - 40px) / 34)); line-height: 1.15;
+  color: var(--accent);
+}
+
+.demo--typing .typ__mode {
+  display: flex; justify-content: space-between; gap: 12px;
+  margin-top: 14px; padding-top: 10px; border-top: 1px dashed var(--line-2);
+}
+.demo--typing .typ__mode .label { font-size: 10.5px; color: var(--text-4); }
+.demo--typing .typ__mode .label:first-child { color: var(--text-3); }
+
+.demo--typing .typ__line {
+  display: flex; gap: 12px; margin-top: 8px; min-height: calc(1.7em * 2);
+  font-size: clamp(15px, 2.8cqi, 19px); line-height: 1.7;
+}
+.demo--typing .typ__prompt { flex: none; color: var(--accent); }
+.demo--typing .typ__target { min-width: 0; white-space: pre-wrap; }
+.demo--typing .typ__w { white-space: nowrap; }
+.demo--typing .typ__c { position: relative; color: var(--text-3); }
+.demo--typing .typ__c.is-ok { color: var(--text-1); }
+.demo--typing .typ__c.is-bad { background: var(--fault-a15); color: var(--fault); box-shadow: inset 0 -2px 0 var(--fault); }
+
+/* caret: dim when the input is not focused, phosphor when it is */
+.demo--typing .typ__c.is-cur::before {
+  content: ''; position: absolute; left: -1px; top: 0.12em; bottom: 0.08em; width: 2px; border-radius: 1px;
+  background: var(--text-4);
+}
+.demo--typing.is-focus .typ__c.is-cur::before { background: var(--signal); box-shadow: 0 0 6px var(--signal-a40); }
+@media (prefers-reduced-motion: no-preference) {
+  .demo--typing.is-focus:not(.is-typing):not(.is-rm) .typ__c.is-cur::before { animation: typ-blink 1.06s steps(1) infinite; }
+}
+@keyframes typ-blink { 50% { opacity: 0; } }
+
+.demo--typing .typ__hint { margin: 8px 0 0; font-size: 10.5px; color: var(--text-4); }
+.demo--typing.is-focus .typ__hint { color: var(--text-3); }
+.demo--typing.is-done .typ__hint { color: var(--accent); }
+
+/* the real input: invisible but focusable, 16px so phones don't zoom */
+.demo--typing .typ__input {
+  position: absolute; left: 18px; top: 50%; width: 1px; height: 1px; margin: 0; padding: 0; border: 0;
+  opacity: 0; background: transparent; color: transparent; caret-color: transparent;
+  font-size: 16px; pointer-events: none;
+}
+
+/* ---------------------------------------------------------------- results */
+.demo--typing .typ__bar { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 10px 12px; margin-top: 14px; }
+.demo--typing .typ__bar .readouts { gap: 6px; }
+
+.demo--typing .typ__miss {
+  display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px;
+  margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line-1);
+}
+.demo--typing .typ__miss > .label { flex: none; font-size: 10.5px; }
+.demo--typing .typ__misslist { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; list-style: none; font-size: 12.5px; line-height: 1.5; }
+.demo--typing .typ__misslist li {
+  padding: 2px 8px; border-radius: var(--r-1); background: var(--bg-0); box-shadow: inset 0 0 0 1px var(--line-1);
+  color: var(--text-1); white-space: nowrap;
+}
+.demo--typing .typ__misslist li.is-empty,
+.demo--typing .typ__misslist li.is-none { padding: 0; background: none; box-shadow: none; }
+.demo--typing .typ__misslist li.is-empty { font-size: 11.5px; color: var(--text-4); }
+.demo--typing .typ__misslist li.is-none { color: var(--signal); }
+.demo--typing .typ__got { color: var(--fault); }
+.demo--typing .typ__arr,
+.demo--typing .typ__n { color: var(--text-4); }
+
+.demo--typing .typ__cap { margin: 14px 0 0; }
+
+.demo--typing.is-rm *, .demo--typing.is-rm *::before { transition: none !important; animation: none !important; }
+
+/* ---------------------------------------------------------------- narrow plates (phones) */
+@container (max-width: 540px) {
+  .demo--typing .typ__term { padding: 14px 14px 12px; }
+  .demo--typing .typ__banner { font-size: calc((100cqi - 32px) / 34); }
+  .demo--typing .typ__line { gap: 8px; }
+  .demo--typing .typ__input { left: 14px; }
+}

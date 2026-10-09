@@ -1,0 +1,151 @@
+/* Fig. 09 · 8-segment controller (assets/js/demos/segment.js)
+   A raised soldermask board with the display and two tact switches, an
+   instrument panel, and a three-channel logic analyzer underneath. */
+
+.demo--segment {
+  container: seg / inline-size;
+  display: grid;
+  gap: 14px;
+  padding: 18px;
+  color: var(--text-1);
+}
+.demo--segment:focus { outline: none; }
+.demo--segment p { margin: 0; }
+
+.demo--segment .seg__top {
+  display: grid;
+  grid-template-columns: minmax(0, 1.08fr) minmax(0, 1fr);
+  gap: 14px;
+}
+
+/* ---------------------------------------------------------------- board */
+.demo--segment .seg__board {
+  display: flex; flex-direction: column; gap: 12px;
+  padding: 11px 14px 9px;
+  border-radius: var(--r-2);
+  background: var(--bg-2);
+  box-shadow: inset 0 0 0 1px var(--line-2), var(--edge);
+}
+.demo--segment .seg__bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.demo--segment .seg__silk {
+  font-family: var(--f-mono); font-size: 10px; font-weight: 460; line-height: 1.4;
+  letter-spacing: 0.08em; text-transform: uppercase; color: var(--text-3);
+}
+.demo--segment .seg__core { display: inline-flex; align-items: center; gap: 8px; }
+.demo--segment .led { transition: background 0.12s, box-shadow 0.12s; }
+.demo--segment .led.is-fault { background: var(--fault); box-shadow: 0 0 0 3px var(--fault-a15); }
+
+.demo--segment .seg__window {
+  flex: 1; min-height: 0;
+  display: grid; place-items: center;
+  padding: 14px 10px;
+  border-radius: 6px;
+  background: var(--bg-0);
+  box-shadow: inset 0 0 0 1px var(--line-1), inset 0 2px 10px var(--bg-0);
+}
+.demo--segment .seg__digits {
+  height: clamp(92px, 24cqw, 124px); width: auto; aspect-ratio: 140 / 100;
+  overflow: visible;
+}
+.demo--segment .seg__ghost > g > * { fill: var(--accent); fill-opacity: 0.075; }
+.demo--segment .seg__lit > g > * { fill: var(--accent-hi); opacity: 0; }
+.demo--segment .seg__lit .is-on { opacity: 1; }
+
+/* tact switches: recessed housing, raised cap, metal pads */
+.demo--segment .seg__keys {
+  display: grid; grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 26px; padding: 0 9px;
+}
+.demo--segment .seg__keywrap { display: flex; flex-direction: column; align-items: center; gap: 5px; min-width: 0; }
+.demo--segment .seg__key {
+  position: relative; width: 100%; height: 58px; padding: 5px;
+  border-radius: 8px;
+  background: var(--bg-1);
+  box-shadow: inset 0 0 0 1px var(--line-2), inset 0 2px 6px var(--bg-0);
+  touch-action: none; -webkit-touch-callout: none; -webkit-user-select: none; user-select: none;
+  -webkit-tap-highlight-color: transparent;
+}
+.demo--segment .seg__key::before,
+.demo--segment .seg__key::after {
+  content: ''; position: absolute; top: 8px; width: 4px; height: 8px; border-radius: 1px;
+  background: var(--accent-lo); box-shadow: 0 34px 0 var(--accent-lo);
+  opacity: 0.85;
+}
+.demo--segment .seg__key::before { left: -9px; }
+.demo--segment .seg__key::after { right: -9px; }
+.demo--segment .seg__cap {
+  display: flex; align-items: center; justify-content: center; gap: 7px; height: 100%;
+  border-radius: 5px;
+  background: var(--bg-4); color: var(--text-2);
+  font-family: var(--f-mono); font-size: 12px; font-weight: 500; letter-spacing: 0.1em; text-transform: uppercase;
+  box-shadow: inset 0 1px 0 var(--line-3), inset 0 0 0 1px var(--line-2), 0 3px 0 var(--bg-0);
+  transform: translateY(-2px);
+  transition: transform 0.08s var(--ease-out), box-shadow 0.08s var(--ease-out), background 0.2s, color 0.2s;
+}
+.demo--segment .seg__cap svg {
+  width: 12px; height: 12px; fill: none; stroke: currentColor;
+  stroke-width: 1.6; stroke-linecap: round; stroke-linejoin: round;
+}
+.demo--segment .seg__key:hover .seg__cap { color: var(--text-1); }
+.demo--segment .seg__key.is-down .seg__cap {
+  transform: translateY(1px);
+  background: var(--bg-3); color: var(--accent-hi);
+  box-shadow: inset 0 1px 0 var(--line-1), inset 0 0 0 1px var(--accent-a40), 0 0 0 var(--bg-0);
+}
+.demo--segment .seg__key:focus-visible { outline-offset: 2px; border-radius: 8px; }
+
+/* ---------------------------------------------------------------- panel */
+.demo--segment .seg__panel { display: flex; flex-direction: column; gap: 10px; min-width: 0; }
+.demo--segment .seg__field { display: flex; flex-direction: column; gap: 6px; }
+.demo--segment .switch > button { min-height: 32px; }
+.demo--segment .ctl { min-height: 38px; }
+.demo--segment .seg__switch { display: flex; }
+.demo--segment .seg__switch > button { flex: 1 1 0; }
+.demo--segment .seg__desc { min-height: 2.9em; font-size: 13px; line-height: 1.45; color: var(--text-2); }
+.demo--segment .seg__desc b { font-weight: 560; color: var(--text-1); }
+
+.demo--segment .seg__readouts { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px; }
+.demo--segment .seg__readouts .readout { min-width: 0; }
+.demo--segment .seg__readouts b { overflow: hidden; white-space: nowrap; transition: color 0.25s; }
+.demo--segment .seg__st { margin-left: 7px; font-size: 11px; letter-spacing: 0.06em; text-transform: uppercase; color: var(--text-3); }
+.demo--segment .seg__st.is-live { color: var(--signal); }
+
+.demo--segment .seg__row { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: auto; }
+.demo--segment .seg__auto { margin-left: auto; text-transform: uppercase; letter-spacing: 0.06em; }
+.demo--segment .seg__auto[aria-pressed="false"] { color: var(--text-2); }
+
+/* ---------------------------------------------------------------- logic analyzer */
+.demo--segment .seg__la {
+  padding: 8px 10px 4px;
+  border-radius: var(--r-2);
+  background: var(--bg-0);
+  box-shadow: inset 0 0 0 1px var(--line-1);
+}
+.demo--segment .seg__la-bar { display: flex; justify-content: space-between; gap: 12px; margin-bottom: 2px; }
+.demo--segment .seg__la-bar .label { font-size: 10px; }
+.demo--segment .seg__trace { width: 100%; height: 114px; overflow: visible; }
+.demo--segment .seg__trace text { font-family: var(--f-mono); font-size: 10px; letter-spacing: 0.06em; fill: var(--text-2); }
+.demo--segment .seg__trace .seg__ax { font-size: 9px; fill: var(--text-4); }
+.demo--segment .seg__lb--irq { transition: fill 0.25s; }
+.demo--segment:not(.is-irq) .seg__lb--irq { fill: var(--text-4); }
+.demo--segment .seg__grid line { stroke: var(--line-1); stroke-width: 1; stroke-dasharray: 2 3; shape-rendering: crispEdges; }
+.demo--segment .seg__grid .seg__base { stroke-dasharray: none; }
+.demo--segment .seg__grid .seg__now { stroke: var(--line-3); stroke-dasharray: none; }
+.demo--segment .seg__fl { fill: var(--accent-a10); }
+.demo--segment .seg__tr { fill: none; stroke: var(--accent); stroke-width: 1.4; }
+.demo--segment .seg__hd { fill: none; stroke: var(--signal); stroke-width: 1.6; }
+.demo--segment .seg__dot { fill: var(--signal); }
+
+/* ---------------------------------------------------------------- foot */
+.demo--segment .seg__foot { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 6px 16px; }
+.demo--segment .seg__hint { display: inline-flex; align-items: center; gap: 4px; font-size: 12px; color: var(--text-3); }
+.demo--segment .seg__hint kbd { min-width: 22px; }
+
+/* ---------------------------------------------------------------- narrow plates */
+@container seg (max-width: 560px) {
+  .demo--segment .seg__top { grid-template-columns: minmax(0, 1fr); }
+}
+
+.demo--segment.is-rm *,
+.demo--segment.is-rm *::before,
+.demo--segment.is-rm *::after { transition: none !important; animation: none !important; }

@@ -3,162 +3,739 @@
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>Felix Cenusa · Portfolio</title>
-  <meta name="description" content="Felix Cenusa, software engineer. Projects, CV and contact.">
+  <title>Felix Cenusa · Software Engineer</title>
+  <meta name="description" content="Felix Cenusa, software engineer in Sweden. Ten projects across the whole stack, from ARM assembly and a FAT file system to web apps, most with a live demo you can play with.">
   <meta name="author" content="Felix Cenusa">
-  <meta name="theme-color" content="#f1f0eb">
+  <meta name="theme-color" content="#eff1ec">
+  <meta name="color-scheme" content="light">
   <meta property="og:type" content="website">
-  <meta property="og:title" content="Felix Cenusa · Portfolio">
-  <meta property="og:description" content="Projects, CV and contact for Felix Cenusa, software engineer.">
-  <link rel="icon" href="favicon.ico">
+  <meta property="og:url" content="https://portfolio.felix.best/">
+  <meta property="og:title" content="Felix Cenusa · Full stack, all the way down">
+  <meta property="og:description" content="Ten projects across the whole stack, from ARM assembly and a FAT file system to web apps, most with a live demo.">
+  <link rel="canonical" href="https://portfolio.felix.best/">
+  <link rel="icon" href="assets/img/mark.svg" type="image/svg+xml">
+  <link rel="alternate icon" href="favicon.ico">
   <link rel="preload" href="assets/fonts/MonaSans-latin.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="preload" href="assets/fonts/MonaSansMono.woff2" as="font" type="font/woff2" crossorigin>
+  <link rel="stylesheet" href="assets/vendor/lenis@1.3.26/lenis.css">
   <link rel="stylesheet" href="assets/css/site.css">
-  <script>document.documentElement.classList.add('js')</script>
+  <link rel="stylesheet" href="_preview/themes.css">
+  <script src="_preview/themes.js"></script>
+  <link rel="stylesheet" href="assets/css/demos/typing.css">
+  <link rel="stylesheet" href="assets/css/demos/aristotle.css">
+  <link rel="stylesheet" href="assets/css/demos/fat.css">
+  <link rel="stylesheet" href="assets/css/demos/segment.css">
+  <link rel="stylesheet" href="assets/css/demos/tis.css">
+  <link rel="stylesheet" href="assets/css/demos/aoc.css">
+  <link rel="stylesheet" href="assets/css/trace.css">
+  <script>matchMedia('(prefers-reduced-motion: no-preference)').matches && (document.documentElement.classList.add('intro'), setTimeout(function () { document.documentElement.classList.remove('intro'); }, 2500));</script>
+  <script type="importmap">{ "imports": { "three": "./assets/vendor/three@0.185.1/three.module.min.js" } }</script>
+  <script defer src="assets/vendor/gsap@3.15.0/gsap.min.js"></script>
+  <script defer src="assets/vendor/gsap@3.15.0/ScrollTrigger.min.js"></script>
+  <script defer src="assets/vendor/gsap@3.15.0/SplitText.min.js"></script>
+  <script defer src="assets/vendor/gsap@3.15.0/ScrambleTextPlugin.min.js"></script>
+  <script defer src="assets/vendor/lenis@1.3.26/lenis.min.js"></script>
+  <script type="module" src="assets/js/main.js"></script>
+  <script type="module" src="assets/js/trace.js"></script>
 </head>
-<body>
+<body data-page="home">
   <a class="skip" href="#main">Skip to content</a>
 
   <header class="nav">
     <div class="wrap nav__inner">
       <a class="brand" href="./" aria-label="Felix Cenusa, home">
+        <svg class="brand__mark" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.5 21 7l-9 4.5L3 7z" fill="currentColor"/><path d="M3 11.5l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-opacity=".65" stroke-width="1.6" stroke-linejoin="round"/><path d="M3 16l9 4.5 9-4.5" fill="none" stroke="currentColor" stroke-opacity=".35" stroke-width="1.6" stroke-linejoin="round"/></svg>
         <span class="brand__name">Felix Cenusa</span>
-        <span class="brand__role mono">Software Engineer</span>
       </a>
       <nav class="nav__links" aria-label="Main">
+        <a href="#stack" class="hide-sm">Stack</a>
         <a href="projects/">Projects</a>
         <a href="cv/">CV</a>
-        <a href="#contact">Contact</a>
-        <a class="nav__ext" href="https://felix.best" target="_blank" rel="noopener">felix.best<svg viewBox="0 0 12 12" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M3 9l6-6M4 3h5v5"/></svg></a>
+        <a href="#contact" class="hide-sm">Contact</a>
       </nav>
+      <button class="kbd-btn" type="button" data-palette-open aria-label="Open command palette">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="7" cy="7" r="4.5"/><path d="M10.5 10.5 14 14"/></svg>
+        <span class="kbd-label">Jump to</span><kbd data-mod-key>Ctrl</kbd><kbd>K</kbd>
+      </button>
     </div>
   </header>
 
+  <nav class="rail" aria-label="Layers">
+    <a href="#l4" data-rail="l4"><i></i>L4 <span>Web</span></a>
+    <a href="#l3" data-rail="l3"><i></i>L3 <span>Apps</span></a>
+    <a href="#l2" data-rail="l2"><i></i>L2 <span>Algorithms</span></a>
+    <a href="#l1" data-rail="l1"><i></i>L1 <span>Systems</span></a>
+    <a href="#l0" data-rail="l0"><i></i>L0 <span>Metal</span></a>
+  </nav>
+
   <main id="main">
-    <section class="hero wrap">
-      <div class="hero__top" data-reveal>
-        <span class="eyebrow"><b>Portfolio</b><span>Sweden</span></span>
-        <span class="eyebrow">Index · 10 projects</span>
-      </div>
+    <!-- ============================================================ hero -->
+    <section class="hero" aria-labelledby="hero-title">
+      <div class="wrap grid hero__grid">
+        <div class="hero__copy">
+          <p class="hero__eyebrow"><span class="led"></span><span data-scramble>Software engineer in Sweden</span></p>
+          <h1 class="display hero__title" id="hero-title" data-split>Full stack, all the way down.</h1>
+          <p class="lede hero__lede" data-hero-fade>I'm Felix Cenusa. I like programming and data-driven stock analysis, and I build at every layer: web apps, algorithms, a file system, and ARM assembly. Most of the projects below have a live demo you can play with.</p>
+          <div class="hero__actions" data-hero-fade>
+            <a class="btn btn--primary" href="#stack">Explore the stack<svg class="down" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M8 2v11M3.5 8.5 8 13l4.5-4.5"/></svg></a>
+            <a class="btn btn--ghost" href="https://felix.best/Felix_Cenusa_CV.pdf" target="_blank" rel="noopener">CV (PDF)<svg class="go" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4.5 11.5l7-7M6 4.5h5.5V10"/></svg></a>
+            <a class="btn btn--ghost" href="https://github.com/FelixCenusa" target="_blank" rel="noopener">GitHub<svg class="go" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4.5 11.5l7-7M6 4.5h5.5V10"/></svg></a>
+          </div>
+          <dl class="hero__facts" data-hero-fade>
+            <div><dt>Based in</dt><dd>Sweden</dd></div>
+            <div><dt>Studied</dt><dd>Software Engineering, BTH</dd></div>
+            <div><dt>Email</dt><dd><button type="button" data-copy="felixcenusa@gmail.com" title="Copy address">felixcenusa@gmail.com</button></dd></div>
+          </dl>
+        </div>
 
-      <div class="grid hero__grid">
-        <h1 class="hero__title" data-reveal>Hi, I'm Felix Cenusa<span class="dot">.</span> <span class="dim">I like programming and data-driven stock analysis.</span></h1>
-        <figure class="hero__portrait" data-reveal style="--d: .12s">
-          <div class="portrait"><img src="assets/img/me.png" alt="Portrait of Felix Cenusa" width="256" height="400"></div>
-          <figcaption class="portrait__cap mono"><span>Felix Cenusa</span><span>Sweden</span></figcaption>
+        <figure class="hero__fig">
+          <div class="stage" data-stage>
+            <svg class="stage__poster poster" viewBox="0 0 600 600" aria-hidden="true" focusable="false">
+              <g class="slab slab--metal">
+                <polygon points="110,484 290,574 290,586 110,496" class="side-l"/>
+                <polygon points="290,574 470,484 470,496 290,586" class="side-r"/>
+                <polygon points="290,394 470,484 290,574 110,484" class="top"/>
+                <g transform="matrix(1.80 0.90 -1.80 0.90 290 394)" class="motif">
+                  <rect x="10" y="10" width="80" height="80" rx="2" class="m-line"/>
+                  <rect x="34" y="34" width="32" height="32" rx="1.5" class="m-fill m-soft"/>
+                  <rect x="34" y="34" width="32" height="32" rx="1.5" class="m-line"/>
+                  <rect x="14.2" y="11.2" width="3.6" height="3.6" class="m-fill"/>
+                  <rect x="14.2" y="85.2" width="3.6" height="3.6" class="m-fill"/>
+                  <rect x="11.2" y="14.2" width="3.6" height="3.6" class="m-fill"/>
+                  <rect x="85.2" y="14.2" width="3.6" height="3.6" class="m-fill"/>
+                  <rect x="25.5" y="11.2" width="3.6" height="3.6" class="m-fill"/>
+                  <rect x="25.5" y="85.2" width="3.6" height="3.6" class="m-fill"/>
+                  <rect x="11.2" y="25.5" width="3.6" height="3.6" class="m-fill"/>
+                  <rect x="85.2" y="25.5" width="3.6" height="3.6" class="m-fill"/>
+                  <rect x="36.8" y="11.2" width="3.6" height="3.6" class="m-fill"/>
+                  <rect x="36.8" y="85.2" width="3.6" height="3.6" class="m-fill"/>
+                  <rect x="11.2" y="36.8" width="3.6" height="3.6" class="m-fill"/>
+                  <rect x="85.2" y="36.8" width="3.6" height="3.6" class="m-fill"/>
+                  <rect x="48.1" y="11.2" width="3.6" height="3.6" class="m-fill"/>
+                  <rect x="48.1" y="85.2" width="3.6" height="3.6" class="m-fill"/>
+                  <rect x="11.2" y="48.1" width="3.6" height="3.6" class="m-fill"/>
+                  <rect x="85.2" y="48.1" width="3.6" height="3.6" class="m-fill"/>
+                  <rect x="59.4" y="11.2" width="3.6" height="3.6" class="m-fill"/>
+                  <rect x="59.4" y="85.2" width="3.6" height="3.6" class="m-fill"/>
+                  <rect x="11.2" y="59.4" width="3.6" height="3.6" class="m-fill"/>
+                  <rect x="85.2" y="59.4" width="3.6" height="3.6" class="m-fill"/>
+                  <rect x="70.7" y="11.2" width="3.6" height="3.6" class="m-fill"/>
+                  <rect x="70.7" y="85.2" width="3.6" height="3.6" class="m-fill"/>
+                  <rect x="11.2" y="70.7" width="3.6" height="3.6" class="m-fill"/>
+                  <rect x="85.2" y="70.7" width="3.6" height="3.6" class="m-fill"/>
+                  <rect x="82" y="11.2" width="3.6" height="3.6" class="m-fill"/>
+                  <rect x="82" y="85.2" width="3.6" height="3.6" class="m-fill"/>
+                  <rect x="11.2" y="82" width="3.6" height="3.6" class="m-fill"/>
+                  <rect x="85.2" y="82" width="3.6" height="3.6" class="m-fill"/>
+                  <polyline points="27.3,15 27.3,24 36,30 36,34" class="m-line"/>
+                  <polyline points="27.3,85 27.3,76 36,70 36,66" class="m-line"/>
+                  <polyline points="85,27.3 76,27.3 70,36 66,36" class="m-line"/>
+                  <polyline points="38.6,15 38.6,24 43,30 43,34" class="m-line"/>
+                  <polyline points="38.6,85 38.6,76 43,70 43,66" class="m-line"/>
+                  <polyline points="85,38.6 76,38.6 70,43 66,43" class="m-line"/>
+                  <polyline points="49.9,15 49.9,24 50,30 50,34" class="m-line"/>
+                  <polyline points="49.9,85 49.9,76 50,70 50,66" class="m-line"/>
+                  <polyline points="85,49.9 76,49.9 70,50 66,50" class="m-line"/>
+                  <polyline points="61.2,15 61.2,24 57,30 57,34" class="m-line"/>
+                  <polyline points="61.2,85 61.2,76 57,70 57,66" class="m-line"/>
+                  <polyline points="85,61.2 76,61.2 70,57 66,57" class="m-line"/>
+                  <polyline points="72.5,15 72.5,24 64,30 64,34" class="m-line"/>
+                  <polyline points="72.5,85 72.5,76 64,70 64,66" class="m-line"/>
+                  <polyline points="85,72.5 76,72.5 70,64 66,64" class="m-line"/>
+                </g>
+                <polyline points="110,484 290,574 470,484" class="edge"/>
+              </g>
+              <line x1="333.2" y1="455.2" x2="333.2" y2="527.2" class="via"/>
+              <line x1="239.6" y1="458.8" x2="239.6" y2="530.8" class="via"/>
+              <line x1="302.6" y1="483.1" x2="302.6" y2="555.1" class="via"/>
+              <g class="slab slab--sys">
+                <polygon points="110,392 290,482 290,494 110,404" class="side-l"/>
+                <polygon points="290,482 470,392 470,404 290,494" class="side-r"/>
+                <polygon points="290,302 470,392 290,482 110,392" class="top"/>
+                <g transform="matrix(1.80 0.90 -1.80 0.90 290 302)" class="motif">
+                  <rect x="6.4" y="6.4" width="9.5" height="9.5" rx="0.8" class="m-line m-faint"/>
+                  <rect x="17.5" y="6.4" width="9.5" height="9.5" rx="0.8" class="m-line m-faint"/>
+                  <rect x="28.6" y="6.4" width="9.5" height="9.5" rx="0.8" class="m-line m-faint"/>
+                  <rect x="39.7" y="6.4" width="9.5" height="9.5" rx="0.8" class="m-fill"/>
+                  <rect x="50.8" y="6.4" width="9.5" height="9.5" rx="0.8" class="m-fill"/>
+                  <rect x="61.9" y="6.4" width="9.5" height="9.5" rx="0.8" class="m-fill"/>
+                  <rect x="73" y="6.4" width="9.5" height="9.5" rx="0.8" class="m-line m-faint"/>
+                  <rect x="84.1" y="6.4" width="9.5" height="9.5" rx="0.8" class="m-line m-faint"/>
+                  <rect x="6.4" y="17.5" width="9.5" height="9.5" rx="0.8" class="m-line m-faint"/>
+                  <rect x="17.5" y="17.5" width="9.5" height="9.5" rx="0.8" class="m-line m-faint"/>
+                  <rect x="28.6" y="17.5" width="9.5" height="9.5" rx="0.8" class="m-line m-faint"/>
+                  <rect x="39.7" y="17.5" width="9.5" height="9.5" rx="0.8" class="m-fill"/>
+                  <rect x="50.8" y="17.5" width="9.5" height="9.5" rx="0.8" class="m-fill"/>
+                  <rect x="61.9" y="17.5" width="9.5" height="9.5" rx="0.8" class="m-line m-faint"/>
+                  <rect x="73" y="17.5" width="9.5" height="9.5" rx="0.8" class="m-line m-faint"/>
+                  <rect x="84.1" y="17.5" width="9.5" height="9.5" rx="0.8" class="m-line m-faint"/>
+                  <rect x="6.4" y="28.6" width="9.5" height="9.5" rx="0.8" class="m-line m-faint"/>
+                  <rect x="17.5" y="28.6" width="9.5" height="9.5" rx="0.8" class="m-line m-faint"/>
+                  <rect x="28.6" y="28.6" width="9.5" height="9.5" rx="0.8" class="m-line m-faint"/>
+                  <rect x="39.7" y="28.6" width="9.5" height="9.5" rx="0.8" class="m-line m-faint"/>
+                  <rect x="50.8" y="28.6" width="9.5" height="9.5" rx="0.8" class="m-fill"/>
+                  <rect x="61.9" y="28.6" width="9.5" height="9.5" rx="0.8" class="m-fill"/>
+                  <rect x="73" y="28.6" width="9.5" height="9.5" rx="0.8" class="m-fill"/>
+                  <rect x="84.1" y="28.6" width="9.5" height="9.5" rx="0.8" class="m-fill"/>
+                  <rect x="6.4" y="39.7" width="9.5" height="9.5" rx="0.8" class="m-line m-faint"/>
+                  <rect x="17.5" y="39.7" width="9.5" height="9.5" rx="0.8" class="m-line m-faint"/>
+                  <rect x="28.6" y="39.7" width="9.5" height="9.5" rx="0.8" class="m-line m-faint"/>
+                  <rect x="39.7" y="39.7" width="9.5" height="9.5" rx="0.8" class="m-line m-faint"/>
+                  <rect x="50.8" y="39.7" width="9.5" height="9.5" rx="0.8" class="m-line m-faint"/>
+                  <rect x="61.9" y="39.7" width="9.5" height="9.5" rx="0.8" class="m-line m-faint"/>
+                  <rect x="73" y="39.7" width="9.5" height="9.5" rx="0.8" class="m-fill"/>
+                  <rect x="84.1" y="39.7" width="9.5" height="9.5" rx="0.8" class="m-line m-faint"/>
+                  <rect x="6.4" y="50.8" width="9.5" height="9.5" rx="0.8" class="m-line m-faint"/>
+                  <rect x="17.5" y="50.8" width="9.5" height="9.5" rx="0.8" class="m-line m-faint"/>
+                  <rect x="28.6" y="50.8" width="9.5" height="9.5" rx="0.8" class="m-line m-faint"/>
+                  <rect x="39.7" y="50.8" width="9.5" height="9.5" rx="0.8" class="m-line m-faint"/>
+                  <rect x="50.8" y="50.8" width="9.5" height="9.5" rx="0.8" class="m-line m-faint"/>
+                  <rect x="61.9" y="50.8" width="9.5" height="9.5" rx="0.8" class="m-line m-faint"/>
+                  <rect x="73" y="50.8" width="9.5" height="9.5" rx="0.8" class="m-fill"/>
+                  <rect x="84.1" y="50.8" width="9.5" height="9.5" rx="0.8" class="m-fill"/>
+                  <rect x="6.4" y="61.9" width="9.5" height="9.5" rx="0.8" class="m-line m-faint"/>
+                  <rect x="17.5" y="61.9" width="9.5" height="9.5" rx="0.8" class="m-line m-faint"/>
+                  <rect x="28.6" y="61.9" width="9.5" height="9.5" rx="0.8" class="m-line m-faint"/>
+                  <rect x="39.7" y="61.9" width="9.5" height="9.5" rx="0.8" class="m-line m-faint"/>
+                  <rect x="50.8" y="61.9" width="9.5" height="9.5" rx="0.8" class="m-line m-faint"/>
+                  <rect x="61.9" y="61.9" width="9.5" height="9.5" rx="0.8" class="m-fill"/>
+                  <rect x="73" y="61.9" width="9.5" height="9.5" rx="0.8" class="m-fill"/>
+                  <rect x="84.1" y="61.9" width="9.5" height="9.5" rx="0.8" class="m-fill"/>
+                  <rect x="6.4" y="73" width="9.5" height="9.5" rx="0.8" class="m-line m-faint"/>
+                  <rect x="17.5" y="73" width="9.5" height="9.5" rx="0.8" class="m-line m-faint"/>
+                  <rect x="28.6" y="73" width="9.5" height="9.5" rx="0.8" class="m-line m-faint"/>
+                  <rect x="39.7" y="73" width="9.5" height="9.5" rx="0.8" class="m-line m-faint"/>
+                  <rect x="50.8" y="73" width="9.5" height="9.5" rx="0.8" class="m-line m-faint"/>
+                  <rect x="61.9" y="73" width="9.5" height="9.5" rx="0.8" class="m-line m-faint"/>
+                  <rect x="73" y="73" width="9.5" height="9.5" rx="0.8" class="m-fill"/>
+                  <rect x="84.1" y="73" width="9.5" height="9.5" rx="0.8" class="m-fill"/>
+                  <rect x="6.4" y="84.1" width="9.5" height="9.5" rx="0.8" class="m-line m-faint"/>
+                  <rect x="17.5" y="84.1" width="9.5" height="9.5" rx="0.8" class="m-line m-faint"/>
+                  <rect x="28.6" y="84.1" width="9.5" height="9.5" rx="0.8" class="m-line m-faint"/>
+                  <rect x="39.7" y="84.1" width="9.5" height="9.5" rx="0.8" class="m-line m-faint"/>
+                  <rect x="50.8" y="84.1" width="9.5" height="9.5" rx="0.8" class="m-fill"/>
+                  <rect x="61.9" y="84.1" width="9.5" height="9.5" rx="0.8" class="m-fill"/>
+                  <rect x="73" y="84.1" width="9.5" height="9.5" rx="0.8" class="m-fill"/>
+                  <rect x="84.1" y="84.1" width="9.5" height="9.5" rx="0.8" class="m-line m-faint"/>
+                </g>
+                <polyline points="110,392 290,482 470,392" class="edge"/>
+              </g>
+              <line x1="333.2" y1="363.2" x2="333.2" y2="435.2" class="via"/>
+              <line x1="239.6" y1="366.8" x2="239.6" y2="438.8" class="via"/>
+              <line x1="302.6" y1="391.1" x2="302.6" y2="463.1" class="via"/>
+              <g class="slab slab--algo">
+                <polygon points="110,300 290,390 290,402 110,312" class="side-l"/>
+                <polygon points="290,390 470,300 470,312 290,402" class="side-r"/>
+                <polygon points="290,210 470,300 290,390 110,300" class="top"/>
+                <g transform="matrix(1.80 0.90 -1.80 0.90 290 210)" class="motif">
+                  <polygon points="42.3,30.3 37.1,33.4 31.8,30.3 31.8,24.3 37.1,21.2 42.3,24.3" class="m-fill m-soft"/>
+                  <polygon points="55.3,30.3 50,33.4 44.7,30.3 44.7,24.3 50,21.2 55.3,24.3" class="m-line"/>
+                  <polygon points="68.2,30.3 62.9,33.4 57.7,30.3 57.7,24.3 62.9,21.2 68.2,24.3" class="m-line"/>
+                  <polygon points="35.9,41.7 30.6,44.7 25.3,41.7 25.3,35.6 30.6,32.6 35.9,35.6" class="m-line"/>
+                  <polygon points="48.8,41.7 43.5,44.7 38.3,41.7 38.3,35.6 43.5,32.6 48.8,35.6" class="m-fill m-soft"/>
+                  <polygon points="61.7,41.7 56.5,44.7 51.2,41.7 51.2,35.6 56.5,32.6 61.7,35.6" class="m-line"/>
+                  <polygon points="74.7,41.7 69.4,44.7 64.1,41.7 64.1,35.6 69.4,32.6 74.7,35.6" class="m-line"/>
+                  <polygon points="29.4,53 24.1,56.1 18.9,53 18.9,47 24.1,43.9 29.4,47" class="m-line"/>
+                  <polygon points="42.3,53 37.1,56.1 31.8,53 31.8,47 37.1,43.9 42.3,47" class="m-line"/>
+                  <polygon points="55.3,53 50,56.1 44.7,53 44.7,47 50,43.9 55.3,47" class="m-fill m-soft"/>
+                  <polygon points="68.2,53 62.9,56.1 57.7,53 57.7,47 62.9,43.9 68.2,47" class="m-line"/>
+                  <polygon points="81.1,53 75.9,56.1 70.6,53 70.6,47 75.9,43.9 81.1,47" class="m-line"/>
+                  <polygon points="35.9,64.4 30.6,67.4 25.3,64.4 25.3,58.3 30.6,55.3 35.9,58.3" class="m-fill m-soft"/>
+                  <polygon points="48.8,64.4 43.5,67.4 38.3,64.4 38.3,58.3 43.5,55.3 48.8,58.3" class="m-line"/>
+                  <polygon points="61.7,64.4 56.5,67.4 51.2,64.4 51.2,58.3 56.5,55.3 61.7,58.3" class="m-line"/>
+                  <polygon points="74.7,64.4 69.4,67.4 64.1,64.4 64.1,58.3 69.4,55.3 74.7,58.3" class="m-fill m-soft"/>
+                  <polygon points="42.3,75.7 37.1,78.8 31.8,75.7 31.8,69.7 37.1,66.6 42.3,69.7" class="m-line"/>
+                  <polygon points="55.3,75.7 50,78.8 44.7,75.7 44.7,69.7 50,66.6 55.3,69.7" class="m-fill m-soft"/>
+                  <polygon points="68.2,75.7 62.9,78.8 57.7,75.7 57.7,69.7 62.9,66.6 68.2,69.7" class="m-line"/>
+                </g>
+                <polyline points="110,300 290,390 470,300" class="edge"/>
+              </g>
+              <line x1="333.2" y1="271.2" x2="333.2" y2="343.2" class="via"/>
+              <line x1="239.6" y1="274.8" x2="239.6" y2="346.8" class="via"/>
+              <line x1="302.6" y1="299.1" x2="302.6" y2="371.1" class="via"/>
+              <g class="slab slab--apps">
+                <polygon points="110,208 290,298 290,310 110,220" class="side-l"/>
+                <polygon points="290,298 470,208 470,220 290,310" class="side-r"/>
+                <polygon points="290,118 470,208 290,298 110,208" class="top"/>
+                <g transform="matrix(1.80 0.90 -1.80 0.90 290 118)" class="motif">
+                  <rect x="8" y="8" width="84" height="84" rx="3" class="m-line"/>
+                  <line x1="20" y1="18" x2="54" y2="18" class="m-line"/>
+                  <line x1="13" y1="18" x2="15" y2="18" class="m-line m-hot"/>
+                  <line x1="20" y1="25" x2="78" y2="25" class="m-line"/>
+                  <line x1="13" y1="25" x2="15" y2="25" class="m-line m-hot"/>
+                  <line x1="20" y1="32" x2="42" y2="32" class="m-line"/>
+                  <line x1="13" y1="32" x2="15" y2="32" class="m-line m-hot"/>
+                  <line x1="20" y1="39" x2="66" y2="39" class="m-line"/>
+                  <line x1="13" y1="39" x2="15" y2="39" class="m-line m-hot"/>
+                  <line x1="20" y1="46" x2="90" y2="46" class="m-line"/>
+                  <line x1="13" y1="46" x2="15" y2="46" class="m-line m-hot"/>
+                  <line x1="20" y1="53" x2="50" y2="53" class="m-line"/>
+                  <line x1="13" y1="53" x2="15" y2="53" class="m-line m-hot"/>
+                  <line x1="20" y1="60" x2="72" y2="60" class="m-line"/>
+                  <line x1="13" y1="60" x2="15" y2="60" class="m-line m-hot"/>
+                  <line x1="20" y1="67" x2="38" y2="67" class="m-line"/>
+                  <line x1="13" y1="67" x2="15" y2="67" class="m-line m-hot"/>
+                  <line x1="20" y1="74" x2="82" y2="74" class="m-line"/>
+                  <line x1="13" y1="74" x2="15" y2="74" class="m-line m-hot"/>
+                  <line x1="20" y1="81" x2="60" y2="81" class="m-line"/>
+                  <line x1="13" y1="81" x2="15" y2="81" class="m-line m-hot"/>
+                  <line x1="20" y1="88" x2="46" y2="88" class="m-line"/>
+                  <line x1="13" y1="88" x2="15" y2="88" class="m-line m-hot"/>
+                  <rect x="20" y="93" width="0" height="0"/>
+                  <rect x="44" y="84" width="5" height="4" class="m-fill m-hot"/>
+                </g>
+                <polyline points="110,208 290,298 470,208" class="edge"/>
+              </g>
+              <line x1="333.2" y1="179.2" x2="333.2" y2="251.2" class="via"/>
+              <line x1="239.6" y1="182.8" x2="239.6" y2="254.8" class="via"/>
+              <line x1="302.6" y1="207.1" x2="302.6" y2="279.1" class="via"/>
+              <g class="slab slab--web">
+                <polygon points="110,116 290,206 290,218 110,128" class="side-l"/>
+                <polygon points="290,206 470,116 470,128 290,218" class="side-r"/>
+                <polygon points="290,26 470,116 290,206 110,116" class="top"/>
+                <g transform="matrix(1.80 0.90 -1.80 0.90 290 26)" class="motif">
+                  <rect x="8" y="8" width="84" height="84" rx="3" class="m-line"/>
+                  <line x1="8" y1="19" x2="92" y2="19" class="m-line"/>
+                  <circle cx="14" cy="13.5" r="1.6" class="m-fill"/>
+                  <circle cx="19" cy="13.5" r="1.6" class="m-fill"/>
+                  <circle cx="24" cy="13.5" r="1.6" class="m-fill"/>
+                  <rect x="15" y="26" width="70" height="16" rx="1.5" class="m-fill m-soft"/>
+                  <rect x="15" y="26" width="38" height="4" rx="1" class="m-fill"/>
+                  <rect x="15" y="50" width="22" height="34" rx="1.5" class="m-line"/>
+                  <rect x="18" y="54" width="16" height="10" rx="1" class="m-fill m-soft"/>
+                  <line x1="18" y1="70" x2="32" y2="70" class="m-line"/>
+                  <line x1="18" y1="75" x2="27" y2="75" class="m-line"/>
+                  <rect x="39" y="50" width="22" height="34" rx="1.5" class="m-line"/>
+                  <rect x="42" y="54" width="16" height="10" rx="1" class="m-fill m-soft"/>
+                  <line x1="42" y1="70" x2="56" y2="70" class="m-line"/>
+                  <line x1="42" y1="75" x2="51" y2="75" class="m-line"/>
+                  <rect x="63" y="50" width="22" height="34" rx="1.5" class="m-line"/>
+                  <rect x="66" y="54" width="16" height="10" rx="1" class="m-fill m-soft"/>
+                  <line x1="66" y1="70" x2="80" y2="70" class="m-line"/>
+                  <line x1="66" y1="75" x2="75" y2="75" class="m-line"/>
+                </g>
+                <polyline points="110,116 290,206 470,116" class="edge"/>
+              </g>
+              <circle cx="333.2" cy="159.2" r="3.2" class="pulse" style="--drop:368px"/>
+              <circle cx="239.6" cy="162.8" r="3.2" class="pulse" style="--drop:368px"/>
+              <circle cx="302.6" cy="187.1" r="3.2" class="pulse" style="--drop:368px"/>
+          </svg>
+            <canvas class="stage__canvas" aria-hidden="true"></canvas>
+            <ol class="stage__labels" aria-hidden="true">
+              <li data-layer-label="l4" style="left:79.67%;top:19.33%"><b>L4</b><span>Web</span></li>
+              <li data-layer-label="l3" style="left:79.67%;top:34.67%"><b>L3</b><span>Apps</span></li>
+              <li data-layer-label="l2" style="left:79.67%;top:50%"><b>L2</b><span>Algorithms</span></li>
+              <li data-layer-label="l1" style="left:79.67%;top:65.33%"><b>L1</b><span>Systems</span></li>
+              <li data-layer-label="l0" style="left:79.67%;top:80.67%"><b>L0</b><span>Metal</span></li>
+            </ol>
+          </div>
+          <figcaption class="stage__cap"><span>The stack, exploded</span><span class="stage__hint">Hover a layer, click to go there</span></figcaption>
         </figure>
-      </div>
-
-      <div class="grid hero__meta" data-reveal>
-        <div class="meta-item meta-item--lede">
-          <span class="mono">About</span>
-          <p>Before university I ran my own cybersecurity firm for a year. Then I enrolled at BTH, Blekinge Institute of Technology, to study Software Engineering.</p>
-        </div>
-        <div class="meta-item">
-          <span class="mono">Education</span>
-          <p>Software Engineering<br>BTH, 2023–2026</p>
-        </div>
-        <div class="meta-item">
-          <span class="mono">Contact</span>
-          <p><a class="link" href="mailto:felixcenusa@gmail.com">felixcenusa@gmail.com</a></p>
-        </div>
       </div>
     </section>
 
-    <section class="section wrap" aria-labelledby="selected">
-      <div class="folio" data-reveal>
-        <span class="folio__no mono">01</span>
-        <span class="folio__name mono" id="selected">Selected projects</span>
-        <span class="folio__meta mono"><a href="projects/">All 10 projects →</a></span>
+    <!-- ============================================================ index -->
+    <section class="section wrap" id="stack" aria-labelledby="stack-title">
+      <div class="grid section__intro">
+        <h2 class="h2" id="stack-title" data-split>Five layers, ten projects.</h2>
+        <p class="lede" data-reveal>Ordered the way a computer is, from the browser down to the registers. Pick a layer, keep scrolling to go down, or <a class="link" href="projects/">see them all in one table</a>.</p>
       </div>
-
-      <div class="grid cards">
-        <a class="card" href="projects/#timetomove" data-reveal>
-          <div class="card__media"><img src="assets/img/opt/TimeToMoveSS.jpg" alt="TimeToMove dashboard with a profile panel and a form for creating a new box" width="1600" height="840" loading="lazy"></div>
-          <div class="card__info">
-            <span class="card__no mono">P.04</span>
-            <h2 class="card__title">TimeToMove<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M1 8h13M9 3l5 5-5 5"/></svg></h2>
-            <p class="card__sub">A self-hosted web app for creating, sharing and managing digital labels.</p>
-            <div class="tags"><span class="tag">JavaScript</span><span class="tag">EJS</span><span class="tag">MySQL</span></div>
-          </div>
+      <div class="index" role="list">
+        <a class="index__row" href="#l4" role="listitem" data-reveal>
+          <span class="index__swatch" style="background:var(--tone-l4)"></span><span class="index__reg">L4</span><span class="index__name">Web</span>
+          <span class="index__projects">TimeToMove, Eshop</span><span class="index__langs">JavaScript, SQL</span>
         </a>
-
-        <a class="card" href="projects/#aristotle" data-reveal style="--d: .1s">
-          <div class="card__media"><img src="assets/img/opt/AristotlesPuzzleAndMath.jpg" alt="Aristotle's number puzzle: hexagonal wooden pieces on top of handwritten maths" width="1280" height="960" loading="lazy" style="object-position: center"></div>
-          <div class="card__info">
-            <span class="card__no mono">P.05</span>
-            <h2 class="card__title">Aristotle's Puzzle Solver<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M1 8h13M9 3l5 5-5 5"/></svg></h2>
-            <p class="card__sub">A highly optimized solver for a classic puzzle.</p>
-            <div class="tags"><span class="tag">C++</span></div>
-          </div>
+        <a class="index__row" href="#l3" role="listitem" data-reveal>
+          <span class="index__swatch" style="background:var(--tone-l3)"></span><span class="index__reg">L3</span><span class="index__name">Apps</span>
+          <span class="index__projects">Fake-GPT, Press-Ice, School Management System</span><span class="index__langs">Python, C++</span>
         </a>
+        <a class="index__row" href="#l2" role="listitem" data-reveal>
+          <span class="index__swatch" style="background:var(--tone-l2)"></span><span class="index__reg">L2</span><span class="index__name">Algorithms</span>
+          <span class="index__projects">Aristotle's Puzzle Solver, Advent of Code 2024</span><span class="index__langs">C++, Python</span>
+        </a>
+        <a class="index__row" href="#l1" role="listitem" data-reveal>
+          <span class="index__swatch" style="background:var(--tone-l1)"></span><span class="index__reg">L1</span><span class="index__name">Systems</span>
+          <span class="index__projects">Custom File System with FAT</span><span class="index__langs">C++</span>
+        </a>
+        <a class="index__row" href="#l0" role="listitem" data-reveal>
+          <span class="index__swatch" style="background:var(--tone-l0)"></span><span class="index__reg">L0</span><span class="index__name">Metal</span>
+          <span class="index__projects">8-Segment Display Controller, TIS-100</span><span class="index__langs">ARM and TIS-100 assembly</span>
+        </a>
+      </div>
+    </section>
 
-        <a class="card" href="projects/#segment-display" data-reveal>
-          <div class="card__media">
-            <div class="plate" data-seg>
-              <div class="seg-row" aria-hidden="true">
-                <div class="seg"><i class="a"></i><i class="b"></i><i class="c"></i><i class="d"></i><i class="e"></i><i class="f"></i><i class="g"></i></div>
-                <div class="seg"><i class="a"></i><i class="b"></i><i class="c"></i><i class="d"></i><i class="e"></i><i class="f"></i><i class="g"></i><i class="dp"></i></div>
-              </div>
-              <div class="seg-dir mono" aria-hidden="true"><span data-dir="up">Up</span><span data-dir="down">Down</span></div>
-              <span class="plate__label mono">ARMv7 · polling + interrupts</span>
+    <!-- ============================================================ L4 web -->
+    <section class="layer" id="l4" data-layer="l4" aria-labelledby="l4-title">
+      <header class="wrap layer__head">
+        <div class="grid layer__head-grid">
+          <div class="layer__id">
+            <ol class="layermap" aria-hidden="true"><li class="is-here"></li><li></li><li></li><li></li><li></li></ol>
+            <h2 class="h2" id="l4-title" data-split><span class="reg">L4</span>Web</h2>
+          </div>
+          <p class="layer__desc" data-reveal>Things that run in a browser and talk to a database: accounts, uploads, admin panels and the SQL underneath.</p>
+        </div>
+      </header>
+
+      <article class="proj wrap" id="timetomove" aria-labelledby="p01">
+        <div class="grid proj__grid">
+          <div class="proj__text" data-reveal>
+            <h3 class="h3 proj__title" id="p01">TimeToMove</h3>
+            <ul class="tags proj__stack" aria-label="Built with"><li class="tag">JavaScript</li><li class="tag">EJS</li><li class="tag">MySQL</li></ul>
+            <p class="proj__lede">A self-hosted web application for creating, sharing and managing digital labels, with a strong focus on security and privacy.</p>
+            <div class="spec">
+              <div class="spec__row"><span class="label">Features</span><ul><li>Login with Gmail</li><li>Robust password security</li><li>Admin controls</li><li>Uploads and downloads</li></ul></div>
+            </div>
+            <div class="proj__links"><a class="btn btn--ghost" href="https://github.com/FelixCenusa/PiPullV3" target="_blank" rel="noopener">Code &amp; write-up<svg class="go" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4.5 11.5l7-7M6 4.5h5.5V10"/></svg></a></div>
+          </div>
+          <div class="proj__media" data-reveal>
+            <figure class="shot">
+              <button class="shot__img" type="button" data-full="assets/img/opt/TimeToMoveSS.jpg" data-cap="TimeToMove: the dashboard after logging in">
+                <img src="assets/img/opt/TimeToMoveSS.jpg" alt="TimeToMove dashboard with a profile panel and a form for creating a new box" width="1600" height="840" loading="lazy">
+              </button>
+              <figcaption><span>TimeToMove: the dashboard after logging in.</span><span class="end">Click to enlarge</span></figcaption>
+            </figure>
+          </div>
+        </div>
+      </article>
+
+      <article class="proj wrap" id="eshop" aria-labelledby="p02">
+        <div class="grid proj__grid">
+          <div class="proj__text" data-reveal>
+            <h3 class="h3 proj__title" id="p02">Eshop</h3>
+            <ul class="tags proj__stack" aria-label="Built with"><li class="tag">SQL</li><li class="tag">JavaScript</li><li class="tag">HTML</li><li class="tag">CSS</li></ul>
+            <p class="proj__lede">An online shop built with SQL, JavaScript, HTML and CSS. Run <code>index.js</code> with Node for the web version, or <code>cli.js</code> for a terminal version.</p>
+            <div class="spec">
+              <div class="spec__row"><span class="label">Runs as</span><ul><li>A web app (<code>index.js</code>)</li><li>A terminal app (<code>cli.js</code>)</li></ul></div>
+              <div class="spec__row"><span class="label">Code</span><span class="muted">In a private repo (Database-Projects)</span></div>
             </div>
           </div>
-          <div class="card__info">
-            <span class="card__no mono">P.02</span>
-            <h2 class="card__title">8-Segment Display Controller<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M1 8h13M9 3l5 5-5 5"/></svg></h2>
-            <p class="card__sub">Counts up or down from keyboard or push-button input.</p>
-            <div class="tags"><span class="tag">ARM Assembly</span></div>
+          <div class="proj__media" data-reveal>
+            <figure class="shot">
+              <button class="shot__img" type="button" data-full="assets/img/opt/eshopss.jpg" data-cap="Eshop: the product list in the web version">
+                <img src="assets/img/opt/eshopss.jpg" alt="Eshop product table in a browser with update and delete actions" width="1600" height="953" loading="lazy">
+              </button>
+              <figcaption><span>Eshop: the product list in the web version.</span><span class="end">Click to enlarge</span></figcaption>
+            </figure>
           </div>
-        </a>
+        </div>
+      </article>
+    </section>
 
-        <a class="card" href="projects/#press-ice" data-reveal style="--d: .1s">
-          <div class="card__media"><img src="assets/img/opt/pressicess.jpg" alt="Press-Ice typing game running in a terminal next to its Python code" width="1600" height="960" loading="lazy"></div>
-          <div class="card__info">
-            <span class="card__no mono">P.09</span>
-            <h2 class="card__title">Press-Ice<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M1 8h13M9 3l5 5-5 5"/></svg></h2>
-            <p class="card__sub">A typing game that rewards precision over speed.</p>
-            <div class="tags"><span class="tag">Python</span></div>
+    <!-- ============================================================ L3 apps -->
+    <section class="layer" id="l3" data-layer="l3" aria-labelledby="l3-title">
+      <header class="wrap layer__head">
+        <div class="grid layer__head-grid">
+          <div class="layer__id">
+            <ol class="layermap" aria-hidden="true"><li></li><li class="is-here"></li><li></li><li></li><li></li></ol>
+            <h2 class="h2" id="l3-title" data-split><span class="reg">L3</span>Apps</h2>
           </div>
-        </a>
+          <p class="layer__desc" data-reveal>Programs people run in a terminal: a chatbot, a typing game, and a school database that saves and loads.</p>
+        </div>
+      </header>
+
+      <article class="proj wrap" id="fake-gpt" aria-labelledby="p03">
+        <div class="grid proj__grid">
+          <div class="proj__text" data-reveal>
+            <h3 class="h3 proj__title" id="p03">Fake-GPT</h3>
+            <ul class="tags proj__stack" aria-label="Built with"><li class="tag">Python</li></ul>
+            <p class="proj__lede">I call it Fake-GPT because you can chat with it, but it isn't a real GPT. The fourth version, Marvin4, is the final one. The versions in between only added features Marvin4 already has.</p>
+            <div class="spec">
+              <div class="spec__row"><span class="label">Run it</span><span>Clone the repo and run <code>main.py</code></span></div>
+            </div>
+            <div class="proj__links"><a class="btn btn--ghost" href="https://github.com/FelixCenusa/Python-Projects/tree/main/marvin4" target="_blank" rel="noopener">Code<svg class="go" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4.5 11.5l7-7M6 4.5h5.5V10"/></svg></a></div>
+          </div>
+          <div class="proj__media" data-reveal>
+            <figure class="shot">
+              <button class="shot__img" type="button" data-full="assets/img/opt/fakegptss.jpg" data-cap="Fake-GPT chatting in the terminal">
+                <img src="assets/img/opt/fakegptss.jpg" alt="Fake-GPT ASCII banner and a chat session in a terminal" width="1600" height="960" loading="lazy">
+              </button>
+              <figcaption><span>Fake-GPT chatting in the terminal.</span><span class="end">Click to enlarge</span></figcaption>
+            </figure>
+          </div>
+        </div>
+      </article>
+
+      <article class="proj wrap" id="press-ice" aria-labelledby="p04">
+        <div class="grid proj__grid">
+          <div class="proj__text" data-reveal>
+            <h3 class="h3 proj__title" id="p04">Press-Ice</h3>
+            <ul class="tags proj__stack" aria-label="Built with"><li class="tag">Python</li></ul>
+            <p class="proj__lede">A typing game called Press-Ice, because you have to be precise to get a good score. It tells you how fast you typed and which mistakes you made, and it has several difficulty levels. The original runs in a terminal; try the web version.</p>
+            <div class="spec">
+              <div class="spec__row"><span class="label">Run it</span><span>Clone the repo and run <code>main.py</code></span></div>
+            </div>
+            <div class="proj__links">
+              <a class="btn btn--ghost" href="https://github.com/FelixCenusa/Python-Projects/tree/main/typing" target="_blank" rel="noopener">Code<svg class="go" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4.5 11.5l7-7M6 4.5h5.5V10"/></svg></a>
+              <a class="btn btn--ghost" href="https://www.youtube.com/watch?v=ALf3cHNM08g" target="_blank" rel="noopener">Code walkthrough<svg class="go" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4.5 11.5l7-7M6 4.5h5.5V10"/></svg></a>
+            </div>
+            <div class="proj__note"><button type="button" data-full="assets/img/opt/pressicess.jpg" data-cap="The original Press-Ice running in a terminal next to its Python code"><img src="assets/img/opt/pressicess.jpg" alt="" width="1600" height="960" loading="lazy">See the original in the terminal</button></div>
+          </div>
+          <div class="proj__media" data-reveal>
+            <figure class="screen">
+              <figcaption class="screen__bar"><span>Press-Ice, re-created for the web</span><span class="end"><span class="led"></span>Try it</span></figcaption>
+              <div class="demo" data-demo="typing"><p class="demo-fallback">A playable typing test lives here. It needs JavaScript.</p></div>
+            </figure>
+          </div>
+        </div>
+      </article>
+
+      <article class="proj wrap" id="school-management" aria-labelledby="p05">
+        <div class="grid proj__grid">
+          <div class="proj__text" data-reveal>
+            <h3 class="h3 proj__title" id="p05">School Management System</h3>
+            <ul class="tags proj__stack" aria-label="Built with"><li class="tag">C++</li></ul>
+            <p class="proj__lede">A school database system that stores information about a school: its people and its classes.</p>
+            <div class="spec">
+              <div class="spec__row"><span class="label">Features</span><ul><li>Menu-driven interface</li><li>Save to file</li><li>Load from file</li></ul></div>
+              <div class="spec__row"><span class="label">Code</span><span class="muted">In a private repo (CPP-Projects)</span></div>
+            </div>
+          </div>
+          <div class="proj__media" data-reveal>
+            <figure class="shot">
+              <button class="shot__img" type="button" data-full="assets/img/opt/schoolmanagementss.jpg" data-cap="School Management System running in the terminal">
+                <img src="assets/img/opt/schoolmanagementss.jpg" alt="School Management System menu running in a terminal inside Visual Studio" width="1600" height="957" loading="lazy">
+              </button>
+              <figcaption><span>School Management System running in the terminal.</span><span class="end">Click to enlarge</span></figcaption>
+            </figure>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <!-- ============================================================ L2 algorithms -->
+    <section class="layer" id="l2" data-layer="l2" aria-labelledby="l2-title">
+      <header class="wrap layer__head">
+        <div class="grid layer__head-grid">
+          <div class="layer__id">
+            <ol class="layermap" aria-hidden="true"><li></li><li></li><li class="is-here"></li><li></li><li></li></ol>
+            <h2 class="h2" id="l2-title" data-split><span class="reg">L2</span>Algorithms</h2>
+          </div>
+          <p class="layer__desc" data-reveal>Search, pruning and puzzles, where how fast it runs is a design decision.</p>
+        </div>
+      </header>
+
+      <article class="proj wrap" id="aristotle" aria-labelledby="p06">
+        <div class="grid proj__grid">
+          <div class="proj__text" data-reveal>
+            <h3 class="h3 proj__title" id="p06">Aristotle's Puzzle Solver</h3>
+            <ul class="tags proj__stack" aria-label="Built with"><li class="tag">C++</li></ul>
+            <p class="proj__lede">A highly optimized C++ implementation that solves Aristotle's Puzzle efficiently. The puzzle: place 1 to 19 on a hexagonal board so that every straight line sums to 38. Try it by hand, or watch a search find it.</p>
+            <div class="spec">
+              <div class="spec__row"><span class="label">Features</span><ul><li>Efficient C++ implementation</li><li>Custom linked list</li><li>Mathematical rigour</li><li>Scalability</li><li>Debug printing</li></ul></div>
+            </div>
+            <div class="proj__links"><a class="btn btn--ghost" href="https://github.com/FelixCenusa/Aristotles-Puzzle-Solver" target="_blank" rel="noopener">Code &amp; write-up<svg class="go" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4.5 11.5l7-7M6 4.5h5.5V10"/></svg></a></div>
+            <div class="proj__note"><button type="button" data-full="assets/img/opt/AristotlesPuzzleAndMath.jpg" data-cap="The physical puzzle, on top of the maths behind the solver"><img src="assets/img/opt/AristotlesPuzzleAndMath.jpg" alt="" width="1280" height="960" loading="lazy">The physical puzzle and the maths</button></div>
+          </div>
+          <div class="proj__media" data-reveal>
+            <figure class="screen">
+              <figcaption class="screen__bar"><span>Aristotle's puzzle, solved by backtracking</span><span class="end"><span class="led"></span>Try it</span></figcaption>
+              <div class="demo" data-demo="aristotle"><p class="demo-fallback">An interactive board and an animated solver live here. They need JavaScript.</p></div>
+            </figure>
+          </div>
+        </div>
+      </article>
+
+      <article class="proj wrap" id="advent-of-code" aria-labelledby="p07">
+        <div class="grid proj__grid">
+          <div class="proj__text" data-reveal>
+            <h3 class="h3 proj__title" id="p07">Advent of Code 2024</h3>
+            <ul class="tags proj__stack" aria-label="Built with"><li class="tag">Python</li></ul>
+            <p class="proj__lede">Code solutions and video walkthroughs for every daily challenge in Advent of Code 2024, made to show problem solving across a wide range of programming concepts.</p>
+            <div class="spec">
+              <div class="spec__row"><span class="label">Features</span><ul><li>Solutions with explanations for each daily challenge</li><li>Video walkthroughs for every problem</li><li>Optimized, well-documented code</li></ul></div>
+            </div>
+            <div class="proj__links">
+              <a class="btn btn--ghost" href="https://github.com/FelixCenusa/Advent-Of-Code-2024" target="_blank" rel="noopener">Code<svg class="go" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4.5 11.5l7-7M6 4.5h5.5V10"/></svg></a>
+              <a class="btn btn--ghost" href="https://youtu.be/YIOukKYyW0U" target="_blank" rel="noopener">The supercut<svg class="go" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4.5 11.5l7-7M6 4.5h5.5V10"/></svg></a>
+            </div>
+          </div>
+          <div class="proj__media" data-reveal>
+            <div class="demo" data-demo="aoc"><p class="demo-fallback">An advent calendar of all 25 puzzles, each with its video walkthrough, lives here. It needs JavaScript; the <a class="link" href="https://github.com/FelixCenusa/Advent-Of-Code-2024#readme">repo README</a> links every video.</p></div>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <!-- ============================================================ user space / kernel space -->
+    <div class="boundary" role="separator" aria-label="The line between user space and kernel space">
+      <div class="boundary__up"><div class="wrap boundary__inner"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M8 13V2M3.5 6.5 8 2l4.5 4.5"/></svg>User space</div></div>
+      <div class="boundary__down" data-tone="dark"><div class="wrap boundary__inner"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M8 2v11M3.5 8.5 8 13l4.5-4.5"/></svg>Kernel space and hardware</div></div>
+      <div class="boundary__line" aria-hidden="true"><span>syscall</span></div>
+    </div>
+
+    <!-- ============================================================ L1 systems -->
+    <section class="layer" id="l1" data-layer="l1" data-tone="dark" aria-labelledby="l1-title">
+      <header class="wrap layer__head">
+        <div class="grid layer__head-grid">
+          <div class="layer__id">
+            <ol class="layermap" aria-hidden="true"><li></li><li></li><li></li><li class="is-here"></li><li></li></ol>
+            <h2 class="h2" id="l1-title" data-split><span class="reg">L1</span>Systems</h2>
+          </div>
+          <p class="layer__desc" data-reveal>The layer that turns a disk full of blocks into files and folders.</p>
+        </div>
+      </header>
+
+      <article class="proj wrap" id="fat-file-system" aria-labelledby="p08">
+        <div class="grid proj__grid">
+          <div class="proj__text" data-reveal>
+            <h3 class="h3 proj__title" id="p08">Custom File System with FAT</h3>
+            <ul class="tags proj__stack" aria-label="Built with"><li class="tag">C++</li></ul>
+            <p class="proj__lede">A flexible file system in C++ with its own File Allocation Table. It supports adjustable block sizes and the standard file operations. Drive a re-creation of the allocator: create, copy, move and delete files, and watch the block chains.</p>
+            <div class="spec">
+              <div class="spec__row"><span class="label">Features</span><ul><li>Adjustable block sizes</li><li>File and directory commands: <code>ls</code> <code>cd</code> <code>mv</code> <code>cp</code> <code>mkdir</code> <code>create</code></li><li>A streamlined FAT design for performance</li></ul></div>
+              <div class="spec__row"><span class="label">Code</span><span class="muted">Course work, not public</span></div>
+            </div>
+          </div>
+          <div class="proj__media" data-reveal>
+            <figure class="screen">
+              <figcaption class="screen__bar"><span>The FAT allocator and its block map</span><span class="end"><span class="led"></span>Try it</span></figcaption>
+              <div class="demo" data-demo="fat"><p class="demo-fallback">An interactive block map and terminal live here. They need JavaScript.</p></div>
+            </figure>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <!-- ============================================================ L0 metal -->
+    <section class="layer" id="l0" data-layer="l0" data-tone="dark" aria-labelledby="l0-title">
+      <header class="wrap layer__head">
+        <div class="grid layer__head-grid">
+          <div class="layer__id">
+            <ol class="layermap" aria-hidden="true"><li></li><li></li><li></li><li></li><li class="is-here"></li></ol>
+            <h2 class="h2" id="l0-title" data-split><span class="reg">L0</span>Metal</h2>
+          </div>
+          <p class="layer__desc" data-reveal>Registers, interrupts and instruction sets. The bottom of the stack, where every cycle counts.</p>
+        </div>
+      </header>
+
+      <article class="proj wrap" id="segment-display" aria-labelledby="p09">
+        <div class="grid proj__grid">
+          <div class="proj__text" data-reveal>
+            <h3 class="h3 proj__title" id="p09">8-Segment Display Controller</h3>
+            <ul class="tags proj__stack" aria-label="Built with"><li class="tag">ARM assembly</li></ul>
+            <p class="proj__lede">An ARM Assembly program that drives an 8-segment display and counts up or down based on user input. Input comes from the keyboard or physical push buttons, handled with both polling and interrupts. Switch modes in the simulation and watch what the CPU does.</p>
+            <div class="spec">
+              <div class="spec__row"><span class="label">Features</span><ul><li>Real-time input through polling and interrupts</li><li>Works with the keyboard and physical push buttons</li><li>Configurable counting direction, up or down</li><li>Efficient display refresh</li></ul></div>
+              <div class="spec__row"><span class="label">Code</span><span class="muted">Course work, not public</span></div>
+            </div>
+          </div>
+          <div class="proj__media" data-reveal>
+            <figure class="screen">
+              <figcaption class="screen__bar"><span>The 8-segment controller: polling or interrupts</span><span class="end"><span class="led"></span>Try it</span></figcaption>
+              <div class="demo" data-demo="segment"><p class="demo-fallback">A live display with push buttons and a logic analyzer lives here. It needs JavaScript.</p></div>
+            </figure>
+          </div>
+        </div>
+      </article>
+
+      <article class="proj wrap" id="tis-100" aria-labelledby="p10">
+        <div class="grid proj__grid">
+          <div class="proj__text" data-reveal>
+            <h3 class="h3 proj__title" id="p10">TIS-100</h3>
+            <ul class="tags proj__stack" aria-label="Built with"><li class="tag">TIS-100 assembly</li></ul>
+            <p class="proj__lede">Played through and completed all of TIS-100, a puzzle game built around programming in assembly. Next to it, a node in the same spirit runs real programs one instruction at a time.</p>
+            <div class="spec">
+              <div class="spec__row"><span class="label">Status</span><span>Completed</span></div>
+            </div>
+          </div>
+          <div class="proj__media" data-reveal>
+            <figure class="screen">
+              <figcaption class="screen__bar"><span>An execution node you can step through</span><span class="end"><span class="led"></span>Try it</span></figcaption>
+              <div class="demo" data-demo="tis"><p class="demo-fallback">A node you can step through lives here. It needs JavaScript.</p></div>
+            </figure>
+          </div>
+        </div>
+      </article>
+    </section>
+
+    <!-- ============================================================ about -->
+    <section class="section wrap" id="about" aria-labelledby="about-title">
+      <div class="grid about__grid">
+        <h2 class="h2 about__lead" id="about-title" data-split>From running a firm to writing file systems.</h2>
+        <div class="about__body" data-reveal>
+          <p>Before university I ran my own cybersecurity firm for a year. Then I enrolled at BTH, Blekinge Institute of Technology, to study Software Engineering, and helped the students who started after me with the C++ course.</p>
+          <p>I like programming and data-driven stock analysis. I was born in Spain, grew up in Romania, live in Sweden, and speak four languages.</p>
+          <dl class="facts">
+            <div><dt>Education</dt><dd>Software Engineering, BTH, 2023–2026</dd></div>
+            <div><dt>Before</dt><dd>My own cybersecurity firm, one year</dd></div>
+            <div><dt>Writes</dt><dd>C++, Python, JavaScript, SQL, ARM assembly</dd></div>
+          </dl>
+          <div class="proj__links">
+            <a class="btn btn--ghost" href="cv/">Read the CV<svg class="go" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 8h11M8.5 3.5 13 8l-4.5 4.5"/></svg></a>
+            <a class="btn btn--ghost" href="https://felix.best/Felix_Cenusa_CV.pdf" target="_blank" rel="noopener">Latest CV (PDF)<svg class="go" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4.5 11.5l7-7M6 4.5h5.5V10"/></svg></a>
+          </div>
+        </div>
       </div>
     </section>
   </main>
 
-  <section class="contact on-dark" id="contact" aria-labelledby="contact-title">
+  <!-- ============================================================ contact -->
+  <section class="contact" id="contact" aria-labelledby="contact-title">
     <div class="wrap">
-      <div class="folio">
-        <span class="folio__no mono">02</span>
-        <span class="folio__name mono">Contact</span>
-        <span class="folio__meta mono">Sweden</span>
-      </div>
-      <h2 class="contact__title" id="contact-title">Say hello<span class="dot">.</span></h2>
-      <p class="contact__note">Email is the quickest way to reach me. My CV and code are linked below.</p>
-
+      <h2 class="display contact__title" id="contact-title" data-split>Say hello.</h2>
       <div class="grid contact__row">
         <div class="contact__mail">
-          <span class="mono" style="display:block; color: var(--on-dark-3); margin-bottom: 10px">Email</span>
-          <a href="mailto:felixcenusa@gmail.com">felixcenusa@gmail.com<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><path d="M1 8h13M9 3l5 5-5 5"/></svg></a>
+          <span class="label">Email, the quickest way to reach me</span>
+          <a class="mailto" href="mailto:felixcenusa@gmail.com">felixcenusa@gmail.com<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><path d="M2 8h11M8.5 3.5 13 8l-4.5 4.5"/></svg></a>
+          <div><button class="ctl copy-btn" type="button" data-copy="felixcenusa@gmail.com"><svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" aria-hidden="true"><rect x="5" y="5" width="8.5" height="8.5" rx="1.5"/><path d="M10.5 5V3.5A1.5 1.5 0 0 0 9 2H3.5A1.5 1.5 0 0 0 2 3.5V9a1.5 1.5 0 0 0 1.5 1.5H5"/></svg>Copy address</button></div>
         </div>
         <div class="contact__meta">
-          <div><span class="mono">GitHub</span><p><a href="https://github.com/FelixCenusa" target="_blank" rel="noopener">FelixCenusa</a></p></div>
-          <div><span class="mono">LinkedIn</span><p><a href="https://linkedin.com/in/felixcenusa" target="_blank" rel="noopener">felixcenusa</a></p></div>
-          <div><span class="mono">Links</span><p><a href="https://felix.best" target="_blank" rel="noopener">felix.best</a></p></div>
-          <div><span class="mono">CV</span><p><a href="https://felix.best/Felix_Cenusa_CV.pdf" target="_blank" rel="noopener">Download PDF</a></p></div>
+          <div><span class="label">GitHub</span><p><a class="link" href="https://github.com/FelixCenusa" target="_blank" rel="noopener">FelixCenusa</a></p></div>
+          <div><span class="label">LinkedIn</span><p><a class="link" href="https://linkedin.com/in/felixcenusa" target="_blank" rel="noopener">felixcenusa</a></p></div>
+          <div><span class="label">Links</span><p><a class="link" href="https://felix.best" target="_blank" rel="noopener">felix.best</a></p></div>
+          <div><span class="label">CV</span><p><a class="link" href="https://felix.best/Felix_Cenusa_CV.pdf" target="_blank" rel="noopener">Download PDF</a></p></div>
         </div>
       </div>
 
       <footer class="footer">
+        <div class="trace" data-trace hidden>
+          <div class="trace__head">
+            <p class="trace__cap">Your visit so far, one channel per layer. A channel is high while its layer is on screen.</p>
+            <button class="ctl trace__dl" type="button" data-trace-vcd>Download .vcd</button>
+          </div>
+          <div class="trace__body">
+            <ul class="trace__labels" data-trace-labels aria-hidden="true">
+              <li data-ch="l4"><b>L4</b><span>Web</span></li>
+              <li data-ch="l3"><b>L3</b><span>Apps</span></li>
+              <li data-ch="l2"><b>L2</b><span>Algorithms</span></li>
+              <li data-ch="l1"><b>L1</b><span>Systems</span></li>
+              <li data-ch="l0"><b>L0</b><span>Metal</span></li>
+            </ul>
+            <div class="trace__plot" data-trace-plot tabindex="0" role="slider" aria-label="Time in your visit" aria-valuemin="0" aria-valuemax="0" aria-valuenow="0">
+              <svg data-trace-svg aria-hidden="true" focusable="false"></svg>
+              <div class="trace__cursor" data-trace-cursor hidden><span class="trace__tip" data-trace-tip></span></div>
+            </div>
+            <div class="trace__axis" data-trace-axis aria-hidden="true"></div>
+          </div>
+          <p class="sr-only" data-trace-summary></p>
+        </div>
         <div class="bits" data-bits="FELIX" aria-hidden="true"></div>
-        <div class="footer__bar mono">
+        <div class="footer__bar">
           <span>© <span data-year>2026</span> Felix Cenusa</span>
-          <a href="https://github.com/FelixCenusa/portfolio" target="_blank" rel="noopener">Fork this site on GitHub</a>
-          <a href="#main">Back to top ↑</a>
+          <span class="build" data-build hidden><span class="led"></span><a data-build-link href="https://github.com/FelixCenusa/portfolio/commits/main" target="_blank" rel="noopener">build <span data-build-sha>main</span></a></span>
+          <a href="https://github.com/FelixCenusa/portfolio" target="_blank" rel="noopener">Source on GitHub</a>
+          <a href="#main" data-top>Back to top ↑</a>
         </div>
       </footer>
     </div>
   </section>
 
-  <div class="grain" aria-hidden="true"></div>
-  <script src="assets/js/site.js"></script>
+  <dialog class="palette" aria-label="Command palette">
+    <div class="palette__head">
+      <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><circle cx="7" cy="7" r="4.5"/><path d="M10.5 10.5 14 14"/></svg>
+      <input class="palette__input" type="text" placeholder="Jump to a project, layer or action…" aria-label="Search commands" role="combobox" aria-expanded="true" aria-controls="palette-list" aria-autocomplete="list" autocomplete="off" spellcheck="false">
+      <kbd>esc</kbd>
+    </div>
+    <ul class="palette__list" id="palette-list" role="listbox" aria-label="Commands"></ul>
+    <div class="palette__foot"><span><kbd>↑</kbd><kbd>↓</kbd> move</span><span><kbd>↵</kbd> open</span><span><kbd>esc</kbd> close</span></div>
+  </dialog>
+
+  <div class="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer" inert>
+    <div class="lightbox__top"><span class="label" data-lightbox-label>Screenshot</span><button class="ctl" type="button" data-lightbox-close>Close <kbd>esc</kbd></button></div>
+    <div class="lightbox__stage"><img alt=""></div>
+    <div class="lightbox__cap"></div>
+  </div>
+
+  <div class="toast" role="status" aria-live="polite"></div>
 </body>
 </html>
