@@ -472,12 +472,6 @@ if (stage) {
   }
 }
 
-// a theme change repaints what CSS can't reach, then re-measures once the new fonts are in
-document.addEventListener('themechange', () => {
-  paintThemeMeta();
-  if (stack && stack.recolor) stack.recolor();
-  if (document.fonts) document.fonts.ready.then(() => ScrollTrigger && ScrollTrigger.refresh());
-});
 
 /* ------------------------------------------------------------ motion: intro, split headings, reveals */
 const html = document.documentElement;

@@ -44,77 +44,84 @@
    --s-* (demo screens), and the scopes below map them onto the working names.
    Lines, tints and shadows are derived, so a theme only restates this block. */
 :root {
-  color-scheme: light;
+  color-scheme: dark;
 
-  /* the descent: one tone per layer, paper at the top, solder mask at the bottom */
-  --tone-l4: #eff1ec;
-  --tone-l3: #e6eae4;
-  --tone-l2: #dce2db;
-  --tone-l1: #1b3327;
-  --tone-l0: #0c1611;
+  /* the descent: one tone per layer, a step darker each time */
+  --tone-l4: #181b21;
+  --tone-l3: #15181d;
+  --tone-l2: #12151a;
+  --tone-l1: #0e1014;
+  --tone-l0: #0a0b0e;
 
-  /* paper */
-  --bg-0: #eff1ec;
-  --bg-1: #f9faf7;
-  --bg-2: #e7ebe5;
-  --bg-3: #dde3dc;
-  --bg-4: #cdd5cd;
-  --text-1: #131c17;
-  --text-2: #46524b;
-  --text-3: #56625b;
-  --text-4: #8b968f;
-  --accent: #1d6b47;      /* mask green: links, focus, the current layer */
-  --accent-hi: #13573a;
-  --accent-lo: #3d8a63;
-  --accent-ink: #ffffff;
-  --signal: #1f8a57;      /* live things: status dots, running demos */
-  --fault: #c0243a;
-  --shade: #131c17;       /* what shadows are made of */
-  --edge: inset 0 1px 0 rgba(255, 255, 255, 0.75);
+  /* channels: each layer is a probe with its own colour */
+  --ch-l4: #f4e04d;
+  --ch-l3: #4fd6ee;
+  --ch-l2: #ff6ad5;
+  --ch-l1: #5be38a;
+  --ch-l0: #7aa5ff;
 
-  /* the board */
-  --d-bg-0: #0c1611;
-  --d-bg-1: #121f18;
-  --d-bg-2: #18291f;
-  --d-bg-3: #203328;
-  --d-bg-4: #2a3f32;
-  --d-text-1: #e6eee8;
-  --d-text-2: #a7b7ad;
-  --d-text-3: #8b9d93;
-  --d-text-4: #5b6d62;
-  --d-accent: #c4e86b;    /* LED lime */
-  --d-accent-hi: #d8f394;
-  --d-accent-lo: #8fb33f;
-  --d-accent-ink: #0c1611;
-  --d-signal: #7ee0b0;
-  --d-fault: #ff8f8a;
-  --l1-bg-0: #1b3327;     /* L1 sits on the mask itself, so raised surfaces step up from it */
-  --l1-bg-1: #213b2e;
-  --l1-bg-2: #284435;
-  --l1-bg-3: #2f4d3c;
-  --l1-bg-4: #385845;
-  --s-bg-0: #08110c;      /* demo screens are a step darker than anything around them */
-  --s-bg-1: #0d1812;
-  --s-bg-2: #132019;
-  --s-bg-3: #1a2a21;
-  --s-bg-4: #22352a;
+  /* the screen */
+  --bg-0: #181b21;
+  --bg-1: #1f232a;
+  --bg-2: #272b33;
+  --bg-3: #30353e;
+  --bg-4: #3b414b;
+  --text-1: #e9edf2;
+  --text-2: #b4bcc8;
+  --text-3: #8f99a8;
+  --text-4: #5f6876;
+  --accent: #4fd6ee;      /* links and focus; each layer swaps in its channel */
+  --accent-hi: #86e5f5;
+  --accent-lo: #2aa9c2;
+  --accent-ink: #08090c;
+  --signal: #5be38a;      /* live things: status dots, running demos */
+  --fault: #ff6b6b;
+  --shade: #000000;       /* what shadows are made of */
+  --edge: inset 0 1px 0 rgba(255, 255, 255, 0.05);
+
+  /* the deep end: kernel-space sections, overlays */
+  --d-bg-0: #0a0b0e;
+  --d-bg-1: #121419;
+  --d-bg-2: #191c22;
+  --d-bg-3: #21252c;
+  --d-bg-4: #2b3039;
+  --d-text-1: #e9edf2;
+  --d-text-2: #b4bcc8;
+  --d-text-3: #8f99a8;
+  --d-text-4: #5f6876;
+  --d-accent: #4fd6ee;    /* the default channel, used on screens */
+  --d-accent-hi: #86e5f5;
+  --d-accent-lo: #2aa9c2;
+  --d-accent-ink: #08090c;
+  --d-signal: #5be38a;
+  --d-fault: #ff6b6b;
+  --l1-bg-0: #0e1014;     /* L1 has its own tone, so raised surfaces step up from it */
+  --l1-bg-1: #16191e;
+  --l1-bg-2: #1d2026;
+  --l1-bg-3: #25292f;
+  --l1-bg-4: #2e3239;
+  --s-bg-0: #060709;      /* demo screens are a step darker than anything around them */
+  --s-bg-1: #0c0d10;
+  --s-bg-2: #121418;
+  --s-bg-3: #191b20;
+  --s-bg-4: #212429;
 
   /* odds and ends that carry the palette */
   --select-bg: var(--d-accent);
   --select-ink: var(--d-accent-ink);
-  --pill: var(--d-accent);           /* the syscall pill */
-  --pill-ink: var(--d-accent-ink);
-  --dash: color-mix(in srgb, var(--d-accent) 55%, transparent);
+  --pill: #f4e04d;           /* the syscall pill */
+  --pill-ink: #0a0b0e;
+  --dash: color-mix(in srgb, var(--ch-l4) 70%, transparent);
 
   /* the stack (poster and 3D): top, right side, left side and line colour of each slab */
-  --slab-l4: #fafbf8; --slab-l4-r: #dfe5de; --slab-l4-l: #cdd6ce; --slab-l4-ink: var(--accent);
-  --slab-l3: #f0f3ee; --slab-l3-r: #d6ddd6; --slab-l3-l: #c4cec5; --slab-l3-ink: var(--accent);
-  --slab-l2: #e3e9e2; --slab-l2-r: #c9d2c9; --slab-l2-l: #b7c2b8; --slab-l2-ink: var(--accent);
-  --slab-l1: #1f3a2d; --slab-l1-r: #172c22; --slab-l1-l: #11221a; --slab-l1-ink: var(--d-accent);
-  --slab-l0: #10201a; --slab-l0-r: #0b1611; --slab-l0-l: #07100c; --slab-l0-ink: var(--d-accent);
-  --via: var(--accent);
-  --pulse: var(--d-accent);
-  --pulse-rim: var(--accent);
+  --slab-l4: #2c323c; --slab-l4-r: #1f232a; --slab-l4-l: #181c21; --slab-l4-ink: #f4e04d;
+  --slab-l3: #262b34; --slab-l3-r: #1b1e24; --slab-l3-l: #15181d; --slab-l3-ink: #4fd6ee;
+  --slab-l2: #20242c; --slab-l2-r: #16191f; --slab-l2-l: #121418; --slab-l2-ink: #ff6ad5;
+  --slab-l1: #1b1f26; --slab-l1-r: #13161b; --slab-l1-l: #0f1115; --slab-l1-ink: #5be38a;
+  --slab-l0: #16191f; --slab-l0-r: #0f1216; --slab-l0-l: #0c0e11; --slab-l0-ink: #7aa5ff;
+  --via: #5a6474;
+  --pulse: #ffffff;
+  --pulse-rim: #4fd6ee;
 
   /* the advent calendar's doors */
   --door: var(--bg-1);
@@ -127,18 +134,18 @@
   --f-sans: 'Mona Sans', 'Helvetica Neue', Arial, sans-serif;
   --f-mono: 'Mona Sans Mono', ui-monospace, 'SFMono-Regular', Consolas, 'Liberation Mono', monospace;
   --f-display: var(--f-sans);
-  --display-weight: 640;
-  --display-stretch: 100%;
-  --display-track: -0.05em;
-  --head-weight: 620;
-  --head-track: -0.042em;
+  --display-weight: 700;
+  --display-stretch: 78%;
+  --display-track: -0.02em;
+  --head-weight: 680;
+  --head-track: -0.018em;
 
   --pad: clamp(16px, 4vw, 56px);
   --max: 1360px;
   --gap: clamp(14px, 1.6vw, 24px);
-  --r-1: 4px;
-  --r-2: 8px;
-  --r-3: 12px;
+  --r-1: 3px;
+  --r-2: 5px;
+  --r-3: 8px;
   --nav-h: 60px;
 
   --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
@@ -166,11 +173,17 @@
   --shade: #000;
   --edge: inset 0 1px 0 rgba(255, 255, 255, 0.05);
 }
+/* each layer is a channel: its accent is its probe colour */
+[data-layer="l4"] { --accent: #f4e04d; --accent-hi: #f8eb8b; --accent-lo: #b7a83a; --accent-ink: #0a0b0e; }
+[data-layer="l3"] { --accent: #4fd6ee; --accent-hi: #8de4f4; --accent-lo: #3ba0b2; --accent-ink: #0a0b0e; }
+[data-layer="l2"] { --accent: #ff6ad5; --accent-hi: #ff9ee4; --accent-lo: #bf50a0; --accent-ink: #0a0b0e; }
+[data-layer="l1"] { --accent: #5be38a; --accent-hi: #94edb3; --accent-lo: #44aa68; --accent-ink: #0a0b0e; }
+[data-layer="l0"] { --accent: #7aa5ff; --accent-hi: #a9c4ff; --accent-lo: #5c7cbf; --accent-ink: #0a0b0e; }
 [data-layer="l1"] { --bg-0: var(--l1-bg-0); --bg-1: var(--l1-bg-1); --bg-2: var(--l1-bg-2); --bg-3: var(--l1-bg-3); --bg-4: var(--l1-bg-4); }
 .screen { --bg-0: var(--s-bg-0); --bg-1: var(--s-bg-1); --bg-2: var(--s-bg-2); --bg-3: var(--s-bg-3); --bg-4: var(--s-bg-4); }
 
 /* derived: restated in every scope so they follow that scope's colours */
-:root, [data-tone="dark"], .nav.is-dark, .rail.is-dark, .lightbox, .toast, .screen {
+:root, [data-layer], [data-tone="dark"], .nav.is-dark, .rail.is-dark, .lightbox, .toast, .screen {
   --line-1: color-mix(in srgb, var(--text-1) 8%, transparent);
   --line-2: color-mix(in srgb, var(--text-1) 14%, transparent);
   --line-3: color-mix(in srgb, var(--text-1) 26%, transparent);
@@ -808,3 +821,108 @@ kbd, .kbd {
   .ls__table tr { display: grid; grid-template-columns: 1fr; padding: 14px 0; border-bottom: 1px solid var(--line-2); }
   .ls__table td { padding: 2px 0; border: 0; }
 }
+
+/* ==========================================================================
+   The scope
+   Dark all the way down, read like a scope screen: a graticule behind every
+   layer, each layer a channel with its own colour and its own running trace,
+   condensed panel lettering, and soft keys for buttons.
+   ========================================================================== */
+.display { text-transform: uppercase; line-height: 0.88; }
+:is(body, .layer, .boundary__up, .boundary__down) {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px), linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    radial-gradient(rgba(255, 255, 255, 0.11) 0.7px, transparent 1.3px),
+    var(--fade, linear-gradient(var(--tone, var(--tone-l4)), var(--tone, var(--tone-l4))));
+  background-size: 100px 100px, 100px 100px, 20px 20px, auto;
+  background-position: calc(50% + 0.5px) 0, calc(50% + 0.5px) 0, calc(50% + 0.5px) 0, 0 0;
+}
+.boundary__up { --tone: var(--tone-l2); }
+.boundary__down { --tone: var(--tone-l1); }
+
+/* each layer is a channel */
+[data-layer="l4"], [href="#l4"], [data-layer-label="l4"] { --ch: var(--ch-l4); }
+[data-layer="l3"], [href="#l3"], [data-layer-label="l3"] { --ch: var(--ch-l3); }
+[data-layer="l2"], [href="#l2"], [data-layer-label="l2"] { --ch: var(--ch-l2); }
+[data-layer="l1"], [href="#l1"], [data-layer-label="l1"] { --ch: var(--ch-l1); }
+[data-layer="l0"], [href="#l0"], [data-layer-label="l0"] { --ch: var(--ch-l0); }
+:is(.index__row, .rail a) { --accent: var(--ch); }
+.stage__labels b { color: var(--ch); }
+.index__swatch { background: var(--ch) !important; box-shadow: none; transform: none; width: 22px; height: 4px; border-radius: 2px; }
+.layermap li:nth-child(1) { --ch: var(--ch-l4); }
+.layermap li:nth-child(2) { --ch: var(--ch-l3); }
+.layermap li:nth-child(3) { --ch: var(--ch-l2); }
+.layermap li:nth-child(4) { --ch: var(--ch-l1); }
+.layermap li:nth-child(5) { --ch: var(--ch-l0); }
+.layermap li { background: color-mix(in srgb, var(--ch) 22%, transparent); box-shadow: none; }
+.layermap li.is-here { background: var(--ch); }
+.layer__id .reg {
+  display: inline-block; margin-right: 0.32em; padding: 0.1em 0.18em 0.04em; border-radius: 0.1em;
+  background: var(--accent); color: var(--accent-ink);
+  font-size: 0.5em; font-weight: 600; letter-spacing: -0.03em; line-height: 1; vertical-align: 0.32em;
+}
+
+/* the trace: each channel draws its own signal under its heading, and it runs */
+.layer__head::after {
+  content: ''; display: block; height: 28px; margin-top: 34px; background: var(--accent); opacity: 0.9;
+  -webkit-mask: var(--wave) 0 50% / 120px 28px repeat-x; mask: var(--wave) 0 50% / 120px 28px repeat-x;
+}
+.layer[data-layer="l4"] { --wave: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 28'%3E%3Cpath d='M0 14 Q15 -6 30 14 T60 14 T90 14 T120 14' fill='none' stroke='%23000' stroke-width='1.6'/%3E%3C/svg%3E"); }
+.layer[data-layer="l3"] { --wave: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 28'%3E%3Cpath d='M0 22 L15 6 L30 22 L45 6 L60 22 L75 6 L90 22 L105 6 L120 22' fill='none' stroke='%23000' stroke-width='1.6' stroke-linejoin='round'/%3E%3C/svg%3E"); }
+.layer[data-layer="l2"] { --wave: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 28'%3E%3Cpath d='M0 22 L30 6 V22 L60 6 V22 L90 6 V22 L120 6 V22' fill='none' stroke='%23000' stroke-width='1.6'/%3E%3C/svg%3E"); }
+.layer[data-layer="l1"] { --wave: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 28'%3E%3Cpath d='M0 22 H30 V6 H60 V22 H90 V6 H120 V22' fill='none' stroke='%23000' stroke-width='1.6'/%3E%3C/svg%3E"); }
+.layer[data-layer="l0"] { --wave: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 28'%3E%3Cpath d='M0 22 H8 V6 H16 V22 H36 V6 H44 V22 H52 V6 H76 V22 H96 V6 H104 V22 H120' fill='none' stroke='%23000' stroke-width='1.6'/%3E%3C/svg%3E"); }
+@media (prefers-reduced-motion: no-preference) {
+  .layer__head::after { animation: scope-run 3.2s linear infinite; }
+}
+@keyframes scope-run { to { -webkit-mask-position: -120px 50%; mask-position: -120px 50%; } }
+
+/* soft keys */
+.btn { height: 42px; border-radius: 5px; font-weight: 640; font-stretch: 86%; font-size: 15px; letter-spacing: 0.005em; }
+.btn--ghost {
+  background: var(--bg-2);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07), inset 0 0 0 1px var(--line-2), 0 2px 0 rgba(0, 0, 0, 0.55);
+}
+.btn--ghost:hover { background: var(--bg-3); box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.07), inset 0 0 0 1px var(--line-3), 0 2px 0 rgba(0, 0, 0, 0.55); }
+.btn--primary { box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.3), 0 2px 0 rgba(0, 0, 0, 0.55); }
+.btn:active { transform: translateY(2px); }
+.tag { background: transparent; box-shadow: inset 0 0 0 1px var(--line-3); border-radius: 4px; }
+.shot__img { border-radius: 4px; box-shadow: 0 0 0 1px var(--line-2), 0 0 0 5px var(--bg-1), 0 0 0 6px var(--line-1); }
+.index__name, .proj__title { font-stretch: 86%; }
+.hero__eyebrow .led { background: var(--ch-l4); box-shadow: 0 0 0 3px rgba(244, 224, 77, 0.18); }
+.contact { border-top: 0; }
+
+/* the projects table reads in channel colours too */
+tr[data-row="l4"] { --ch: var(--ch-l4); }
+tr[data-row="l3"] { --ch: var(--ch-l3); }
+tr[data-row="l2"] { --ch: var(--ch-l2); }
+tr[data-row="l1"] { --ch: var(--ch-l1); }
+tr[data-row="l0"] { --ch: var(--ch-l0); }
+.ls__layer { color: var(--ch, var(--accent)); }
+.ls__table tbody tr { box-shadow: inset 2px 0 0 transparent; transition: background 0.25s, box-shadow 0.25s; }
+.ls__table tbody tr:hover { box-shadow: inset 2px 0 0 var(--ch); }
+
+.timeline .years { color: var(--ch-l4); }
+
+/* ---------------------------------------------------------------- the rail as a small stack */
+.rail a i { width: 20px; height: 7px; border-radius: 1.5px; transform: skewX(-45deg); background: var(--slab); box-shadow: inset 0 0 0 1px var(--line-3); transition: transform 0.45s var(--ease-out), background 0.3s, width 0.4s var(--ease-out); }
+.rail a[data-rail="l4"] { --slab: var(--tone-l4); }
+.rail a[data-rail="l3"] { --slab: var(--tone-l3); }
+.rail a[data-rail="l2"] { --slab: var(--tone-l2); }
+.rail a[data-rail="l1"] { --slab: var(--tone-l1); }
+.rail a[data-rail="l0"] { --slab: var(--tone-l0); }
+.rail a.is-active i { width: 20px; background: var(--accent); box-shadow: none; transform: skewX(-45deg) translateX(6px); }
+.rail a i { background: color-mix(in srgb, var(--ch) 25%, transparent); box-shadow: none; }
+.rail a.is-active i { background: var(--ch); }
+
+/* ---------------------------------------------------------------- the 404 page */
+.lost { min-height: calc(100svh - var(--nav-h) - 280px); }
+.lost__core {
+  margin: 28px 0 0; padding: 16px 18px; max-width: 34em; overflow-x: auto;
+  border-radius: var(--r-2); background: var(--s-bg-1); color: var(--d-text-2);
+  box-shadow: 0 0 0 1px var(--s-bg-0);
+  font-family: var(--f-mono); font-size: 13.5px; line-height: 1.7; font-variant-ligatures: none;
+}
+.lost__core code { font-size: inherit; }
+.lost__prompt { color: var(--d-accent); }
+.lost .page-head__side .btn { min-width: 220px; justify-content: space-between; }
