@@ -1,1 +1,66 @@
-/* Project captures: commit history as traces, with cursors (assets/js/captures.js). */
+/* Project captures: commit history as traces, with cursors (assets/js/captures.js).
+   Above each project title, a thin capture of its repo: commits per week as a
+   step trace in the layer's channel colour. Hover or focus puts two cursors on
+   the first and last commit, and the readout above measures between them. A
+   project with no public repo is a flat line: no signal on the probe. */
+
+.capture {
+  position: relative; display: block; margin: 0 0 14px;
+  color: var(--ch, var(--accent)); border-radius: var(--r-1);
+}
+.capture:focus-visible { outline-offset: 5px; }
+.capture.is-pending { visibility: hidden; }
+.capture__box { position: relative; display: block; height: 28px; }
+
+/* the trace: crisp steps, drawn in device pixels by the script (which also sets the stroke width,
+   rounded to whole device pixels, as an attribute; so no stroke-width here) */
+.capture__trace { position: absolute; inset: 0; width: 100%; height: 100%; overflow: hidden; }
+.capture__trace polyline {
+  fill: none; stroke: currentColor;
+  stroke-linejoin: miter; stroke-linecap: butt; vector-effect: non-scaling-stroke;
+}
+.capture.is-none .capture__trace polyline { stroke-opacity: 0.45; }
+
+/* it sweeps in once, left to right at a constant rate, like a scope drawing a capture
+   (a beat late, so the project's text has mostly faded in by then) */
+.capture__trace { clip-path: inset(0 100% 0 0); transition: clip-path 0.5s linear 0.3s; }
+.capture.is-captured .capture__trace { clip-path: inset(0); }
+
+/* the readout, in the space above the capture so it moves nothing when it changes */
+.capture__read {
+  position: absolute; left: 0; right: 0; bottom: calc(100% + 6px);
+  font-size: 13px; line-height: 18px; font-weight: 450; color: var(--text-3);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+}
+.capture__read .num { font-size: 12.5px; font-weight: 500; color: var(--text-2); }
+.capture__meas { display: none; }
+.capture__meas .num { display: inline-block; text-align: right; }
+.capture.is-on .capture__idle { display: none; }
+.capture.is-on .capture__meas { display: inline; }
+.capture.is-on .capture__read { color: var(--text-2); }
+.capture.is-on .capture__read .num { color: var(--text-1); }
+
+/* the cursors: 1px dashed lines that slide in from the edges and settle on the first and last commit */
+.capture__cursor {
+  position: absolute; top: -4px; bottom: -4px; left: 0; width: 1px; pointer-events: none;
+  background: repeating-linear-gradient(to bottom, var(--text-2) 0 3px, transparent 3px 5px);
+  opacity: 0;
+  transition: transform 0.5s var(--cap-ease, var(--ease-out)), opacity 0.12s linear;
+}
+.capture__cursor[data-c="a"] { transform: translateX(0); }
+.capture__cursor[data-c="b"] { transform: translateX(var(--w, 0px)); }
+.capture.is-on .capture__cursor { opacity: 1; }
+.capture.is-on .capture__cursor[data-c="a"] { transform: translateX(var(--a, 0px)); }
+.capture.is-on .capture__cursor[data-c="b"] { transform: translateX(var(--b, 0px)); }
+
+/* /projects/: a compact capture under each description, readout beside it (or under it when the cell is narrow) */
+.capture--row { display: flex; flex-wrap: wrap; align-items: center; gap: 4px 14px; margin: 12px 0 0; }
+.capture--row .capture__box { order: -1; flex: 0 1 160px; min-width: 96px; height: 18px; }
+.capture--row .capture__read { position: static; flex: 1 1 auto; min-width: 0; }
+.capture--row .capture__cursor { top: -3px; bottom: -3px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .capture__trace { clip-path: none; transition: none; }
+  .capture__cursor { transition: none; }
+}
+@media print { .capture__trace { clip-path: none; } }
