@@ -911,16 +911,40 @@ tr[data-row="l0"] { --ch: var(--ch-l0); }
 
 .timeline .years { color: var(--ch-l4); }
 
-/* ---------------------------------------------------------------- the rail as a small stack */
-.rail a i { width: 20px; height: 7px; border-radius: 1.5px; transform: skewX(-45deg); background: var(--slab); box-shadow: inset 0 0 0 1px var(--line-3); transition: transform 0.45s var(--ease-out), background 0.3s, width 0.4s var(--ease-out); }
-.rail a[data-rail="l4"] { --slab: var(--tone-l4); }
-.rail a[data-rail="l3"] { --slab: var(--tone-l3); }
-.rail a[data-rail="l2"] { --slab: var(--tone-l2); }
-.rail a[data-rail="l1"] { --slab: var(--tone-l1); }
-.rail a[data-rail="l0"] { --slab: var(--tone-l0); }
-.rail a.is-active i { width: 20px; background: var(--accent); box-shadow: none; transform: skewX(-45deg) translateX(6px); }
-.rail a i { background: color-mix(in srgb, var(--ch) 25%, transparent); box-shadow: none; }
-.rail a.is-active i { background: var(--ch); }
+/* ---------------------------------------------------------------- the trace, wherever the stack is drawn small
+   The mark, the rail and each layer's map are the same picture: one trace
+   stepping down five levels, a level per layer in its channel colour. The
+   current level is lit; the others sit at a third of their colour. */
+.rail a i { width: 14px; height: 3px; border-radius: 0; transform: none; box-shadow: none; background: color-mix(in srgb, var(--ch) 32%, transparent); transition: background 0.3s, width 0.4s var(--ease-out); }
+.rail a[data-rail="l3"] i { margin-left: 5px; }
+.rail a[data-rail="l2"] i { margin-left: 10px; }
+.rail a[data-rail="l1"] i { margin-left: 15px; }
+.rail a[data-rail="l0"] i { margin-left: 20px; }
+.rail a[data-rail="l4"] i { margin-left: 0; }
+.rail a { width: auto; }
+.rail a i { flex: none; }
+.rail a span { margin-left: calc(20px - var(--step, 0px)); }
+.rail a[data-rail="l3"] { --step: 5px; }
+.rail a[data-rail="l2"] { --step: 10px; }
+.rail a[data-rail="l1"] { --step: 15px; }
+.rail a[data-rail="l0"] { --step: 20px; }
+.rail a.is-active i { width: 14px; background: var(--ch); }
+
+.layermap { position: relative; display: block; width: 46px; height: 31px; margin: 0 0 0.5em; padding: 0; gap: 0; }
+.layermap li { position: absolute; width: 11px; height: 3px; border-radius: 0; box-shadow: none; transform: none; background: color-mix(in srgb, var(--ch) 50%, transparent); }
+.layermap li:nth-child(1) { left: 0; top: 0; }
+.layermap li:nth-child(2) { left: 9px; top: 7px; }
+.layermap li:nth-child(3) { left: 18px; top: 14px; }
+.layermap li:nth-child(4) { left: 27px; top: 21px; }
+.layermap li:nth-child(5) { left: 36px; top: 28px; }
+.layermap li.is-here { background: var(--ch); box-shadow: none; transform: none; }
+
+/* a demo is a screen on its layer's channel */
+[data-layer="l4"] .screen { --accent: var(--ch-l4); --accent-hi: #f8eb8b; --accent-lo: #b7a83a; --accent-ink: #0a0b0e; }
+[data-layer="l3"] .screen { --accent: var(--ch-l3); --accent-hi: #8de4f4; --accent-lo: #3ba0b2; --accent-ink: #0a0b0e; }
+[data-layer="l2"] .screen { --accent: var(--ch-l2); --accent-hi: #ff9ee4; --accent-lo: #bf50a0; --accent-ink: #0a0b0e; }
+[data-layer="l1"] .screen { --accent: var(--ch-l1); --accent-hi: #94edb3; --accent-lo: #44aa68; --accent-ink: #0a0b0e; }
+[data-layer="l0"] .screen { --accent: var(--ch-l0); --accent-hi: #a9c4ff; --accent-lo: #5c7cbf; --accent-ink: #0a0b0e; }
 
 /* ---------------------------------------------------------------- the 404 page */
 .lost { min-height: calc(100svh - var(--nav-h) - 280px); }
