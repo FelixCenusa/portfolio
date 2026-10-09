@@ -165,7 +165,7 @@ if (lb) {
 /* ------------------------------------------------------------ command palette */
 const LAYERS = [['l4', 'L4', 'Web'], ['l3', 'L3', 'Apps'], ['l2', 'L2', 'Algorithms'], ['l1', 'L1', 'Systems'], ['l0', 'L0', 'Metal']];
 const PROJECTS = [ // id, layer, name, hint, demo
-  ['timetomove', 'L4', 'TimeToMove', 'JavaScript'], ['eshop', 'L4', 'Eshop', 'SQL'],
+  ['june', 'L4', 'June', 'JavaScript, live site'], ['timetomove', 'L4', 'TimeToMove', 'JavaScript'], ['eshop', 'L4', 'Eshop', 'SQL'],
   ['fake-gpt', 'L3', 'Fake-GPT', 'Python'], ['press-ice', 'L3', 'Press-Ice', 'Python, live demo', 'typing'], ['school-management', 'L3', 'School Management System', 'C++'],
   ['aristotle', 'L2', "Aristotle's Puzzle Solver", 'C++, live demo', 'aristotle'], ['advent-of-code', 'L2', 'Advent of Code 2024', 'Python', 'aoc'],
   ['fat-file-system', 'L1', 'Custom File System with FAT', 'C++, live demo', 'fat'],

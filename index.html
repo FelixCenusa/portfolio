@@ -4,14 +4,14 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Felix Cenusa, software engineer</title>
-  <meta name="description" content="Felix Cenusa, software engineer in Sweden. Ten projects across the whole stack, from ARM assembly and a FAT file system to web apps, most with a live demo you can play with.">
+  <meta name="description" content="Felix Cenusa, software engineer in Sweden. Eleven projects across the whole stack, from ARM assembly and a FAT file system to web apps, most with a live demo you can play with.">
   <meta name="author" content="Felix Cenusa">
   <meta name="theme-color" content="#181b21">
   <meta name="color-scheme" content="dark">
   <meta property="og:type" content="website">
   <meta property="og:url" content="https://portfolio.felix.best/">
   <meta property="og:title" content="Felix Cenusa: full stack, all the way down">
-  <meta property="og:description" content="Ten projects across the whole stack, from ARM assembly and a FAT file system to web apps, most with a live demo.">
+  <meta property="og:description" content="Eleven projects across the whole stack, from ARM assembly and a FAT file system to web apps, most with a live demo.">
   <meta property="og:image" content="https://portfolio.felix.best/assets/img/og.png">
   <meta property="og:image:width" content="1200">
   <meta property="og:image:height" content="630">
@@ -341,13 +341,13 @@
     <!-- ============================================================ index -->
     <section class="section wrap" id="stack" aria-labelledby="stack-title">
       <div class="grid section__intro">
-        <h2 class="h2" id="stack-title" data-split>Five layers, ten projects.</h2>
+        <h2 class="h2" id="stack-title" data-split>Five layers, eleven projects.</h2>
         <p class="lede" data-reveal>Ordered the way a computer is, from the browser down to the registers. Pick a layer, keep scrolling to go down, or <a class="link" href="projects/">see them all in one table</a>.</p>
       </div>
       <div class="index" role="list">
         <a class="index__row" href="#l4" role="listitem" data-reveal>
           <span class="index__swatch" style="background:var(--tone-l4)"></span><span class="index__reg">L4</span><span class="index__name">Web</span>
-          <span class="index__projects">TimeToMove, Eshop</span><span class="index__langs">JavaScript, SQL</span>
+          <span class="index__projects">June, TimeToMove, Eshop</span><span class="index__langs">JavaScript, GLSL, SQL</span>
         </a>
         <a class="index__row" href="#l3" role="listitem" data-reveal>
           <span class="index__swatch" style="background:var(--tone-l3)"></span><span class="index__reg">L3</span><span class="index__name">Apps</span>
@@ -376,9 +376,31 @@
             <ol class="layermap" aria-hidden="true"><li class="is-here"></li><li></li><li></li><li></li><li></li></ol>
             <h2 class="h2" id="l4-title" data-split><span class="reg">L4</span>Web</h2>
           </div>
-          <p class="layer__desc" data-reveal>Things that run in a browser and talk to a database: accounts, uploads, admin panels and the SQL underneath.</p>
+          <p class="layer__desc" data-reveal>Things that run in a browser: a WebGL portfolio for a designer, accounts, uploads, admin panels and the SQL underneath.</p>
         </div>
       </header>
+
+      <article class="proj wrap" id="june" aria-labelledby="p11">
+        <div class="grid proj__grid">
+          <div class="proj__text" data-reveal>
+            <h3 class="h3 proj__title" id="p11">June</h3>
+            <ul class="tags proj__stack" aria-label="Built with"><li class="tag">JavaScript</li><li class="tag">GLSL</li><li class="tag">Three.js</li><li class="tag">GSAP</li></ul>
+            <p class="proj__lede">A portfolio site for June Hong, a color, material and finish (CMF) designer in Detroit, with six case studies, her CV and a 3D color library. The home page opens on a live WebGL shader of woven silk, and the weave resolves under your cursor like a loupe. It is plain JavaScript, GLSL and CSS on top of Three.js and GSAP, with no framework and no build step.</p>
+            <div class="spec">
+              <div class="spec__row"><span class="label">Features</span><ul><li>A hero shader that lowers its own resolution when frames run slow</li><li>A 3D swatch library in five finishes, with HEX and L*a*b* values</li><li>Page transitions, a custom scroll rail, and reduced-motion, keyboard and no-JavaScript fallbacks</li></ul></div>
+            </div>
+            <div class="proj__links"><a class="btn btn--primary" href="https://june.felix.best" target="_blank" rel="noopener">Visit the live site<svg class="go" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M4.5 11.5l7-7M6 4.5h5.5V10"/></svg></a></div>
+          </div>
+          <div class="proj__media" data-reveal>
+            <figure class="shot">
+              <button class="shot__img" type="button" data-full="assets/img/opt/june.jpg" data-cap="June: the home page and its woven-silk shader">
+                <img src="assets/img/opt/june.jpg" alt="June Hong's portfolio home page: a teal woven-silk shader behind the headline &quot;Color has always been how I make sense of the world&quot;, with a row of color chips" width="1600" height="900" loading="lazy">
+              </button>
+              <figcaption><span>June: the home page and its woven-silk shader.</span><span class="end">Click to enlarge</span></figcaption>
+            </figure>
+          </div>
+        </div>
+      </article>
 
       <article class="proj wrap" id="timetomove" aria-labelledby="p01">
         <div class="grid proj__grid">

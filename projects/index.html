@@ -4,7 +4,7 @@
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <title>Projects | Felix Cenusa</title>
-  <meta name="description" content="All ten of Felix Cenusa's projects in one table: layer, language, and links to the code and live demos.">
+  <meta name="description" content="All eleven of Felix Cenusa's projects in one table: layer, language, and links to the code and live demos.">
   <meta name="author" content="Felix Cenusa">
   <meta name="theme-color" content="#181b21">
   <meta name="color-scheme" content="dark">
@@ -55,7 +55,7 @@
       <p class="page-head__eyebrow mono"><span data-scramble>~/projects $ ls -la --sort=layer</span></p>
       <h1 class="display page-head__title" id="page-title" data-split>Projects</h1>
       <div class="grid page-head__row">
-        <p class="lede page-head__lede" data-reveal>All ten, from web apps down to ARM assembly. Where the code is public it's linked, and five of them have a live demo on the home page.</p>
+        <p class="lede page-head__lede" data-reveal>All eleven, from web apps down to ARM assembly. Where the code is public it's linked, and five of them have a live demo on the home page.</p>
         <div class="page-head__side" data-reveal>
           <span class="label">Sorted from the top of the stack (L4) to the bottom (L0)</span>
           <a class="btn btn--ghost" href="../#stack">See them on the stack<svg class="go" viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.6" aria-hidden="true"><path d="M2 8h11M8.5 3.5 13 8l-4.5 4.5"/></svg></a>
@@ -66,14 +66,14 @@
     <section class="ls wrap" aria-label="Project table">
       <div class="ls__bar">
         <div class="ls__filters switch" role="group" aria-label="Filter by language" data-filter-group="#ls-table">
-          <button type="button" data-filter="all" aria-pressed="true">All <span class="num">10</span></button>
+          <button type="button" data-filter="all" aria-pressed="true">All <span class="num">11</span></button>
           <button type="button" data-filter="python" aria-pressed="false">Python <span class="num">3</span></button>
           <button type="button" data-filter="cpp" aria-pressed="false">C++ <span class="num">3</span></button>
-          <button type="button" data-filter="js" aria-pressed="false">JavaScript <span class="num">2</span></button>
+          <button type="button" data-filter="js" aria-pressed="false">JavaScript <span class="num">3</span></button>
           <button type="button" data-filter="sql" aria-pressed="false">SQL <span class="num">2</span></button>
           <button type="button" data-filter="asm" aria-pressed="false">Assembly <span class="num">2</span></button>
         </div>
-        <span class="mono ls__count" data-filter-count aria-live="polite">10 of 10</span>
+        <span class="mono ls__count" data-filter-count aria-live="polite">11 of 11</span>
       </div>
 
       <table class="ls__table" id="ls-table">
@@ -81,6 +81,12 @@
           <tr><th scope="col">Layer</th><th scope="col">Project</th><th scope="col">Stack</th><th scope="col">Links</th></tr>
         </thead>
         <tbody>
+          <tr data-tags="js" data-row="l4">
+            <td class="ls__layer">L4<span>Web</span></td>
+            <td class="ls__name"><a href="../#june">June</a><p>A portfolio site for a CMF designer, with a live WebGL weave shader, a 3D color library and six case studies.</p></td>
+            <td class="ls__stack">JavaScript, GLSL, Three.js, GSAP</td>
+            <td class="ls__links"><a class="link" href="https://june.felix.best" target="_blank" rel="noopener">Live site</a></td>
+          </tr>
           <tr data-tags="js sql" data-row="l4">
             <td class="ls__layer">L4<span>Web</span></td>
             <td class="ls__name"><a href="../#timetomove">TimeToMove</a><p>A self-hosted web app for creating, sharing and managing digital labels, with a strong focus on security and privacy.</p></td>

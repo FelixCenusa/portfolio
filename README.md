@@ -1,6 +1,6 @@
 # Portfolio
 
-My portfolio site: ten projects arranged as a computer is, from web apps at the top of the stack down to ARM assembly at the bottom. Most of them have a live demo you can play with in the browser.
+My portfolio site: eleven projects arranged as a computer is, from web apps at the top of the stack down to ARM assembly at the bottom. Most of them have a live demo you can play with in the browser.
 
 **Live:** [portfolio.felix.best](https://portfolio.felix.best)
 
