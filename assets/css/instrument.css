@@ -1,1 +1,90 @@
-/* The instrument controls: the Run/Stop soft key and its lamp (assets/js/instrument.js, main.js). */
+/* The instrument controls: the Run/Stop soft key and its lamp, the autoset key,
+   what Stop holds, and the step-response motion for the palette, toast and rail
+   (assets/js/instrument.js, ease.js, main.js). Flat: lamps are plain discs, no glow. */
+
+/* ---------------------------------------------------------------- the step response
+   ring() from ease.js, sampled for CSS: a fast rise, about 9% overshoot, one ring,
+   settled. For positions and scales only, never opacity or colour. Regenerate
+   with ringCss() if ring() changes. */
+:root { --ring: cubic-bezier(0.16, 1, 0.3, 1); }
+@supports (transition-timing-function: linear(0, 1)) {
+  :root {
+    --ring: linear(0, 0.0327, 0.1163, 0.2314, 0.3622, 0.4962, 0.6241, 0.7396, 0.8391, 0.9207, 0.9844, 1.0311, 1.0627,
+      1.0814, 1.0896, 1.0897, 1.0839, 1.0743, 1.0625, 1.0498, 1.0373, 1.0257, 1.0155, 1.0069, 1);
+  }
+}
+
+/* ---------------------------------------------------------------- lamps */
+.key-lamp { display: inline-block; width: 6px; height: 6px; border-radius: 50%; background: var(--lamp, var(--signal)); flex: none; }
+.btn .key-lamp { margin-right: -2px; }
+
+/* ---------------------------------------------------------------- Run/Stop
+   Labelled with its action: "Stop" while running, "Run" while stopped. The lamp
+   shows the state: green running, red stopped. Invisible until main.js has wired
+   it, so a page without JS never shows a key that does nothing (it keeps its
+   space, so nothing shifts when it appears). */
+.runkey {
+  display: inline-flex; align-items: center; gap: 7px; height: 32px; padding: 0 11px 0 10px;
+  border-radius: 7px; background: var(--bg-1); box-shadow: inset 0 0 0 1px var(--line-2), var(--edge);
+  font-size: 13px; font-weight: 520; color: var(--text-2); white-space: nowrap;
+  transition: color 0.2s, box-shadow 0.2s, background-color 0.4s;
+}
+.runkey:hover { color: var(--text-1); box-shadow: inset 0 0 0 1px var(--line-3), var(--edge); }
+.runkey:active { transform: translateY(1px); }
+.runkey:not(.is-ready) { visibility: hidden; }
+.runkey__lamp { width: 6px; height: 6px; border-radius: 50%; background: var(--signal); flex: none; transition: background-color 0.15s; }
+.is-stopped .runkey__lamp { background: var(--fault); }
+.runkey__label { min-width: 2.25em; } /* "Stop" and "Run" take the same room, so the nav doesn't shift */
+.runkey__icon { display: none; width: 8px; height: 8px; fill: currentColor; flex: none; }
+.runkey__run, .is-stopped .runkey__stop { display: none; }
+.is-stopped .runkey__run { display: inline; }
+/* it sits with the jump key as a pair */
+.kbd-btn + .runkey, .runkey + .kbd-btn { margin-left: -16px; }
+
+/* ---------------------------------------------------------------- the nav, fitted
+   With the key added the nav still fits on one line down to 320px wide: the jump
+   key drops its words first, then the Run/Stop key becomes a lamp and a stop or
+   run glyph (its accessible name stays), then the gaps tighten, and below 360px
+   the brand keeps only its mark (its link keeps its aria-label). At the narrowest
+   widths with the name the row is about 320px of content plus 2 x 16px of --pad,
+   so 352px. */
+@media (max-width: 760px) { .kbd-btn .kbd-label { display: none; } }
+@media (max-width: 700px) {
+  .runkey { width: 34px; padding: 0; justify-content: center; gap: 5px; }
+  .runkey__label { display: none; }
+  .runkey__icon { display: block; }
+}
+@media (max-width: 480px) { .kbd-btn kbd { display: none; } }
+@media (max-width: 420px) {
+  .nav__inner { gap: 14px; }
+  .kbd-btn + .runkey, .runkey + .kbd-btn { margin-left: -8px; }
+}
+@media (max-width: 360px) { .brand__name { display: none; } }
+
+/* ---------------------------------------------------------------- what Stop holds
+   CSS loops freeze where they are, like a held capture. Anything that loops for
+   its own sake can opt in with data-ambient; JS loops register with instrument.js. */
+.is-stopped .layer__head::after,
+.is-stopped .poster *,
+.is-stopped [data-ambient],
+.is-stopped [data-ambient] *,
+.is-stopped [data-ambient]::before,
+.is-stopped [data-ambient]::after { animation-play-state: paused !important; }
+
+/* ---------------------------------------------------------------- step-response entrances */
+@media (prefers-reduced-motion: no-preference) {
+  /* the palette drops into place and rings once; its fade stays a plain fade */
+  .palette[open] { animation: pal-fade 0.2s var(--ease-out), pal-ring 0.55s var(--ring); }
+  /* the toast rises and settles; it leaves on the plain ease (site.css) */
+  .toast.is-on { transition: opacity 0.25s var(--ease-out), transform 0.6s var(--ring); }
+  /* the rail's level for the layer you're in steps out to full width */
+  .rail a.is-active i { transform-origin: 0 50%; animation: rail-step 0.6s var(--ring) both; }
+}
+/* ---------------------------------------------------------------- print
+   main.js finishes every waiting entrance before printing; this catches a heading
+   SplitText splits again after that, whose lines would wait below their masks. */
+@media print { [data-split] .line { transform: none !important; } }
+
+@keyframes pal-fade { from { opacity: 0; } }
+@keyframes pal-ring { from { transform: translateY(-10px) scale(0.985); } }
+@keyframes rail-step { from { transform: scaleX(0.3); } }

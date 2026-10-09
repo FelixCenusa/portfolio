@@ -1,9 +1,12 @@
 // Site behaviour for every page: smooth scroll, text intros and reveals, the
-// command palette, lightbox, copy-to-clipboard, the depth rail, lazy demos and
-// the 3D hero. Everything degrades: without JS the pages are complete, and with
-// reduced motion nothing moves that doesn't have to.
+// Run/Stop key, autoset, the command palette, lightbox, copy-to-clipboard, the
+// depth rail, lazy demos, the 3D hero and the lab. Everything degrades: without
+// JS the pages are complete, and with reduced motion nothing moves that doesn't
+// have to.
 
-import { score, split, where, plan, complete, recall, remember, addCommand } from './shell.js';
+import { score, split, where, plan, complete, recall, remember, AUTOSET, autosetPick } from './shell.js';
+import { setRun, isRunning, onRun } from './instrument.js';
+import { ring } from './ease.js';
 
 const ROOT = new URL('../../', import.meta.url); // site root, from assets/js/
 const $ = (s, el = document) => el.querySelector(s);
@@ -14,10 +17,14 @@ const EMAIL = 'felixcenusa@gmail.com';
 const { gsap, ScrollTrigger, SplitText, ScrambleTextPlugin, Lenis } = window;
 
 /* ------------------------------------------------------------ smooth scroll */
+// No extra offset for the nav: Lenis already honours the scroll-padding-top in
+// site.css (the nav's height plus 24px), the same as native anchor jumps do.
 let lenis = null;
-if (gsap && ScrollTrigger) gsap.registerPlugin(ScrollTrigger, ...[SplitText, ScrambleTextPlugin].filter(Boolean));
+// ScrambleText stays registered for the readouts (numerals only, never words)
+if (gsap) gsap.registerPlugin(...[ScrollTrigger, SplitText, ScrambleTextPlugin].filter(Boolean));
 if (!reduced && Lenis) {
-  lenis = new Lenis({ lerp: 0.11, wheelMultiplier: 1, anchors: { offset: -84 } });
+  lenis = new Lenis({ lerp: 0.11, wheelMultiplier: 1, anchors: true });
+  window.lenis = lenis; // the instance, for other modules (Lenis itself leaves only a version marker there)
   if (gsap && ScrollTrigger) {
     lenis.on('scroll', ScrollTrigger.update);
     gsap.ticker.add((t) => lenis.raf(t * 1000));
@@ -30,7 +37,7 @@ if (!reduced && Lenis) {
 function scrollToTarget(target) {
   const el = typeof target === 'string' ? (target === '#top' ? 0 : $(target)) : target;
   if (el == null) return;
-  if (lenis) lenis.scrollTo(el, { offset: el === 0 ? 0 : -84, duration: 1.4 });
+  if (lenis) lenis.scrollTo(el, { duration: 1.4 });
   else if (el === 0) scrollTo({ top: 0, behavior: reduced ? 'auto' : 'smooth' });
   else el.scrollIntoView({ behavior: reduced ? 'auto' : 'smooth', block: 'start' });
 }
@@ -38,12 +45,14 @@ function scrollToTarget(target) {
 /* ------------------------------------------------------------ toast + copy */
 const toast = $('.toast') || document.body.appendChild(Object.assign(document.createElement('div'), { className: 'toast', role: 'status' }));
 let toastTimer = 0;
-function say(html) {
+function say(html, ms = 2200) {
   toast.innerHTML = html;
   toast.classList.add('is-on');
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => toast.classList.remove('is-on'), 2200);
+  toastTimer = setTimeout(() => toast.classList.remove('is-on'), ms);
 }
+// a 6px flat lamp for the toast, in a token colour
+const lamp = (color) => `<span class="key-lamp" style="--lamp:${color}" aria-hidden="true"></span>`;
 async function copy(text) {
   try {
     await navigator.clipboard.writeText(text);
@@ -55,11 +64,38 @@ async function copy(text) {
     try { document.execCommand('copy'); } catch {}
     ta.remove();
   }
-  say(`<span class="led"></span>Copied ${text}`);
+  say(`${lamp('var(--signal)')}Copied ${text}`);
 }
 document.addEventListener('click', (e) => {
   const b = e.target.closest('[data-copy]');
   if (b) { e.preventDefault(); copy(b.dataset.copy); }
+});
+
+/* ------------------------------------------------------------ Run/Stop, the scope's most used key */
+// The nav key is labelled with what it will do: "Stop" while things move, "Run"
+// once they're held. Its lamp is green running and red stopped (CSS reads
+// html.is-stopped, which instrument.js sets). Stopping holds the ambient motion,
+// whatever registers with instrument.js or opts in to the CSS hold; recordings
+// like the visit trace carry on. It's also the page's pause control (WCAG
+// 2.2.2), so the copy only promises what Stop really holds. The setting is
+// remembered, and tabs follow each other.
+const runKeys = $$('[data-runkey]');
+const paintRun = (on) => runKeys.forEach((b) => {
+  const label = $('.runkey__label', b);
+  if (label) label.textContent = on ? 'Stop' : 'Run';
+  b.setAttribute('aria-label', on ? 'Stop animations' : 'Run animations');
+  b.title = on ? 'Hold the ambient motion' : 'Set the ambient motion going again';
+});
+function toggleRun(on = !isRunning()) {
+  setRun(on);
+  if (on) say(`${lamp('var(--signal)')}Running`);
+  else say(`${lamp('var(--fault)')}${$('[data-trace]') ? 'Stopped. Your visit trace keeps recording.' : 'Stopped'}`, 2800);
+}
+paintRun(isRunning());
+onRun(paintRun);
+runKeys.forEach((b) => { b.addEventListener('click', () => toggleRun()); b.classList.add('is-ready'); });
+addEventListener('storage', (e) => { // instrument.js keeps the setting under 'scope-run'
+  if (e.key === 'scope-run' && (e.newValue === '1' || e.newValue === '0')) setRun(e.newValue === '1', { persist: false });
 });
 
 /* ------------------------------------------------------------ nav, year, back to top */
@@ -185,12 +221,14 @@ const COMMANDS = [
   { group: 'Pages', reg: 'ls', name: 'All projects, as a table', hint: '/projects', run: () => { location.href = new URL('projects/', ROOT).href; } },
   { group: 'Pages', reg: 'cv', name: 'CV', hint: '/cv', run: () => { location.href = new URL('cv/', ROOT).href; } },
   { group: 'Pages', reg: '@', name: 'Contact', hint: '#contact', run: go('#contact') },
+  { group: 'Actions', reg: 'auto', name: 'Run a demo', hint: 'autoset', run: () => autoset() },
   { group: 'Actions', reg: '⧉', name: 'Copy email address', hint: EMAIL, run: () => copy(EMAIL) },
-  { group: 'Actions', reg: '↓', name: 'Download CV (PDF)', hint: 'felix.best', run: ext('https://felix.best/Felix_Cenusa_CV.pdf') },
+  { group: 'Actions', reg: 'pdf', name: 'Download CV (PDF)', hint: 'felix.best', run: ext('https://felix.best/Felix_Cenusa_CV.pdf') },
   { group: 'Actions', reg: 'gh', name: 'GitHub profile', hint: 'FelixCenusa', run: ext('https://github.com/FelixCenusa') },
   { group: 'Actions', reg: 'in', name: 'LinkedIn', hint: 'felixcenusa', run: ext('https://linkedin.com/in/felixcenusa') },
-  { group: 'Actions', reg: '↗', name: 'felix.best', hint: 'links', run: ext('https://felix.best') },
+  { group: 'Actions', reg: 'web', name: 'felix.best', hint: 'links', run: ext('https://felix.best') },
   { group: 'Actions', reg: '</>', name: 'View the source of this site', hint: 'GitHub', run: ext('https://github.com/FelixCenusa/portfolio') },
+  { group: 'Actions', reg: 'run', get name() { return isRunning() ? 'Stop animations' : 'Run animations'; }, hint: 'stop, run', run: () => toggleRun() },
 ];
 
 // The shell's picture of the site. The home page reads its own sections, so it
@@ -213,28 +251,203 @@ const layerHere = () => {
   return s ? s.dataset.layer : null;
 };
 
-// scroll to a demo, then put focus on its first control once it has mounted
-// (unless focus has moved on in the meantime)
-function runDemo(el) {
-  scrollToTarget(el);
-  const from = document.activeElement, until = performance.now() + 6000;
-  const poll = () => {
-    if (document.activeElement !== from) return;
-    const c = 'mounted' in el.dataset && $$('a[href], button, input, select, textarea, [tabindex]', el)
-      .find((n) => n.tabIndex >= 0 && !n.disabled && n.getClientRects().length);
-    if (c) c.focus({ preventScroll: true });
-    else if (performance.now() < until) setTimeout(poll, 150);
-  };
-  poll();
+const demoEl = (name) => $(`.demo[data-demo="${CSS.escape(name)}"]`);
+const firstControl = (el) => $$('a[href], button, input, select, textarea, [tabindex]', el)
+  .find((n) => n.tabIndex >= 0 && !n.disabled && n.getClientRects().length);
+// a demo sits in a screen with its caption bar on top; land on the whole screen
+const demoScreen = (el) => el.closest('.screen') || el;
+
+// Demos mount once each: when they come near the viewport (lazy demos, below), or
+// up front when something is about to land on one.
+// a demo mounting (or anything else changing the page's height) moves every
+// ScrollTrigger below it; re-measure once things settle
+let refreshT = 0;
+const refreshTriggers = () => {
+  if (!ScrollTrigger) return;
+  clearTimeout(refreshT);
+  refreshT = setTimeout(() => ScrollTrigger.refresh(), 200);
+};
+if (ScrollTrigger && 'ResizeObserver' in window) {
+  let lastH = 0;
+  new ResizeObserver(() => {
+    const h = document.body.scrollHeight;
+    if (Math.abs(h - lastH) > 40) { lastH = h; refreshTriggers(); }
+  }).observe(document.body);
 }
-// "run tis" from another page lands here
+
+const mounting = new WeakSet();
+function mountDemo(el) {
+  if (mounting.has(el)) return;
+  mounting.add(el);
+  const name = el.dataset.demo;
+  import(new URL(`assets/js/demos/${name}.js`, ROOT).href)
+    .then((m) => { el.dataset.mounted = ''; m.mount(el, { reducedMotion: reduced }); refreshTriggers(); })
+    .catch((err) => console.warn(`demo ${name} failed to load`, err));
+}
+
+// where a node's top comes to rest after a jump: under the nav, as an anchor's does
+// (scroll-padding-top in site.css), plus any scroll-margin-top of its own
+const landingGap = (node) => (parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0)
+  + (parseFloat(getComputedStyle(node).scrollMarginTop) || 0);
+// a node's top once the reveals it sits in have finished (a reveal starts 28px low)
+const settledTop = (node) => {
+  let top = node.getBoundingClientRect().top;
+  if (gsap) for (let n = node.closest('[data-reveal]'); n; n = n.parentElement && n.parentElement.closest('[data-reveal]')) top -= parseFloat(gsap.getProperty(n, 'y')) || 0;
+  return top;
+};
+const scrollToY = (y, duration = 1.4) => {
+  if (lenis) lenis.scrollTo(y, { duration });
+  else scrollTo({ top: y, behavior: reduced ? 'auto' : 'smooth' });
+};
+
+// Scroll to a demo's screen, then call then(from) once the demo has mounted and the
+// page is at rest with the screen in place and on screen. `from` is what had focus
+// when it began. The scroll aims at a number fixed when it starts, and the page
+// changes under it (demos it passes mount and grow; the screen's reveal still holds
+// it 28px low), so at rest it measures again and re-aims, three times at most.
+// Scrolling, tapping, clicking or typing meanwhile means the visitor has taken
+// over, and it gives up. A newer landing replaces an older one.
+let landing = null; // cancels the landing under way
+function landOn(el, then) {
+  if (landing) landing();
+  const screen = demoScreen(el), from = document.activeElement, ac = new AbortController();
+  let timer = 0, aims = 0, lastY = NaN, until = performance.now() + 8000;
+  const cancel = () => { clearTimeout(timer); ac.abort(); if (landing === cancel) landing = null; };
+  landing = cancel;
+  // after a task, so the key or tap that started this doesn't count as a takeover
+  setTimeout(() => {
+    if (ac.signal.aborted) return;
+    const takeover = (e) => { if (!/^(Shift|Control|Alt|Meta|CapsLock)$/.test(e.key || '')) cancel(); };
+    for (const type of ['wheel', 'touchstart', 'pointerdown', 'keydown']) addEventListener(type, takeover, { capture: true, passive: true, signal: ac.signal });
+  }, 0);
+  const offBy = () => settledTop(screen) - landingGap(screen);
+  const later = (ms = 120) => { if (performance.now() < until) timer = setTimeout(tick, ms); else cancel(); };
+  const tick = () => {
+    const y = scrollY, still = Math.abs(y - lastY) < 1 && !(lenis && lenis.isScrolling);
+    lastY = y;
+    if (!still) return later();
+    const off = offBy(), max = document.documentElement.scrollHeight - innerHeight;
+    const placed = Math.abs(off) <= 8 || (off > 0 && y >= max - 1) || (off < 0 && y <= 0);
+    if (!placed && aims < 3) { // short or long: aim again from here
+      aims++; lastY = NaN; until = Math.max(until, performance.now() + 4000);
+      scrollToY(y + off, 0.8);
+      return later(150);
+    }
+    if (!('mounted' in el.dataset)) return later();
+    cancel();
+    const r = screen.getBoundingClientRect();
+    if (r.bottom > 0 && r.top < innerHeight) then(from);
+  };
+  mountDemo(el);
+  scrollToY(scrollY + offBy());
+  timer = setTimeout(tick, 150);
+}
+
+// scroll to a demo, then put focus on its first control once it's there (unless
+// focus has moved on in the meantime)
+function runDemo(el) {
+  landOn(el, (from) => {
+    if (document.activeElement !== from && document.activeElement !== document.body) return;
+    const c = firstControl(el);
+    if (c) c.focus({ preventScroll: true });
+  });
+}
+
+/* ------------------------------------------------------------ autoset */
+// The scope key that finds the signal for you: go to the strongest live demo and
+// start it. Each press moves on to the next one in the round (AUTOSET, shell.js);
+// the place in the round lasts for the session, across pages.
+const ROUND_KEY = 'autoset';
+const readRound = () => { try { return +sessionStorage.getItem(ROUND_KEY) || 0; } catch { return 0; } };
+// on the home page only the demos that are there; elsewhere the home page has them all
+const nextAutoset = () => autosetPick(readRound(), isHome ? (d) => !!demoEl(d) : undefined);
+const fine = matchMedia('(pointer: fine)').matches;
+
+// How each demo starts when it doesn't handle 'demo:start' itself. Gentle: never
+// presses a control that would stop something already running.
+const press = (b, when = () => true) => { if (b && !b.disabled && when(b)) b.click(); return b; };
+const STARTERS = {
+  segment: (el) => press($('.seg__auto', el), (b) => b.getAttribute('aria-pressed') === 'false'),
+  fat: (el) => press($('[data-act="create"]', el)),
+  aristotle: (el) => press($('[data-a="solve"]', el), (b) => !/pause/i.test(b.textContent)),
+  tis: (el) => press($('button[aria-label="Run"]', el)) || $('button[aria-label="Stop"]', el),
+  typing: (el) => (fine ? $('input, textarea', el) : null), // a phone keyboard shouldn't pop up unasked
+};
+// Start a mounted demo and return the control to focus. A demo can take this over:
+// listen for 'demo:start' on its root, call preventDefault() and set detail.focus.
+function kick(el, name) {
+  const ev = new CustomEvent('demo:start', { cancelable: true, detail: { focus: null, source: 'autoset' } });
+  if (!el.dispatchEvent(ev)) return ev.detail.focus;
+  try { return (STARTERS[name] && STARTERS[name](el)) || firstControl(el); } catch (err) { console.warn(`autoset: ${name}`, err); return null; }
+}
+
+// land on the demo's screen (landOn, above), then start it and focus its control
+// (unless focus has gone elsewhere)
+function startDemo(el, name) {
+  landOn(el, (from) => {
+    const target = kick(el, name);
+    const free = document.activeElement === from || document.activeElement === document.body;
+    if (target && target.isConnected && free) target.focus({ preventScroll: true });
+  });
+}
+
+const announce = (entry) => {
+  const there = AUTOSET.filter(([d]) => demoEl(d));
+  say(`${lamp(`var(--ch-${entry[2]})`)}Demo ${there.indexOf(entry) + 1} of ${there.length}: ${entry[3]}`, 3200);
+};
+
+// the hero's "Run a demo" key: its link and lamp point at the demo it will start
+const autosetKeys = $$('[data-autoset]');
+function paintAutoset() {
+  const pick = nextAutoset();
+  autosetKeys.forEach((a) => {
+    a.hidden = !pick;
+    if (!pick) return;
+    const [, id, layer, name] = pick.entry;
+    a.setAttribute('href', `#${id}`);
+    a.title = `Starts ${name}`;
+    $('.key-lamp', a)?.style.setProperty('--lamp', `var(--ch-${layer})`);
+  });
+}
+
+function autoset() {
+  const pick = nextAutoset();
+  if (!pick) { say('There are no live demos on this page'); return; }
+  try { sessionStorage.setItem(ROUND_KEY, String(pick.next)); } catch {}
+  paintAutoset();
+  // like the real key, autoset leaves the scope running, unless motion is unwelcome
+  if (!isRunning() && !reduced) setRun(true);
+  const [demo, id] = pick.entry;
+  if (!isHome) {
+    try { sessionStorage.setItem('autoset-run', demo); } catch {}
+    location.href = new URL(`#${id}`, ROOT).href;
+    return;
+  }
+  announce(pick.entry);
+  startDemo(demoEl(demo), demo);
+}
+
+autosetKeys.forEach((a) => a.addEventListener('click', (e) => {
+  if (e.button !== 0 || e.metaKey || e.ctrlKey || e.shiftKey || e.altKey) return; // new tab: a plain link
+  e.preventDefault();
+  e.stopPropagation(); // Lenis would scroll to the anchor as well
+  autoset();
+}));
+paintAutoset();
+
+// "run tis" or autoset from another page lands here
 if (isHome) {
-  let want = null;
-  try { want = sessionStorage.getItem('palette-run'); sessionStorage.removeItem('palette-run'); } catch {}
-  const el = want && $(`.demo[data-demo="${CSS.escape(want)}"]`);
+  let want = null, auto = null;
+  try {
+    want = sessionStorage.getItem('palette-run'); sessionStorage.removeItem('palette-run');
+    auto = sessionStorage.getItem('autoset-run'); sessionStorage.removeItem('autoset-run');
+  } catch {}
+  const entry = auto && AUTOSET.find(([d]) => d === auto);
+  const el = entry ? demoEl(entry[0]) : want && demoEl(want);
+  const land = () => { if (entry) { announce(entry); startDemo(el, entry[0]); } else runDemo(el); };
   if (el) {
-    if (document.readyState === 'complete') runDemo(el);
-    else addEventListener('load', () => runDemo(el), { once: true });
+    if (document.readyState === 'complete') land();
+    else addEventListener('load', land, { once: true });
   }
 }
 
@@ -262,7 +475,10 @@ if (pal) {
     hist = remember(hist, line); hi = hist.length;
     try { sessionStorage.setItem('palette-history', JSON.stringify(hist)); } catch {}
   };
-  const shellCtx = () => ({ page: document.body.dataset.page || 'home', here: layerHere(), layers: siteTree(), email: EMAIL });
+  const shellCtx = () => ({
+    page: document.body.dataset.page || 'home', here: layerHere(), layers: siteTree(), email: EMAIL,
+    running: isRunning(), autoset: nextAutoset()?.entry[3],
+  });
 
   const print = (cmd, lines, err) => {
     const row = (text, cls) => Object.assign(document.createElement('div'), { className: cls, textContent: text });
@@ -281,12 +497,18 @@ if (pal) {
     keep(cmd);
     input.value = ''; sel = 0;
     if (a.clear) out.replaceChildren();
+    else if (typeof a.scope === 'boolean') { // stop, and run on its own
+      setRun(a.scope);
+      ctx = shellCtx();
+      print(cmd, [a.scope ? 'running' : 'stopped. run sets it going again']);
+    }
     else if (a.out) print(cmd, a.out, a.err);
     else if (a.copy) { copy(a.copy); print(cmd, [`copied ${a.copy}`]); }
     else if (a.call) { const out = a.call(); if (out != null) print(cmd, [].concat(out)); }
     else {
       close();
       if (a.go) go(a.go)();
+      else if (a.autoset) autoset();
       else if (a.page) {
         const u = new URL(a.page, ROOT);
         if (u.pathname === location.pathname) scrollToTarget('#top'); else location.href = u.href;
@@ -417,10 +639,7 @@ const demoIO = new IntersectionObserver((entries) => {
   for (const e of entries) {
     if (!e.isIntersecting) continue;
     demoIO.unobserve(e.target);
-    const el = e.target, name = el.dataset.demo;
-    import(new URL(`assets/js/demos/${name}.js`, ROOT).href)
-      .then((m) => { el.dataset.mounted = ''; m.mount(el, { reducedMotion: reduced }); })
-      .catch((err) => console.warn(`demo ${name} failed to load`, err));
+    mountDemo(e.target); // a no-op if a landing mounted it first
   }
 }, { rootMargin: '600px 0px' });
 $$('.demo[data-demo]').forEach((el) => demoIO.observe(el));
@@ -475,73 +694,120 @@ if (stage) {
 
 
 /* ------------------------------------------------------------ motion: intro, split headings, reveals */
+// Things arrive the way a signal does after a step: positions and scales use
+// ring() from ease.js (a fast rise, about 9% overshoot, one ring, settled).
+// Opacity never rings; it fades. None of this is ambient, so Stop doesn't hold
+// it: a reveal always finishes.
 const html = document.documentElement;
 if (gsap && !reduced) {
   const mm = gsap.matchMedia();
   mm.add('(prefers-reduced-motion: no-preference)', () => {
-    const ease = 'expo.out';
+    const fade = 'power2.out';
+    const step = ring();
+    const lines = ring(0.75); // lines rise inside a mask: overshoot ~2% so their tops don't clip
 
     // hero intro (the head script hid these to avoid a flash; only run if we're in time)
     const heroTitle = $('.hero__title');
     if (heroTitle && html.classList.contains('intro')) {
-      const tl = gsap.timeline({ defaults: { ease }, delay: 0.1 });
-      const fades = $$('[data-hero-fade]');
-      gsap.set([...fades, '.hero__fig'], { autoAlpha: 0, y: 18 });
+      const tl = gsap.timeline({ delay: 0.1 });
+      const fades = $$('[data-hero-fade]'), fig = $$('.hero__fig');
+      if (fades.length || fig.length) gsap.set([...fades, ...fig], { autoAlpha: 0, y: 18 });
       html.classList.remove('intro');
-      const eyebrow = $('[data-scramble]');
-      if (eyebrow && ScrambleTextPlugin) {
-        tl.to(eyebrow, { duration: 1.1, scrambleText: { text: eyebrow.textContent, chars: '01·/<>_', speed: 0.6, revealDelay: 0.2 }, ease: 'none' }, 0);
-      }
       if (SplitText) {
         const split = SplitText.create(heroTitle, { type: 'lines', mask: 'lines', linesClass: 'line' });
-        tl.from(split.lines, { yPercent: 110, duration: 1.3, stagger: 0.09 }, 0.05);
+        tl.from(split.lines, { yPercent: 110, duration: 1.1, ease: lines, stagger: 0.09 }, 0.05);
         tl.call(() => split.revert(), null, '>');
       } else {
-        tl.from(heroTitle, { autoAlpha: 0, y: 24, duration: 1 }, 0.05);
+        tl.from(heroTitle, { autoAlpha: 0, duration: 0.8, ease: fade }, 0.05);
+        tl.from(heroTitle, { y: 24, duration: 0.9, ease: step }, 0.05);
       }
-      tl.to(fades, { autoAlpha: 1, y: 0, duration: 1.1, stagger: 0.08 }, 0.45);
-      tl.to('.hero__fig', { autoAlpha: 1, y: 0, duration: 1.6 }, 0.3);
+      if (fades.length) {
+        tl.to(fades, { autoAlpha: 1, duration: 0.9, ease: fade, stagger: 0.08 }, 0.45);
+        tl.to(fades, { y: 0, duration: 0.9, ease: step, stagger: 0.08 }, 0.45);
+      }
+      if (fig.length) {
+        tl.to(fig, { autoAlpha: 1, duration: 1.4, ease: fade }, 0.3);
+        tl.to(fig, { y: 0, duration: 1.1, ease: step }, 0.3);
+      }
     } else {
       html.classList.remove('intro');
     }
+
+    // Printing wants the whole page. The entrances that wait for a scroll are kept
+    // by element (a re-split replaces its heading's), so the ones nobody has
+    // scrolled to yet can be finished first, along with the reveals.
+    const waiting = new Map();
+    let revealed = [];
+    const printAll = () => {
+      if (revealed.length) gsap.set(revealed, { autoAlpha: 1, y: 0 });
+      waiting.forEach((t) => t.progress(1));
+    };
+    addEventListener('beforeprint', printAll);
 
     // section headings: lines rise out of a mask as they come into view
     if (SplitText && ScrollTrigger) {
       $$('[data-split]').forEach((el) => {
         if (el === heroTitle) return;
         SplitText.create(el, {
-          type: 'lines', mask: 'lines', autoSplit: true,
-          onSplit: (self) => gsap.from(self.lines, {
-            yPercent: 110, duration: 1.2, ease, stagger: 0.08,
-            scrollTrigger: { trigger: el, start: 'top 88%', once: true },
-          }),
+          type: 'lines', mask: 'lines', linesClass: 'line', autoSplit: true,
+          onSplit: (self) => {
+            const t = gsap.from(self.lines, {
+              yPercent: 110, duration: 1.1, ease: lines, stagger: 0.08,
+              scrollTrigger: { trigger: el, start: 'top 88%', once: true },
+            });
+            waiting.set(el, t);
+            return t;
+          },
         });
       });
     }
 
-    // blocks fade up in batches
+    // blocks fade up in batches: the fade and the rise are separate tweens, so only the rise rings
     if (ScrollTrigger) {
       const els = $$('[data-reveal]');
       gsap.set(els, { autoAlpha: 0, y: 28 });
       ScrollTrigger.batch(els, {
         start: 'top 90%', once: true,
-        onEnter: (batch) => gsap.to(batch, { autoAlpha: 1, y: 0, duration: 1.1, ease, stagger: 0.07, overwrite: true }),
+        onEnter: (batch) => {
+          gsap.to(batch, { autoAlpha: 1, duration: 0.8, ease: fade, stagger: 0.07, overwrite: 'auto' });
+          gsap.to(batch, { y: 0, duration: 0.9, ease: step, stagger: 0.07, overwrite: 'auto' });
+        },
       });
+      revealed = els; // for printAll
 
-      // each layer's "you are here" slab slides into place as its heading arrives
+      // each layer's "you are here" level steps into place as its heading arrives
       $$('.layermap .is-here').forEach((el) => {
-        gsap.from(el, { scaleX: 0, transformOrigin: '0 50%', duration: 1.2, ease, clearProps: 'transform', scrollTrigger: { trigger: el, start: 'top 88%', once: true } });
+        waiting.set(el, gsap.from(el, { scaleX: 0, transformOrigin: '0 50%', duration: 0.9, ease: step, clearProps: 'transform', scrollTrigger: { trigger: el, start: 'top 88%', once: true } }));
       });
 
       // the footer's bits light up as it arrives
       $$('.bits').forEach((b) => {
-        gsap.from($$('i.on', b), { opacity: 0, duration: 0.4, stagger: { each: 0.02, from: 'random' }, scrollTrigger: { trigger: b, start: 'top 95%', once: true } });
+        waiting.set(b, gsap.from($$('i.on', b), { opacity: 0, duration: 0.4, stagger: { each: 0.02, from: 'random' }, scrollTrigger: { trigger: b, start: 'top 95%', once: true } }));
       });
     }
-    return () => html.classList.remove('intro');
+    return () => { html.classList.remove('intro'); removeEventListener('beforeprint', printAll); };
   });
   // fonts change line breaks; let ScrollTrigger re-measure once they're in
   document.fonts && document.fonts.ready.then(() => ScrollTrigger && ScrollTrigger.refresh());
 } else {
   html.classList.remove('intro');
+}
+
+/* ------------------------------------------------------------ the lab */
+// Experiments that aren't on the site yet. ?lab=1 turns them on for this browser,
+// ?lab=0 turns them off again. A missing or broken lab never breaks the page.
+{
+  const want = new URLSearchParams(location.search).get('lab');
+  let on = want === '1';
+  try {
+    if (want === '1') localStorage.setItem('lab', '1');
+    else if (want === '0') localStorage.removeItem('lab');
+    else on = localStorage.getItem('lab') === '1';
+  } catch {}
+  // lab.js starts itself on import; init() is idempotent, so calling it as well is safe
+  if (on) {
+    import('./lab/lab.js')
+      .then((m) => { if (m && typeof m.init === 'function') return m.init(); })
+      .catch((err) => console.warn('the lab did not load', err));
+  }
 }

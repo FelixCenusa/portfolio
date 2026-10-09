@@ -2,7 +2,9 @@
 // handful of commands it knows. Everything here is pure, so it can be tested
 // without a page. The palette hands in a context:
 //   { page: 'home' | 'projects' | 'cv', here: 'l2' | null, email,
-//     layers: [{ id: 'l4', name: 'Web', projects: [{ id, name, demo }] }] }   (top layer first)
+//     layers: [{ id: 'l4', name: 'Web', projects: [{ id, name, demo }] }],   (top layer first)
+//     running: true | false,          the instrument's Run/Stop state (optional)
+//     autoset: 'the FAT allocator…' } what autoset would start next (optional)
 
 export const VERBS = {
   help: { usage: 'help', about: 'List the commands' },
@@ -10,7 +12,9 @@ export const VERBS = {
   cd: { usage: 'cd <layer>', about: 'Go to a layer: l4 to l0, web to metal, .. or /', arg: true },
   pwd: { usage: 'pwd', about: 'Print where you are' },
   open: { usage: 'open <name>', about: 'Go to a project', arg: true },
-  run: { usage: 'run <demo>', about: 'Go to a live demo and focus it', arg: true },
+  run: { usage: 'run [demo]', about: 'Start a live demo; on its own, undo stop', arg: true },
+  stop: { usage: 'stop', about: 'Hold the ambient motion, like Stop on a scope' },
+  autoset: { usage: 'autoset', about: 'Go to the next live demo and start it' },
   whoami: { usage: 'whoami', about: 'Who made this site' },
   mail: { usage: 'mail', about: 'Copy the email address' },
   cv: { usage: 'cv', about: 'Open the CV' },
@@ -18,10 +22,11 @@ export const VERBS = {
 };
 const ME = ['Felix Cenusa, software engineer in Sweden', 'Software Engineering at BTH'];
 
-// Commands other modules add at runtime (the instrument's stop and run, the lab).
-//   addCommand('stop', { usage: 'stop', about: 'Freeze every moving trace', arg: false,
-//                        words: (ctx) => [['on'], ['off']],          // optional, for Tab
-//                        plan: (arg, ctx) => ({ label, action }) or ({ err: 'stop: …' }) })
+// Commands other modules add at runtime (the lab, readouts…). One with the name of a
+// built-in command replaces it.
+//   addCommand('probe', { usage: 'probe [layer]', about: 'Measure a layer', arg: true,
+//                        words: (ctx) => ctx.layers.map((l) => [l.id]),   // optional, for Tab
+//                        plan: (arg, ctx) => ({ label, action }) or ({ err: 'probe: …' }) })
 // The action is any action plan() can return (see below), or { call: fn }: the palette
 // runs fn() and prints the lines it returns (a string or an array of strings).
 const EXTRA = new Map();
@@ -111,10 +116,31 @@ function help() {
   return [...lines, 'tab completes, up recalls earlier commands'];
 }
 
+// Autoset's round: the strongest live demos first. Each press starts the next
+// one that's on the page. [demo, project id, layer, what the toast calls it]
+export const AUTOSET = [
+  ['segment', 'segment-display', 'l0', 'the 8-segment controller and its logic analyzer'],
+  ['fat', 'fat-file-system', 'l1', 'the FAT allocator and its block map'],
+  ['aristotle', 'aristotle', 'l2', "Aristotle's puzzle solver"],
+  ['tis', 'tis-100', 'l0', 'the TIS-100 node'],
+  ['typing', 'press-ice', 'l3', 'the Press-Ice typing test'],
+];
+// the entry to start for a stored index (anything, it's clamped and wrapped), skipping
+// demos the page doesn't have; { at, entry, next } or null when none are there
+export function autosetPick(index, has = () => true, round = AUTOSET) {
+  const n = round.length, from = Number.isInteger(+index) ? ((+index % n) + n) % n : 0;
+  for (let k = 0; k < n; k++) {
+    const at = (from + k) % n;
+    if (has(round[at][0])) return { at, entry: round[at], next: (at + 1) % n };
+  }
+  return null;
+}
+
 // What a line would do, without doing it. null when it isn't a command.
 // { verb, arg, label, usage, action }, where action is one of
 //   { out: [lines], err }  print      { go: '#id' }  home-page anchor     { page: 'cv/' }  another page
 //   { demo, id }  a demo              { copy: text }                     { clear: true }
+//   { scope: bool }  Run (true) or Stop (false)                          { autoset: true }  the next demo
 //   { call: fn }  run fn, print what it returns (added commands only)
 export function plan(input, ctx) {
   const s = split(input);
@@ -134,6 +160,8 @@ export function plan(input, ctx) {
   if (verb === 'mail') return p(`Copy ${ctx.email}`, { copy: ctx.email });
   if (verb === 'cv') return p(v.about, { page: 'cv/' });
   if (verb === 'clear') return p(v.about, { clear: true });
+  if (verb === 'stop') return p(ctx.running === false ? 'Already stopped' : 'Hold the ambient motion', { scope: false });
+  if (verb === 'autoset') return p(ctx.autoset ? `Run ${ctx.autoset}` : v.about, { autoset: true });
   if (verb === 'ls') {
     const at = resolveDir(arg, ctx), l = ctx.layers.find((x) => x.id === at);
     if (at === '') return p(v.about, { out: listing(ctx.layers) });
@@ -152,9 +180,9 @@ export function plan(input, ctx) {
     const hit = best(arg, projectsOf(ctx), (x) => [x.id, x.name]);
     return hit ? p(`Open ${hit.name}`, { go: `#${hit.id}` }) : fail(`open: no such project: ${arg}`);
   }
-  // run
+  // run: alone it's the Run key (undoes stop); with a name it starts that demo
   const all = projectsOf(ctx), demos = all.filter((x) => x.demo), a = arg.toLowerCase();
-  if (!arg) return fail(`run: missing demo, one of: ${demos.map((x) => x.demo).join(', ')}`);
+  if (!arg) return p(ctx.running === false ? 'Run again: the ambient motion resumes' : 'Already running', { scope: true });
   const plain = all.find((x) => !x.demo && x.id === a);
   if (plain) return fail(`run: ${plain.id} has no live demo`);
   const hit = demos.find((x) => x.demo === a || x.id === a) || best(a, demos, (x) => [x.demo, x.id, x.name]);
