@@ -3,7 +3,7 @@
 // the 3D hero. Everything degrades: without JS the pages are complete, and with
 // reduced motion nothing moves that doesn't have to.
 
-import { score, split, where, plan, complete, recall, remember } from './shell.js';
+import { score, split, where, plan, complete, recall, remember, addCommand } from './shell.js';
 
 const ROOT = new URL('../../', import.meta.url); // site root, from assets/js/
 const $ = (s, el = document) => el.querySelector(s);
@@ -283,6 +283,7 @@ if (pal) {
     if (a.clear) out.replaceChildren();
     else if (a.out) print(cmd, a.out, a.err);
     else if (a.copy) { copy(a.copy); print(cmd, [`copied ${a.copy}`]); }
+    else if (a.call) { const out = a.call(); if (out != null) print(cmd, [].concat(out)); }
     else {
       close();
       if (a.go) go(a.go)();

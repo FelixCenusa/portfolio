@@ -17,6 +17,18 @@ export const VERBS = {
   clear: { usage: 'clear', about: 'Clear the output' },
 };
 const ME = ['Felix Cenusa, software engineer in Sweden', 'Software Engineering at BTH'];
+
+// Commands other modules add at runtime (the instrument's stop and run, the lab).
+//   addCommand('stop', { usage: 'stop', about: 'Freeze every moving trace', arg: false,
+//                        words: (ctx) => [['on'], ['off']],          // optional, for Tab
+//                        plan: (arg, ctx) => ({ label, action }) or ({ err: 'stop: …' }) })
+// The action is any action plan() can return (see below), or { call: fn }: the palette
+// runs fn() and prints the lines it returns (a string or an array of strings).
+const EXTRA = new Map();
+export function addCommand(verb, spec) {
+  VERBS[verb] = { usage: spec.usage, about: spec.about, arg: !!spec.arg };
+  EXTRA.set(verb, spec);
+}
 const PAGES = ['projects', 'cv'];
 
 export function score(q, text) {
@@ -103,12 +115,18 @@ function help() {
 // { verb, arg, label, usage, action }, where action is one of
 //   { out: [lines], err }  print      { go: '#id' }  home-page anchor     { page: 'cv/' }  another page
 //   { demo, id }  a demo              { copy: text }                     { clear: true }
+//   { call: fn }  run fn, print what it returns (added commands only)
 export function plan(input, ctx) {
   const s = split(input);
   if (!s) return null;
   const { verb, arg } = s, v = VERBS[verb];
   const p = (label, action) => ({ verb, arg, label, usage: v.usage, action });
   const fail = (line) => p(v.about, { out: [line], err: true });
+
+  if (EXTRA.has(verb)) {
+    const r = EXTRA.get(verb).plan(arg, ctx) || { err: `${verb}: nothing to do` };
+    return r.err ? fail(r.err) : p(r.label || v.about, r.action);
+  }
 
   if (verb === 'help') return p(v.about, { out: help() });
   if (verb === 'pwd') return p(v.about, { out: [where(ctx).path] });
@@ -150,6 +168,7 @@ function argWords(verb, ctx) {
   if (verb === 'ls') return layers;
   if (verb === 'open') return projectsOf(ctx).map((x) => [x.id, x.name]);
   if (verb === 'run') return projectsOf(ctx).filter((x) => x.demo).map((x) => [x.demo, x.id, x.name]);
+  if (EXTRA.has(verb) && EXTRA.get(verb).words) return EXTRA.get(verb).words(ctx);
   return [];
 }
 
