@@ -1,1 +1,71 @@
-/* Readouts: real measurements under each layer heading, and the timebase (assets/js/readouts.js). */
+/* Readouts: real measurements under each layer heading, and the timebase (assets/js/readouts.js).
+   A row reads like the measurement line under a scope's screen: words in the
+   sans at 13px, each value in Mona Sans Mono with tabular figures, its unit in
+   the sans after a thin space. The tick is this layer's level of the rail's
+   trace, lit while the layer is the active one. */
+
+.ro {
+  display: flex; flex-wrap: wrap; align-items: baseline; gap: 6px 32px;
+  margin-top: clamp(26px, 2.8vw, 40px);
+  font-size: 13px; line-height: 1.5; color: var(--text-3);
+}
+/* the row sits on the layer's trace, the way readouts sit on a screen */
+.layer__head:has(> .ro)::after { margin-top: 14px; }
+.ro p { margin: 0; }
+.ro__l { font-weight: 520; }
+.ro__val { white-space: nowrap; }
+.ro__v {
+  display: inline-block; text-align: right;
+  font-family: var(--f-mono); font-size: 15px; font-weight: 500;
+  font-variant-numeric: tabular-nums; font-variant-ligatures: none;
+  color: var(--text-1);
+}
+.ro__u { font-weight: 450; }
+.ro__tb { margin-left: auto; }
+.ro__tick {
+  display: inline-block; width: 14px; height: 3px; margin-right: 10px; vertical-align: 0.28em;
+  background: color-mix(in srgb, var(--ch, var(--accent)) 32%, transparent);
+  transition: background-color 0.3s;
+}
+.ro[data-active] .ro__tick { background: var(--ch, var(--accent)); }
+
+@media (max-width: 900px) {
+  .ro { gap: 4px 24px; }
+  .ro__tb { flex-basis: 100%; margin-left: 0; }
+}
+
+/* the timebase on the rail (wide screens), under the level of the active layer;
+   its name and caption show with the layer names, on hover or focus */
+.rail__tb {
+  display: flex; flex-direction: column; gap: 2px;
+  margin-top: 6px; padding: 4px 0 2px; border-top: 1px solid var(--line-2);
+  font-size: 12px; line-height: 1.4; color: var(--text-3); white-space: nowrap;
+}
+.tb__r { display: flex; align-items: baseline; }
+.tb__tick { flex: none; align-self: center; width: 14px; height: 3px; margin: 0 10px 0 var(--step, 0px); background: var(--ch, var(--accent)); }
+.tb__l { font-weight: 520; }
+.tb__v {
+  display: inline-block;
+  font-family: var(--f-mono); font-size: 12px; font-weight: 500;
+  font-variant-numeric: tabular-nums; font-variant-ligatures: none;
+  color: var(--text-2);
+}
+.tb__u { font-weight: 450; }
+.tb__cap { max-width: 15em; white-space: normal; }
+/* The rail is centred on the viewport, so if it grew on hover every link would move up under
+   the pointer. The name and caption keep their room while hidden, and the caption is as wide as
+   the links already make the rail and three lines tall whatever it says, so neither hover nor a
+   new layer changes the rail's size. */
+.rail__tb .tb__cap { contain: inline-size; min-height: 4.2em; }
+/* the rail's own levels already mark the layer; without the tick the value clears the content column at 1440 px */
+.rail__tb .tb__tick { display: none; }
+.rail__tb .tb__v, .rail__tb { font-size: 11px; }
+.rail__tb .tb__l, .rail__tb .tb__cap {
+  visibility: hidden; opacity: 0; transform: translateX(-4px);
+  transition: opacity 0.3s, transform 0.4s var(--ease-out), visibility 0s 0.3s;
+}
+.rail:hover .rail__tb .tb__l, .rail:focus-within .rail__tb .tb__l,
+.rail:hover .rail__tb .tb__cap, .rail:focus-within .rail__tb .tb__cap {
+  visibility: visible; opacity: 1; transform: none;
+  transition: opacity 0.3s, transform 0.4s var(--ease-out);
+}

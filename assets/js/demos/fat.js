@@ -448,6 +448,8 @@ export function mount(root, { reducedMotion = false } = {}) {
     const cwd = fs.path(fs.cwd);
     $('.fat-prompt').textContent = cwd + ' $';
     $('label').textContent = `Terminal command, in ${cwd}`;
+    // the L1 readout (assets/js/readouts.js) follows the disk through this
+    root.dispatchEvent(new CustomEvent('fat:change', { bubbles: true, detail: { blocks: fs.n, blockSize: fs.bs, used: st.used, free: st.free } }));
     return st;
   }
 

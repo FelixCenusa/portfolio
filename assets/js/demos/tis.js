@@ -141,6 +141,26 @@ export const PRESETS = {
     [-23, 41, 0, -7, 88, -150, 12, -1], x => Math.abs(x)),
 };
 
+/** How fast this interpreter runs here: step a preset over and over (starting again each
+    time its output is complete) for about `ms` milliseconds. Pure and DOM-free, like the
+    rest of the interpreter; the layer readout calls it at idle (assets/js/readouts.js).
+    Returns { instructions, ms, perSecond }. */
+const CAP = 2e6; // about 0.2 s of work at the speeds measured so far
+export function bench(ms = 30, key = 'AMPLIFY') {
+  const p = PRESETS[key] || PRESETS.AMPLIFY, { code } = parse(p.src), want = p.expected.length;
+  let s = init(), n = 0;
+  const t0 = performance.now();
+  let t = t0;
+  do {
+    for (let i = 0; i < 256; i++) {
+      s = step(code, s, p.input); n++;
+      if (s.halt || s.out.length >= want) s = init();
+    }
+    t = performance.now();
+  } while (t - t0 < ms && n < CAP); // the cap: a frozen or very coarse clock must not spin forever
+  return { instructions: n, ms: t - t0, perSecond: n / ((t - t0) / 1000) };
+}
+
 /* ------------------------------------------------------------------ UI */
 
 function h(tag, props, ...kids) {
@@ -199,8 +219,8 @@ export function mount(root, { reducedMotion = false } = {}) {
     b.focus();
     pick(b.dataset.v);
   });
-  const revertBtn = h('button', { type: 'button', class: 'ctl', text: 'REVERT', hidden: true, onclick: revert });
-  const editBtn = h('button', { type: 'button', class: 'ctl', 'aria-pressed': 'false', text: 'EDIT', onclick: () => (editing ? leaveEdit() : enterEdit()) });
+  const revertBtn = h('button', { type: 'button', class: 'ctl', text: 'Revert', hidden: true, onclick: revert });
+  const editBtn = h('button', { type: 'button', class: 'ctl', 'aria-pressed': 'false', text: 'Edit', onclick: () => (editing ? leaveEdit() : enterEdit()) });
   const task = h('p', { class: 'tis__task' });
 
   const col = (name, aria) => {
@@ -238,12 +258,12 @@ export function mount(root, { reducedMotion = false } = {}) {
   const errs = h('ul', { class: 'tis__errs', id: errId, hidden: true });
 
   const btn = (text, fn, extra = {}) => h('button', { type: 'button', class: 'ctl', text, onclick: fn, ...extra });
-  const stepBtn = btn('STEP', doStep, { 'aria-label': 'Step one cycle' });
-  const runBtn = btn('RUN', doRun);
-  const fastBtn = btn('FAST', doFast, { 'aria-pressed': 'false' });
-  const resetBtn = btn('RESET', () => { stop(); reset(); render(); say('Reset'); });
+  const stepBtn = btn('Step', doStep, { 'aria-label': 'Step one cycle' });
+  const runBtn = btn('Run', doRun);
+  const fastBtn = btn('Fast', doFast, { 'aria-pressed': 'false' });
+  const resetBtn = btn('Reset', () => { stop(); reset(); render(); say('Reset'); });
   (reducedMotion ? stepBtn : runBtn).classList.add('ctl--primary');
-  const rCyc = reg('CYCLES'), rVer = reg('VERDICT');
+  const rCyc = reg('Cycles'), rVer = reg('Verdict');
   const live = h('div', { class: 'sr-only', 'aria-live': 'polite', role: 'status' });
 
   root.replaceChildren(
@@ -307,7 +327,7 @@ export function mount(root, { reducedMotion = false } = {}) {
     rVer.b.textContent = finished || '—';
     rVer.el.classList.toggle('readout--signal', finished === 'OK');
     rVer.el.classList.toggle('readout--fault', finished === 'FAIL');
-    runBtn.textContent = running ? 'STOP' : 'RUN';
+    runBtn.textContent = running ? 'Stop' : 'Run';
     runBtn.setAttribute('aria-label', running ? 'Stop' : 'Run');
     fastBtn.setAttribute('aria-pressed', String(running && fast));
   }
@@ -319,7 +339,7 @@ export function mount(root, { reducedMotion = false } = {}) {
     });
     task.textContent = PRESETS[key].task;
     editBtn.setAttribute('aria-pressed', String(editing));
-    editBtn.textContent = editing ? 'DONE' : 'EDIT';
+    editBtn.textContent = editing ? 'Done' : 'Edit';
     revertBtn.hidden = !editing;
     codeBox.classList.toggle('is-editing', editing);
     listing.setAttribute('aria-hidden', String(editing));

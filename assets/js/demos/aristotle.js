@@ -98,9 +98,9 @@ export function solveAll() {
 
 let uid = 0;
 const HEX = '43.3,1.5 85.3,25.75 85.3,74.25 43.3,98.5 1.3,74.25 1.3,25.75';
-const SPEEDS = [['SLOW', 6], ['FAST', 420], ['MAX', 0]]; // nodes per second, 0 = as fast as a frame allows. FAST finds the first solution in ~15 s
+const SPEEDS = [['Slow', 6], ['Fast', 420], ['Max', 0]]; // nodes per second, 0 = as fast as a frame allows. Fast finds the first solution in ~15 s
 const FLASH = [320, 110, 90];
-const NOTE0 = 'ALL runs the full search without animation.';
+const NOTE0 = 'All runs the full search without animation.';
 const fmt = n => n.toLocaleString('en-US');
 const fmtT = ms => ms < 1000 ? Math.round(ms) + ' ms' : ms < 6e4 ? (ms / 1000).toFixed(1) + ' s' : `${ms / 6e4 | 0}:${String((ms / 1000 | 0) % 60).padStart(2, '0')}`;
 const where = i => `row ${CELLS[i].row}, cell ${CELLS[i].col}`;
@@ -134,11 +134,11 @@ export function mount(root, { reducedMotion = false } = {}) {
   const t = document.createElement('template');
   t.innerHTML = `
 <div class="ar-bar">
-  <button type="button" class="ctl ctl--primary ar-go" data-a="solve">SOLVE</button>
-  <button type="button" class="ctl" data-a="step">STEP</button>
-  <button type="button" class="ctl" data-a="all">ALL</button>
-  <button type="button" class="ctl" data-a="reset">RESET</button>
-  <button type="button" class="ctl" data-a="clear">CLEAR</button>
+  <button type="button" class="ctl ctl--primary ar-go" data-a="solve">Solve</button>
+  <button type="button" class="ctl" data-a="step">Step</button>
+  <button type="button" class="ctl" data-a="all">All</button>
+  <button type="button" class="ctl" data-a="reset">Reset</button>
+  <button type="button" class="ctl" data-a="clear">Clear</button>
   <div class="ar-speed"><span class="label" id="${id}-sp">Speed</span><div class="switch" role="radiogroup" aria-labelledby="${id}-sp">${
     SPEEDS.map(([s], k) => `<button type="button" role="radio" data-k="${k}" aria-checked="${k === 1}" tabindex="${k === 1 ? 0 : -1}">${s}</button>`).join('')}</div></div>
 </div>
@@ -223,7 +223,7 @@ export function mount(root, { reducedMotion = false } = {}) {
     text(ro[0], fmt(stat[0])); text(ro[1], fmt(stat[1])); text(ro[2], String(filled)); text(ro[3], fmtT(stat[2]));
     ro[0].parentNode.classList.toggle('readout--signal', running || counting);
     keys.forEach((k, n) => k.classList.toggle('is-used', n < N && cnt[n + 1] > 0));
-    text(btn.solve, running ? 'PAUSE' : S && last === 2 ? 'NEXT' : 'SOLVE');
+    text(btn.solve, running ? 'Pause' : S && last === 2 ? 'Next' : 'Solve');
     btn.prev.disabled = btn.next.disabled = !sols;
     led.className = 'led' + (running || counting || solved ? '' : ' led--off');
     text(lnEl, `${full} of 15 lines complete, ${good} summing to 38.`);
@@ -309,6 +309,8 @@ export function mount(root, { reducedMotion = false } = {}) {
       ms += performance.now() - t0; stat = [s.nodes, s.backtracks, ms];
       if (!r.done) { render(); cTimer = setTimeout(slice, 0); return; }
       counting = false; sols = found;
+      // the L2 readout (assets/js/readouts.js) shows the visitor's own run; ms is compute time only
+      root.dispatchEvent(new CustomEvent('aristotle:solved', { bubbles: true, detail: { all: true, solutions: found.length, nodes: s.nodes, backtracks: s.backtracks, ms } }));
       text(solSum, `${fmt(s.nodes)} nodes in ${fmtT(ms)}`);
       text(solNote, `All ${found.length} are rotations and reflections of one another.`);
       say(`${found.length} solutions, ${fmt(s.nodes)} nodes in ${fmtT(ms)}`);
@@ -407,7 +409,7 @@ export function mount(root, { reducedMotion = false } = {}) {
   document.addEventListener('visibilitychange', kick);
 
   render();
-  text(statusEl, 'Pick a cell and type 1–19, or press SOLVE.');
+  text(statusEl, 'Pick a cell and type 1–19, or press Solve.');
 
   return {
     destroy() {
