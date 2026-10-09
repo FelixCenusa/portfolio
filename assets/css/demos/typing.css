@@ -37,8 +37,7 @@
   display: flex; justify-content: space-between; gap: 12px;
   margin-top: 14px; padding-top: 10px; border-top: 1px dashed var(--line-2);
 }
-.demo--typing .typ__mode .label { font-size: 10.5px; color: var(--text-4); }
-.demo--typing .typ__mode .label:first-child { color: var(--text-3); }
+.demo--typing .typ__mode .label { font-size: 12px; color: var(--text-3); }
 
 .demo--typing .typ__line {
   display: flex; gap: 12px; margin-top: 8px; min-height: calc(1.7em * 2);
@@ -51,19 +50,19 @@
 .demo--typing .typ__c.is-ok { color: var(--text-1); }
 .demo--typing .typ__c.is-bad { background: var(--fault-a15); color: var(--fault); box-shadow: inset 0 -2px 0 var(--fault); }
 
-/* caret: dim when the input is not focused, phosphor when it is */
+/* caret: dim when the input is not focused, lit when it is; it holds still while the page is stopped */
 .demo--typing .typ__c.is-cur::before {
   content: ''; position: absolute; left: -1px; top: 0.12em; bottom: 0.08em; width: 2px; border-radius: 1px;
   background: var(--text-4);
 }
-.demo--typing.is-focus .typ__c.is-cur::before { background: var(--signal); box-shadow: 0 0 6px var(--signal-a40); }
+.demo--typing.is-focus .typ__c.is-cur::before { background: var(--signal); }
 @media (prefers-reduced-motion: no-preference) {
-  .demo--typing.is-focus:not(.is-typing):not(.is-rm) .typ__c.is-cur::before { animation: typ-blink 1.06s steps(1) infinite; }
+  html:not(.is-stopped) .demo--typing.is-focus:not(.is-typing):not(.is-rm) .typ__c.is-cur::before { animation: typ-blink 1.06s steps(1) infinite; }
 }
 @keyframes typ-blink { 50% { opacity: 0; } }
 
-.demo--typing .typ__hint { margin: 8px 0 0; font-size: 10.5px; color: var(--text-4); }
-.demo--typing.is-focus .typ__hint { color: var(--text-3); }
+.demo--typing .typ__hint { margin: 8px 0 0; font-size: 12px; color: var(--text-3); }
+.demo--typing.is-focus .typ__hint { color: var(--text-2); }
 .demo--typing.is-done .typ__hint { color: var(--accent); }
 
 /* the real input: invisible but focusable, 16px so phones don't zoom */
@@ -81,7 +80,7 @@
   display: flex; flex-wrap: wrap; align-items: center; gap: 8px 14px;
   margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line-1);
 }
-.demo--typing .typ__miss > .label { flex: none; font-size: 10.5px; }
+.demo--typing .typ__miss > .label { flex: none; }
 .demo--typing .typ__misslist { display: flex; flex-wrap: wrap; gap: 6px; margin: 0; padding: 0; list-style: none; font-size: 12.5px; line-height: 1.5; }
 .demo--typing .typ__misslist li {
   padding: 2px 8px; border-radius: var(--r-1); background: var(--bg-0); box-shadow: inset 0 0 0 1px var(--line-1);
@@ -89,11 +88,25 @@
 }
 .demo--typing .typ__misslist li.is-empty,
 .demo--typing .typ__misslist li.is-none { padding: 0; background: none; box-shadow: none; }
-.demo--typing .typ__misslist li.is-empty { font-size: 11.5px; color: var(--text-4); }
-.demo--typing .typ__misslist li.is-none { color: var(--signal); }
+.demo--typing .typ__misslist li.is-empty { font-family: var(--f-sans); font-size: 12.5px; color: var(--text-3); }
+.demo--typing .typ__misslist li.is-none { font-family: var(--f-sans); color: var(--signal); }
 .demo--typing .typ__got { color: var(--fault); }
 .demo--typing .typ__arr,
-.demo--typing .typ__n { color: var(--text-4); }
+.demo--typing .typ__n { color: var(--text-3); }
+
+/* ---------------------------------------------------------------- eye diagram (after a finished line) */
+.demo--typing .typ__eye { margin-top: 14px; padding-top: 12px; border-top: 1px solid var(--line-1); font-family: var(--f-sans); }
+.demo--typing .typ__eye-head { display: flex; flex-wrap: wrap; align-items: baseline; justify-content: space-between; gap: 4px 14px; margin-bottom: 8px; }
+.demo--typing .typ__eye-title { font-size: 13px; font-weight: 520; color: var(--text-3); }
+.demo--typing .typ__eye-read { font-size: 13px; color: var(--text-3); }
+.demo--typing .typ__eye-read b { font-family: var(--f-mono); font-size: 14px; font-weight: 500; font-variant-numeric: tabular-nums; color: var(--text-1); }
+.demo--typing .typ__eye-plot {
+  display: block; width: 100%; height: 120px;
+  border-radius: var(--r-2); background: var(--bg-0); box-shadow: inset 0 0 0 1px var(--line-2);
+}
+.demo--typing .typ__eye-axis { display: flex; justify-content: space-between; gap: 8px; padding: 5px 12px 0; font-size: 12px; color: var(--text-3); }
+.demo--typing .typ__eye-axis .num { font-size: 11.5px; }
+.demo--typing .typ__eye-note { margin: 8px 0 0; max-width: 60ch; font-size: 12.5px; line-height: 1.5; color: var(--text-3); }
 
 .demo--typing .typ__cap { margin: 14px 0 0; }
 

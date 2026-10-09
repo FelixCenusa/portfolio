@@ -1,0 +1,29 @@
+/* "No signal" on the 404 page (assets/js/nosignal.js): one flat trace on a
+   10 × 8 graticule, with a readout under the screen naming the address that
+   was probed. */
+
+/* the heading is a sentence, so it stays in sentence case */
+.lost__title { max-width: 12em; font-size: clamp(40px, 6vw, 96px); line-height: 1; text-transform: none; }
+.lost__lede { margin: 22px 0 0; }
+
+.nosig { margin: 0; max-width: 40rem; }
+.nosig__screen {
+  position: relative; isolation: isolate; aspect-ratio: 2 / 1; overflow: hidden;
+  border-radius: var(--r-2); background: var(--s-bg-0); box-shadow: inset 0 0 0 1px var(--line-2);
+}
+/* the same 10 × 8 graticule as every other screen (the --grat-* tokens in site.css) */
+.nosig__screen::before {
+  content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none;
+  background: var(--grat-ink);
+  -webkit-mask: var(--grat-lines) 0 0 / 100% 100% no-repeat, var(--grat-hticks) 0 50% / 100% var(--grat-tick) no-repeat, var(--grat-vticks) 50% 0 / var(--grat-tick) 100% no-repeat;
+  mask: var(--grat-lines) 0 0 / 100% 100% no-repeat, var(--grat-hticks) 0 50% / 100% var(--grat-tick) no-repeat, var(--grat-vticks) 50% 0 / var(--grat-tick) 100% no-repeat;
+}
+.nosig__svg { position: absolute; inset: 0; width: 100%; height: 100%; overflow: visible; }
+.nosig__trace { fill: none; stroke: var(--accent); stroke-width: 1.5; stroke-linejoin: round; vector-effect: non-scaling-stroke; }
+
+/* the readout under the screen: label in the sans, the value in mono. It only
+   shows once a script has put a real address in it (none on /404.html itself) */
+.nosig__bar { display: flex; align-items: baseline; gap: 10px; min-height: 32px; padding: 9px 2px 0; font-size: 13.5px; line-height: 1.4; }
+.nosig__bar:has(> .nosig__path:empty) { display: none; }
+.nosig__key { flex: none; font-weight: 520; color: var(--text-3); }
+.nosig__path { min-width: 0; font-family: var(--f-mono); font-size: 13px; color: var(--text-1); overflow-wrap: anywhere; }

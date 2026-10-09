@@ -17,6 +17,8 @@
 .trace__head { display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 8px 16px; margin-bottom: 12px; }
 .trace__cap { margin: 0; font-size: 13.5px; color: var(--text-3); }
 .trace__dl { min-height: 30px; font-family: var(--f-sans); font-size: 13px; letter-spacing: 0; }
+/* the soft keys: Save image beside Download .vcd */
+.trace__keys { display: flex; flex-wrap: wrap; gap: 8px; }
 
 /* label column on the left, the plot beside it, the time axis underneath */
 .trace__body { display: grid; grid-template-columns: max-content minmax(0, 1fr); column-gap: 14px; }
@@ -39,7 +41,7 @@
 .trace__plot rect { fill: color-mix(in srgb, var(--ch) 14%, transparent); }
 .trace__wave { fill: none; stroke: var(--ch); stroke-width: 1.5; stroke-linejoin: miter; }
 
-.trace__axis { grid-column: 2; position: relative; height: 24px; font-family: var(--f-mono); font-size: 11px; font-variant-numeric: tabular-nums; color: var(--text-4); }
+.trace__axis { grid-column: 2; position: relative; height: 24px; font-family: var(--f-mono); font-size: 11px; font-variant-numeric: tabular-nums; color: var(--text-3); }
 .trace__axis span { position: absolute; top: 5px; transform: translateX(-50%); white-space: nowrap; }
 .trace__axis span:first-child { transform: none; }
 .trace__axis span.is-end { transform: translateX(-100%); }

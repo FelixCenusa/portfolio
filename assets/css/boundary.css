@@ -1,1 +1,39 @@
-/* The syscall boundary, where the signal is converted (assets/js/boundary.js). */
+/* The syscall boundary, where the signal is converted (assets/js/boundary.js).
+   One trace runs the full width along the line between user space and kernel
+   space: the L2 sawtooth on the right of a crossing point, the L1 square on its
+   left. --split (0 to 1) is where the crossing is; the script moves it as you
+   scroll through, and without the script or with reduced motion it stays at
+   half way. The waves are the same tiles the layer headings draw (site.css). */
+
+.boundary { --split: 0.5; }
+
+/* the dashed line is now the zero line under the trace, so it goes neutral */
+.boundary__line { border-top-color: var(--line-3); }
+.boundary__line span { z-index: 2; }
+
+.boundary__trace {
+  position: absolute; left: 0; right: 0; top: 50%; z-index: 1;
+  height: 28px; margin-top: -14px; overflow: hidden; pointer-events: none;
+}
+.boundary__wave {
+  position: absolute; inset: 0;
+  -webkit-mask: var(--bwave) 0 50% / 120px 28px repeat-x; mask: var(--bwave) 0 50% / 120px 28px repeat-x;
+}
+/* kernel side, already converted: left of the crossing */
+.boundary__wave--l1 {
+  --bwave: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 28'%3E%3Cpath d='M0 22 H30 V6 H60 V22 H90 V6 H120 V22' fill='none' stroke='%23000' stroke-width='1.6'/%3E%3C/svg%3E");
+  background: var(--ch-l1);
+  clip-path: inset(0 calc(100% - var(--split) * 100%) 0 0);
+}
+/* user side, still a sawtooth: right of the crossing */
+.boundary__wave--l2 {
+  --bwave: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 120 28'%3E%3Cpath d='M0 22 L30 6 V22 L60 6 V22 L90 6 V22 L120 6 V22' fill='none' stroke='%23000' stroke-width='1.6'/%3E%3C/svg%3E");
+  background: var(--ch-l2);
+  clip-path: inset(0 0 0 calc(var(--split) * 100%));
+}
+/* the crossing point: a 1px marker, moved with a transform (the box is the
+   trace's full width, so 100% of its own width is the whole line) */
+.boundary__cross { position: absolute; inset: 0; transform: translateX(calc(var(--split) * 100%)); }
+.boundary__cross::before {
+  content: ''; position: absolute; left: -0.5px; top: 0; bottom: 0; width: 1px; background: var(--text-2);
+}
