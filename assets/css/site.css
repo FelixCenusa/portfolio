@@ -288,7 +288,14 @@ code, kbd, samp, .mono, .num { font-variant-ligatures: none; }
 .nav.is-scrolled { border-bottom-color: var(--line-1); }
 .nav__inner { height: 100%; display: flex; align-items: center; gap: 24px; }
 .brand { display: inline-flex; align-items: center; gap: 10px; white-space: nowrap; margin-right: auto; }
-.brand__mark { width: 22px; height: 22px; flex: none; color: var(--accent); transition: color 0.4s; }
+.brand__mark { width: 26px; height: 22px; flex: none; }
+/* the mark is one trace stepping down the five layers: bright levels, faint fast edges */
+.brand__level { stroke-width: 2.4; stroke-dasharray: 1; stroke-dashoffset: 0; }
+.brand__edge { stroke-width: 1.2; stroke-opacity: 0.45; }
+@media (prefers-reduced-motion: no-preference) {
+  .brand:hover .brand__level { animation: brand-sweep 0.5s var(--ease-out) calc(var(--i) * 70ms) both; }
+}
+@keyframes brand-sweep { from { stroke-dashoffset: 1; } }
 .brand__name { font-size: 15.5px; font-weight: 620; letter-spacing: -0.015em; }
 .nav__links { display: flex; align-items: center; gap: clamp(14px, 2vw, 28px); }
 .nav__links a { position: relative; font-size: 14px; font-weight: 500; color: var(--text-2); padding: 8px 0; transition: color 0.25s; }
